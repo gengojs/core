@@ -6,12 +6,10 @@
   * https://github.com/iwatakeshi
   * license : MIT
   */
- /* Imports */
- var root = require('app-root-path'),
-   version = require(root + '/package').version,
+ var version = require('./package').version,
    path = require('path'),
-   extract = require(root + '/modules/extract/'),
-   plugify = require(root + '/lib/plugify/'),
+   extract = require('./modules/extract/'),
+   plugify = require('./lib/plugify/'),
    _ = require('lodash'),
    Proto = require('uberproto');
  /**
@@ -20,11 +18,6 @@
   * @private
   */
  var Gengo = Proto.extend({
-   /**
-    * @method init
-    * @description Initializes Gengo.
-    * @private
-    */
    init: function(options, plugins) {
      //version
      this.version = version;
@@ -107,8 +100,8 @@
        this.plugins._localize = plugin.package;
        plugin.bind(this)();
      }, this);
-     /* Apply API */
 
+     /* Apply API */
      // koa?
      if (this.isKoa(req)) {
        this.server = 'koa';

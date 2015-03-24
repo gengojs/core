@@ -1,6 +1,5 @@
 var _ = require('lodash'),
-  path = require('path'),
-  root = require('app-root-path'),
+  path = require('path');
   /* Defaults */
   /*parser =  require(path.normalize(root + '/plugins/parser/default')),
   api = require(path.normalize(root + '/plugins/api/')),

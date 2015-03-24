@@ -1,0 +1,33 @@
+{
+  "name": "gengojs-core",
+  "version": "0.0.1",
+  "description": "The core of gengo.js that manages i18n and l10n.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iwatakeshi/gengojs-core.git"
+  },
+  "keywords": [
+    "i18n",
+    "gengojs",
+    "l10n",
+    "internationalization",
+    "localization",
+    "translate",
+    "plugin",
+    "plugins"
+  ],
+  "author": "iwatakeshi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iwatakeshi/gengojs-core/issues"
+  },
+  "homepage": "https://github.com/iwatakeshi/gengojs-core",
+  "dependencies": {
+    "lodash": "^3.5.0",
+    "uberproto": "^1.1.2"
+  }
+}

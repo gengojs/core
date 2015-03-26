@@ -13,7 +13,7 @@
 
 'use strict';
 
-var Proto = require("uberproto");
+var Proto = require('uberproto');
 var _ = require('lodash');
 
 /**

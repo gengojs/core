@@ -7,3 +7,15 @@ TODO:
     - Write about plugins
 * Create tests
 * Create repos for individual plugins
+
+
+
+#Contributing
+
+* Requirements
+	* Grunt
+	* [Airbnb Javascript Style](https://github.com/airbnb/javascript#testing)
+
+#Build
+
+Run `grunt` to build. 

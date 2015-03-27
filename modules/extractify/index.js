@@ -33,22 +33,22 @@ var Extract = Proto.extend({
     var values = {},
       args = [],
       value;
-    //if the arguments is greater than 2 (because of offset)
+    //If the arguments is greater than 2 (because of offset)
     if (length > 2) {
-      //just append them to the array
+      //Just append them to the array
       _.forEach(array, function(item) {
         args.push(item);
       });
     }
-    // if they are exactly 2 argument
+    // If they are exactly 2 argument
     else if (length === 2) {
-      // get the first value
+      // Get the first value
       value = array[0];
-      // set arguments [...]
+      // Set arguments [...]
       if (_.isArray(value)) args = value;
       else if (_.isObject(value)) args = [];
       else args.push(value);
-      //set values {...}
+      // Set values {...}
       values = _.isObject(value) ? value : {};
     }
 

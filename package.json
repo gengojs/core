@@ -1,10 +1,10 @@
 {
   "name": "gengojs-core",
-  "version": "0.0.1",
+  "version": "0.0.1-beta.1",
   "description": "The core of gengo.js that manages i18n and l10n.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt && mocha ./tests/core/"
   },
   "repository": {
     "type": "git",
@@ -27,14 +27,17 @@
   },
   "homepage": "https://github.com/iwatakeshi/gengojs-core",
   "dependencies": {
-    "lodash": "^3.5.0",
-    "uberproto": "^1.1.2",
-    "yaml-js": "^0.1.0"
+    "debug": "^2.1.3",
+    "hoek": "^2.12.0",
+    "js-yaml": "^3.2.7",
+    "lodash": "^3.6.0",
+    "uberproto": "^1.1.2"
   },
   "devDependencies": {
+    "chai": "^2.2.0",
     "grunt": "^0.4.5",
     "grunt-contrib-jshint": "^0.11.1",
-    "grunt-jsbeautifier": "^0.2.10",
-    "load-grunt-tasks": "^3.1.0"
+    "load-grunt-tasks": "^3.1.0",
+    "mocha": "^2.2.1"
   }
 }

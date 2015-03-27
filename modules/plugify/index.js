@@ -1,83 +1,75 @@
+// Load modules
 var _ = require('lodash');
-/* Defaults */
-/*parser =  require(path.normalize(root + '/plugins/parser/default')),
-  api = require(path.normalize(root + '/plugins/api/')),
-  apply = require(path.normalize(root + '/plugins/apply/')),
-  config = require(path.normalize(root + '/plugins/config/')),
-  memory = require(path.normalize(root + '/plugins/memory/')),
-  router = require(path.normalize(root + '/plugins/router/')),
-  accept = require(path.normalize(root + '/plugins/accept/'));
-  localize = require(path.normalize(root + '/plugins/localize/'));*/
+var Hoek = require('hoek');
 
-/**
- * @description Removes any duplicate functions
- * with the same name.
- * @param  {Array} array The array to remove duplicates.
- * @return {Array}       The unique array;
+module.exports = function Plugify(plugins, callback, context) {
+  'use strict';
+
+  /*
+    Definition: 
+    A plugin must be either a function, an array containing functions, 
+    or an plain object with a set of functions.
+    
+    1. A plugin must return a plain object 
+    with the main (export) function and its package.
+    
+    2. A package must contain the name, nickname and type of plugin.
+
+    // the export function
+    function ship(){
+      var pkg = require('./package.json');
+      //used for options
+      pkg.nickname = 'googler';
+      pkg.type = 'parser';
+      return {
+         main:myfunction,
+         package:pkg
+      };
+    }
+    
+    3. A plain object exporting multiple 
+    plugins is called a 'pack' or 'gengo pack'.
+    
+    //export object
+    var gengopack = {
+        handler: ship1,
+        // ! You should not reference ship2 as ship1
+        // ...in short, been there done that! (failed)
+        // ...in long, for some reason the package (no matter how different)
+        // it will return the package of the last ship
+        parser: ship2
+        //...
+    };
  */
-function unique(array) {
-  'use strict';
-  if (_.isEmpty(array)) return array;
-  else
-    array = _.uniq(array, false, function(plugin) {
-      return plugin.package.name;
+  var registrations = [];
+  // check type!
+  if (_.isPlainObject(plugins)) {
+    _.forOwn(plugins, function(ship) {
+      // assert
+      Hoek.assert(_.isFunction(ship),
+        'Uh oh! The ship must be a function!');
+      Hoek.assert(_.isPlainObject(ship()),
+        'Woops! Did the ship forget to return a plain object?');
+      // add the ship
+      registrations.push(ship());
     });
-  return array;
-}
-
-
-module.exports = function plugify(plugins) {
-  'use strict';
-  var result = [];
-  if (plugins) plugins = _.isArray(plugins) ? plugins : [plugins()] || null;
-  if (plugins) {
-    _.forEach(plugins, function(plugin) {
-      plugin = plugin();
-      switch (plugin.package.type) {
-        case 'parser':
-          // if (plugin.package.name !== parser.package.name) 
-          // result.push(plugin);
-          // else result.push(parser());
-          unique(result);
-          break;
-        case 'accept':
-          // if (plugin.package.name !== accept.package.name) 
-          // result.push(plugin);
-          // else result.push(accept());
-          unique(result);
-          break;
-        case 'backend':
-          // if (plugin.package.name !== backend.package.name) 
-          // result.push(plugin);
-          // else result.push(backend());
-          unique(result);
-          break;
-        case 'router':
-          // if (plugin.package.name !== router.package.name) 
-          // result.push(plugin);
-          // else result.push(router());
-          unique(result);
-          break;
-        case 'localize':
-          // if (plugin.package.name !== localize.package.name) 
-          // result.push(plugin);
-          // else result.push(localize());
-          unique(result);
-          break;
-        case 'apply':
-          // if (plugin.package.name !== apply.package.name) 
-          // result.push(plugin);
-          // else result.push(apply());
-          unique(result);
-          break;
-        case 'api':
-          // if (plugin.package.name !== api.package.name) 
-          // result.push(plugin);
-          // else result.push(api());
-          unique(result);
-          break;
-      }
-    });
-  } else result = [];
-  return result;
+  } else if (_.isArray(plugins)) registrations = plugins;
+  else if (_.isFunction(plugins)) {
+    Hoek.assert(_.isPlainObject(plugins()),
+      'Woops! Did the ship forget to return a plain object?');
+    registrations.push(plugins());
+  }
+  // callback!
+  _.forEach(registrations, function(plugin) {
+    // assert
+    Hoek.assert(_.has(plugin, 'main'),
+      'Woops! Did you forget the main function?');
+    Hoek.assert(_.has(plugin, 'package'),
+      'Woops! Did you forget the package?');
+    Hoek.assert(_.has(plugin.package, 'type'),
+      'Woops! Did you forget the "type" of plugin?');
+    Hoek.assert(_.has(plugin.package, 'name'),
+      'Woops! Did you forget the "name" of plugin?');
+    callback.bind(this)(plugin.main, plugin.package);
+  }, context);
 };

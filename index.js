@@ -8,114 +8,158 @@
   'use strict';
   /* Imports */
   var version = require('./package').version,
-    extract = require('./modules/extract/'),
+    extractify = require('./modules/extractify/'),
     plugify = require('./modules/plugify/'),
     optify = require('./modules/optify/'),
+    debugify = require('./modules/debugify/'),
     _ = require('lodash'),
     Proto = require('uberproto');
-  /**
-   * @class
-   * @description gengo.js Constructor.
-   * @private
-   */
+  /* Constructor */
   var Gengo = Proto.extend({
     init: function(options, plugins) {
-      //version
+      debugify('core', 'fn:', 'init');
+
+      /* Gengo properties */
+
+      //Version
       this.version = version;
-      // top level gengo (applied api)
-      this.gengo = undefined;
-      // (String | Object) internal options
-      this.options = optify(options);
-      //current server
+      // Current server
       this.server = '';
       // i18ned string
       this.result = '';
 
+      // Debug
+      debugify('core', 'version:', this.version);
+
+
+      /* Plugin Options */
+
+      // (String | Object) options
+      this.options = _.assign((this.options = {}), optify(options));
+      debugify('core', 'options:', this.options);
+
+      /* Utils */
+
+      this.utils = {
+        // General debugger
+        debug: debugify.debug,
+        // Lodash
+        _: _
+      };
+
       /* Plugins */
 
       this.plugins = {};
-      // low level api
       this.plugins.parsers = [];
       this.plugins.routers = [];
       this.plugins.backends = [];
       this.plugins.apis = [];
-      this.plugins.accepts = [];
+      this.plugins.headers = [];
       this.plugins.localizes = [];
       this.plugins.handlers = [];
-      // set plugins
+      // Set plugins
       this.use(plugins);
-      // backends (MUST initialize this before parsing!)
+
+      debugify('core', 'plugins:', this.plugins);
+      debugify('plugins', 'plugins loaded:');
+      debugify('plugins', 'parsers:', this.plugins.parsers);
+      debugify('plugins', 'routers:', this.plugins.routers);
+      debugify('plugins', 'backends:', this.plugins.backends);
+      debugify('plugins', 'apis:', this.plugins.apis);
+      debugify('plugins', 'headers:', this.plugins.headers);
+      debugify('plugins', 'localizes:', this.plugins.localizes);
+      debugify('plugins', 'handlers:', this.plugins.handlers);
+
+      // Backends
       _.forEach(this.plugins.backends, function(plugin) {
         if (plugin) {
           this.plugins._backend = plugin.package;
-          plugin.apply(this);
+          if (this.options[plugin.type])
+            this.plugins._backend.options = this.options[plugin.type];
+          debugify('backend', 'name:', this.plugins._backend.name);
+          plugin.bind(this)();
         }
       }, this);
 
       return this;
     },
-    /**
-     * @method parse
-     * @description Calls all parsers for i18n.
-     * @param  {(String | Object)} phrase The phrase or object to parse.
-     * @param  {Object} other  The arguments and values extracted.
-     * @param  {Number} length The number of 'arguments'.
-     * @return {String}        The i18ned string.
-     * @private
-     */
+    /* Parse calls the plugin when called by the API --> __('Hello')*/
     parse: function(phrase) {
-      this.length = arguments.length;
-      this.phrase = phrase;
-      this.other = extract(arguments, this.length);
-      this.arguments = arguments;
+      debugify('core', 'fn:', 'parse');
+      // Parser properties
+      this.parser = {
+        length: arguments.length,
+        phrase: phrase,
+        other: extractify(arguments, this.length),
+        arguments: arguments
+      };
+      // parser
       _.forEach(this.plugins.parsers, function(plugin) {
         if (plugin) {
           this.plugins._parser = plugin.package;
-          plugin.apply(this);
+          if (this.options[plugin.type])
+            this.plugins._parser.options = this.options[plugin.type];
+          debugify('parser', 'name:', this.plugins._parser.name);
+          debugify('parser', 'phrase:', this.phrase);
+          debugify('parser', 'args:', this.other.args);
+          debugify('parser', 'values:', this.other.values);
+          plugin.bind(this)();
         }
       }, this);
       return this.result;
     },
-    /** Ship is the middleware for Express, Koa, and Hapi */
+    /** Ship is the middleware for Express, Koa, and Hapi (can support more)*/
     ship: function() {
-      // get the request, response
+      debugify('core', 'fn:', 'ship');
+
+      // Get the request, response
       var req = arguments[0],
         res = arguments[1] || null,
         next = arguments[2] || null;
 
       /*Set plugins */
-      // accepts
-      _.forEach(this.plugins.accepts, function(plugin) {
+      // Headers
+      _.forEach(this.plugins.headers, function(plugin) {
         if (plugin) {
-          this.plugins._accept = plugin.package;
+          this.plugins._header = plugin.package;
+          if (this.options[plugin.type])
+            this.plugins._header.options = this.options[plugin.type];
+          debugify('header', 'name:', this.plugins._header.name);
+
           plugin.bind(this)(req, res);
         }
       }, this);
-      // routers
+      // Routers
       _.forEach(this.plugins.routers, function(plugin) {
         if (plugin) {
           this.plugins._router = plugin.package;
+          if (this.options[plugin.type])
+            this.plugins._router.options = this.options[plugin.type];
+          debugify('router', 'name:', this.plugins._router.name);
           plugin.bind(this)(req, res);
         }
       }, this);
-      // localize(s)
+      // Localize(s)
       _.forEach(this.plugins.localizes, function(plugin) {
         if (plugin) {
           this.plugins._localize = plugin.package;
-          plugin.apply(this);
+          if (this.options[plugin.type])
+            this.plugins._localize.options = this.options[plugin.type];
+          debugify('localize', 'name:', this.plugins._localize.name);
+          plugin.bind(this)();
         }
       }, this);
       /* Apply API */
 
-      // koa?
+      // Koa?
       if (this.isKoa(req)) {
         this.server = 'koa';
-        //apply api to koa
+        // Apply api to koa
         this.assign(req.request, req.response);
         if (req.req || req.res) this.assign(req.req, req.res);
         if (req.state) this.assign(req.state);
       }
-      // hapi?
+      // Hapi?
       if (this.isHapi(req)) {
         this.server = 'hapi';
         if (req.response)
@@ -123,70 +167,63 @@
             this.assign(req.response.source.context);
         this.assign(req);
       }
-      // express ?
+      // Express ?
       if (this.isExpress(req)) {
         this.server = 'express';
         this.assign(req, res);
-        // apply to API to the view
+        // Apply to API to the view
         if (res && res.locals) this.assign(res.locals);
       }
+
+      debugify('core', 'current server:', this.server);
+      // Make sure next exists and call it.
       if (_.isFunction(next)) next();
     },
-    /**
-     * @method use
-     * @description Enables Gengo to accept a plugins.
-     * @param  {Function} fn The plugins parser for Gengo to use.
-     * @private
-     */
+    /** Use is the function enables Gengo to accept plugins.*/
     use: function(plugins) {
-      // set defaults and plugins
-      _.forEach(plugify(plugins), function(plugin) {
-        if (plugin) {
-          var _package = plugin.package,
-            type = _package.type,
-            name = _package.name;
-
-          // example: this.plugins.parser.default
-          this.plugins[type] = {};
-          this.plugins[type][name] = plugin;
-          this.plugins[type][name].package = +_package;
-          // insert plugins as callbacks
-          this.plugins[type + 's'].push(plugin);
-        }
-
-      }, this);
+      debugify('core', 'fn:', 'use');
+      if (plugins) {
+        // Add plugins to array when plugify
+        // begins its callbacks
+        plugify(plugins, function(main, pkg) {
+          // Initialize an object
+          this.plugins[pkg.type] = {};
+          // Set the plugin fn
+          this.plugins[pkg.type][pkg.name] = main;
+          // Set the package
+          this.plugins[pkg.type][pkg.name].package = pkg;
+          // Insert plugins as callbacks
+          this.plugins[pkg.type + 's'].push(main);
+        }, this);
+      }
       return this;
     },
-    /** 
-     * @method assign
-     * @description Assigns the API to an object.
-     * @private
-     */
+    /* Assign applies the API to the objects.*/
     assign: function() {
-      // apply
-      _.forEach(this.plugins.handlers, function(plugin) {
-        if (plugin) {
-          this.plugins._handler = plugin.package;
-          plugin.apply(this);
-        }
-      }, this);
-      return this;
-    },
-    /** 
-     * @method gengo
-     * @description Sets up the API.
-     * @return {Object} The api for Gengo.
-     * @private
-     */
-    bootstrap: function() {
-      // api
+      debugify('core', 'fn:', 'assign');
+
+      // Define the API
       _.forEach(this.plugins.apis, function(plugin) {
         if (plugin) {
           this.plugins._api = plugin.package;
+          if (this.options[plugin.type])
+            this.plugins._api.options = this.options[plugin.type];
+          debugify('api', 'name:', this.plugins._api.name);
           plugin.bind(this)();
         }
       }, this);
-      return this.api;
+
+      // Apply
+      _.forEach(this.plugins.handlers, function(plugin) {
+        if (plugin) {
+          this.plugins._handler = plugin.package;
+          if (this.options[plugin.type])
+            this.plugins._handler.options = this.options[plugin.type];
+          debugify('handler', 'name:', this.plugins._handler.name);
+          plugin.bind(this)();
+        }
+      }, this);
+      return this;
     },
     isKoa: function(req) {
       return req && !req.raw ? (req.response && req.request) :

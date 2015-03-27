@@ -12,6 +12,7 @@
     plugify = require('./modules/plugify/'),
     optify = require('./modules/optify/'),
     debugify = require('./modules/debugify/'),
+    prepify = require('./modules/prepify/'),
     _ = require('lodash'),
     Proto = require('uberproto');
   /* Constructor */
@@ -73,10 +74,11 @@
       // Backends
       _.forEach(this.plugins.backends, function(plugin) {
         if (plugin) {
-          this.plugins._backend = plugin.package;
-          if (this.options[plugin.type])
-            this.plugins._backend.options = this.options[plugin.type];
-          debugify('backend', 'name:', this.plugins._backend.name);
+          var info = prepify(plugin, this.options);
+          this.plugins._backend = info.package();
+          this.plugins._backend.options = info.options();
+          debugify('backend', 'name:', info.name(),
+            'options:', info.options());
           plugin.bind(this)();
         }
       }, this);
@@ -96,10 +98,11 @@
       // parser
       _.forEach(this.plugins.parsers, function(plugin) {
         if (plugin) {
-          this.plugins._parser = plugin.package;
-          if (this.options[plugin.type])
-            this.plugins._parser.options = this.options[plugin.type];
-          debugify('parser', 'name:', this.plugins._parser.name);
+          var info = prepify(plugin, this.options);
+          this.plugins._parser = info.package();
+          this.plugins._parser.options = info.options();
+          debugify('parser', 'name:', info.name(),
+            'options:', info.options());
           debugify('parser', 'phrase:', this.phrase);
           debugify('parser', 'args:', this.other.args);
           debugify('parser', 'values:', this.other.values);
@@ -121,31 +124,33 @@
       // Headers
       _.forEach(this.plugins.headers, function(plugin) {
         if (plugin) {
-          this.plugins._header = plugin.package;
-          if (this.options[plugin.type])
-            this.plugins._header.options = this.options[plugin.type];
-          debugify('header', 'name:', this.plugins._header.name);
-
+          var info = prepify(plugin, this.options);
+          this.plugins._header = info.package();
+          this.plugins._header.options = info.options();
+          debugify('header', 'name:', info.name(),
+            'options:', info.options());
           plugin.bind(this)(req, res);
         }
       }, this);
       // Routers
       _.forEach(this.plugins.routers, function(plugin) {
         if (plugin) {
-          this.plugins._router = plugin.package;
-          if (this.options[plugin.type])
-            this.plugins._router.options = this.options[plugin.type];
-          debugify('router', 'name:', this.plugins._router.name);
+          var info = prepify(plugin, this.options);
+          this.plugins._router = info.package();
+          this.plugins._router.options = info.options();
+          debugify('router', 'name:', info.name(),
+            'options:', info.options());
           plugin.bind(this)(req, res);
         }
       }, this);
       // Localize(s)
       _.forEach(this.plugins.localizes, function(plugin) {
         if (plugin) {
-          this.plugins._localize = plugin.package;
-          if (this.options[plugin.type])
-            this.plugins._localize.options = this.options[plugin.type];
-          debugify('localize', 'name:', this.plugins._localize.name);
+          var info = prepify(plugin, this.options);
+          this.plugins._localize = info.package();
+          this.plugins._localize.options = info.options();
+          debugify('localize', 'name:', info.name(),
+            'options:', info.options());
           plugin.bind(this)();
         }
       }, this);
@@ -205,10 +210,11 @@
       // Define the API
       _.forEach(this.plugins.apis, function(plugin) {
         if (plugin) {
-          this.plugins._api = plugin.package;
-          if (this.options[plugin.type])
-            this.plugins._api.options = this.options[plugin.type];
-          debugify('api', 'name:', this.plugins._api.name);
+          var info = prepify(plugin, this.options);
+          this.plugins._api = info.package();
+          this.plugins._api.options = info.options();
+          debugify('api', 'name:', info.name(),
+            'options:', info.options());
           plugin.bind(this)();
         }
       }, this);
@@ -216,10 +222,11 @@
       // Apply
       _.forEach(this.plugins.handlers, function(plugin) {
         if (plugin) {
-          this.plugins._handler = plugin.package;
-          if (this.options[plugin.type])
-            this.plugins._handler.options = this.options[plugin.type];
-          debugify('handler', 'name:', this.plugins._handler.name);
+          var info = prepify(plugin, this.options);
+          this.plugins._handler = info.package();
+          this.plugins._handler.options = info.options();
+          debugify('handler', 'name:', info.name(),
+            'options:', info.options());
           plugin.bind(this)();
         }
       }, this);

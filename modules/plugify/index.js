@@ -44,15 +44,19 @@ module.exports = function Plugify(plugins, callback, context) {
   var registrations = [];
   // check type!
   if (_.isPlainObject(plugins)) {
-    _.forOwn(plugins, function(ship) {
-      // assert
-      Hoek.assert(_.isFunction(ship),
-        'Uh oh! The ship must be a function!');
-      Hoek.assert(_.isPlainObject(ship()),
-        'Woops! Did the ship forget to return a plain object?');
-      // add the ship
-      registrations.push(ship());
-    });
+    // Is there one plugin?
+    if (plugins.main) {
+      registrations.push(plugins);
+    } else
+      _.forOwn(plugins, function(ship) {
+        // assert
+        Hoek.assert(_.isFunction(ship),
+          'Uh oh! The ship must be a function!');
+        Hoek.assert(_.isPlainObject(ship()),
+          'Woops! Did the ship forget to return a plain object?');
+        // add the ship
+        registrations.push(ship());
+      });
   } else if (_.isArray(plugins)) registrations = plugins;
   else if (_.isFunction(plugins)) {
     Hoek.assert(_.isPlainObject(plugins()),

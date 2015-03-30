@@ -224,7 +224,11 @@
         if (plugin) {
           var info = prepify(plugin, this.options);
           this.plugins._handler = info.package();
-          this.plugins._handler.options = info.options();
+          this.plugins._handler.options = _.merge(info.options() || {},
+          // In this case, handler uses the same options
+          // as the API plugin. But I will merge in case anyone
+          // needs to use an handler option on its own.
+          this.plugins._api.options);
           debugify('handler', 'name:', info.name(),
             'options:', info.options());
           plugin.bind(this)();

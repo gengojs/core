@@ -13,13 +13,11 @@ module.exports = function Plugify(plugins, callback, context) {
     1. A plugin must return a plain object 
     with the main (export) function and its package.
     
-    2. A package must contain the name, nickname and type of plugin.
+    2. A package must contain the name and type of plugin.
 
     // the export function
     function ship(){
       var pkg = require('./package.json');
-      //used for options
-      pkg.nickname = 'googler';
       pkg.type = 'parser';
       return {
          main:myfunction,

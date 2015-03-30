@@ -184,7 +184,7 @@
       // Make sure next exists and call it.
       if (_.isFunction(next)) next();
     },
-    /** Use is the function enables Gengo to accept plugins.*/
+    /** Use is the function that enables Gengo to accept plugins.*/
     use: function(plugins) {
       debugify('core', 'fn:', 'use');
       if (plugins) {

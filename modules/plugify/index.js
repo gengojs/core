@@ -1,11 +1,18 @@
 'use strict';
 
+var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
+
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-// Load modules
-var _ = require('lodash');
-var Hoek = require('hoek');
+
+var _import = require('lodash');
+
+var _import2 = _interopRequireWildcard(_import);
+
+var _Hoek = require('hoek');
+
+var _Hoek2 = _interopRequireWildcard(_Hoek);
 
 exports['default'] = function (plugins, callback, context) {
   /*jshint strict:false*/
@@ -45,28 +52,27 @@ exports['default'] = function (plugins, callback, context) {
   */
   var registrations = [];
   // check type!
-  if (_.isPlainObject(plugins)) {
-    _.forOwn(plugins, function (ship) {
+  if (_import2['default'].isPlainObject(plugins)) {
+    _import2['default'].forOwn(plugins, function (ship) {
       // assert
-      Hoek.assert(_.isFunction(ship), 'Uh oh! The ship must be a function!');
-      Hoek.assert(_.isPlainObject(ship()), 'Woops! Did the ship forget to return a plain object?');
+      _Hoek2['default'].assert(_import2['default'].isFunction(ship), 'Uh oh! The ship must be a function!');
+      _Hoek2['default'].assert(_import2['default'].isPlainObject(ship()), 'Woops! Did the ship forget to return a plain object?');
       // add the ship
       registrations.push(ship());
     });
-  } else if (_.isArray(plugins)) registrations = plugins;else if (_.isFunction(plugins)) {
-    Hoek.assert(_.isPlainObject(plugins()), 'Woops! Did the ship forget to return a plain object?');
+  } else if (_import2['default'].isArray(plugins)) registrations = plugins;else if (_import2['default'].isFunction(plugins)) {
+    _Hoek2['default'].assert(_import2['default'].isPlainObject(plugins()), 'Woops! Did the ship forget to return a plain object?');
     registrations.push(plugins());
   }
   // callback!
   registrations.forEach(function (plugin) {
     // Assert
-    Hoek.assert(_.has(plugin, 'main'), 'Woops! Did you forget the main function?');
-    Hoek.assert(_.has(plugin, 'package'), 'Woops! Did you forget the package?');
-    Hoek.assert(_.has(plugin['package'], 'type'), 'Woops! Did you forget the "type" of plugin?');
-    Hoek.assert(_.has(plugin['package'], 'name'), 'Woops! Did you forget the "name" of plugin?');
+    _Hoek2['default'].assert(_import2['default'].has(plugin, 'main'), 'Woops! Did you forget the main function?');
+    _Hoek2['default'].assert(_import2['default'].has(plugin, 'package'), 'Woops! Did you forget the package?');
+    _Hoek2['default'].assert(_import2['default'].has(plugin['package'], 'type'), 'Woops! Did you forget the "type" of plugin?');
+    _Hoek2['default'].assert(_import2['default'].has(plugin['package'], 'name'), 'Woops! Did you forget the "name" of plugin?');
     callback.bind(undefined)(plugin.main, plugin['package']);
   }, context);
 };
 
 module.exports = exports['default'];
-//# sourceMappingURL=index.js.map

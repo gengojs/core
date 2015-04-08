@@ -63,4 +63,3 @@ exports['default'] = function (array, length) {
 };
 
 module.exports = exports['default'];
-//# sourceMappingURL=index.js.map

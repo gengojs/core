@@ -18,3 +18,8 @@
 	* `'core-plugify'`
 	* `'core-' + [type of plugin]`
 * Options are now accessed through `this._ + [type of plugin]` 
+
+**0.0.1-beta.4**
+
+* Bug fixes for debugging.
+* Removed source maps

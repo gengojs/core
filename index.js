@@ -282,4 +282,3 @@ exports['default'] = function (options, plugins) {
 };
 
 module.exports = exports['default'];
-//# sourceMappingURL=index.js.map

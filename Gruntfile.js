@@ -3,14 +3,14 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
   grunt.initConfig({
     jshint: {
-      src: ['lib/*.js', 'lib/**/*.js'],
+      src: ['lib/**/*.js'],
       options: {
         jshintrc: '.jshintrc'
       }
     },
     babel: {
       options: {
-        sourceMap: true
+        sourceMap: false
       },
       dist: {
         files: {

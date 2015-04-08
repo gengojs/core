@@ -14,7 +14,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          './index.js': 'lib/index.js',
+          './index.js': 'lib/core/index.js',
           './modules/debugify/index.js': 'lib/modules/debugify/index.js',
           './modules/extractify/index.js': 'lib/modules/extractify/index.js',
           './modules/optify/index.js': 'lib/modules/optify/index.js',

@@ -51,16 +51,22 @@ exports['default'] = function (plugins, callback, context) {
     };
   */
   var registrations = [];
-  // check type!
+  // The plugin will return a {}.
   if (_import2['default'].isPlainObject(plugins)) {
-    _import2['default'].forOwn(plugins, function (ship) {
-      // assert
-      _Hoek2['default'].assert(_import2['default'].isFunction(ship), 'Uh oh! The ship must be a function!');
-      _Hoek2['default'].assert(_import2['default'].isPlainObject(ship()), 'Woops! Did the ship forget to return a plain object?');
-      // add the ship
-      registrations.push(ship());
-    });
-  } else if (_import2['default'].isArray(plugins)) registrations = plugins;else if (_import2['default'].isFunction(plugins)) {
+    // This may be the only ship
+    if (_import2['default'].has(plugins, 'main')) {
+      registrations.push(plugins);
+    } else
+      // This may have multiple ships
+      _import2['default'].forOwn(plugins, function (ship) {
+        // Assert that ship is a function
+        _Hoek2['default'].assert(_import2['default'].isFunction(ship), 'Uh oh! The ship must be a function!');
+        _Hoek2['default'].assert(_import2['default'].isPlainObject(ship()), 'Woops! Did the ship forget to return a plain object?');
+        registrations.push(ship());
+      });
+  }
+  if (_import2['default'].isArray(plugins)) registrations = plugins;
+  if (_import2['default'].isFunction(plugins)) {
     _Hoek2['default'].assert(_import2['default'].isPlainObject(plugins()), 'Woops! Did the ship forget to return a plain object?');
     registrations.push(plugins());
   }
@@ -71,8 +77,8 @@ exports['default'] = function (plugins, callback, context) {
     _Hoek2['default'].assert(_import2['default'].has(plugin, 'package'), 'Woops! Did you forget the package?');
     _Hoek2['default'].assert(_import2['default'].has(plugin['package'], 'type'), 'Woops! Did you forget the "type" of plugin?');
     _Hoek2['default'].assert(_import2['default'].has(plugin['package'], 'name'), 'Woops! Did you forget the "name" of plugin?');
-    callback.bind(undefined)(plugin.main, plugin['package']);
-  }, context);
+    callback.bind(context)(plugin.main, plugin['package']);
+  });
 };
 
 module.exports = exports['default'];

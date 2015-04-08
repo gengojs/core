@@ -23,3 +23,8 @@
 
 * Bug fixes for debugging.
 * Removed source maps
+
+**0.0.1-beta.5**
+
+* Bug fixes for inidivdual plugins not able to be loaded
+* Updated readme

@@ -8,45 +8,41 @@
    'use strict';
    describe('module', function() {
      it('should export the module', function() {
-       assert.isObject(Gengo);
+       assert.isFunction(Gengo);
        assert.isDefined(Gengo);
      });
-     it('should export init', function() {
-       assert.isFunction(Gengo.create().init);
-       assert.isDefined(Gengo.create().init);
-     });
      it('should export ship', function() {
-       assert.isFunction(Gengo.create().ship);
-       assert.isDefined(Gengo.create().ship);
+       assert.isFunction(new Gengo().ship);
+       assert.isDefined(new Gengo().ship);
      });
      it('should export parse', function() {
-       assert.isFunction(Gengo.create().parse);
-       assert.isDefined(Gengo.create().parse);
+       assert.isFunction(new Gengo().parse);
+       assert.isDefined(new Gengo().parse);
      });
      it('should export ship', function() {
-       assert.isFunction(Gengo.create().ship);
-       assert.isDefined(Gengo.create().ship);
+       assert.isFunction(new Gengo().ship);
+       assert.isDefined(new Gengo().ship);
      });
      it('should export use', function() {
-       assert.isFunction(Gengo.create().use);
-       assert.isDefined(Gengo.create().use);
+       assert.isFunction(new Gengo().use);
+       assert.isDefined(new Gengo().use);
      });
      it('should export isKoa', function() {
-       assert.isFunction(Gengo.create().isKoa);
-       assert.isDefined(Gengo.create().isKoa);
+       assert.isFunction(new Gengo().isKoa);
+       assert.isDefined(new Gengo().isKoa);
      });
      it('should export isHapi', function() {
-       assert.isFunction(Gengo.create().isHapi);
-       assert.isDefined(Gengo.create().isHapi);
+       assert.isFunction(new Gengo().isHapi);
+       assert.isDefined(new Gengo().isHapi);
      });
      it('should export isExpress', function() {
-       assert.isFunction(Gengo.create().isExpress);
-       assert.isDefined(Gengo.create().isExpress);
+       assert.isFunction(new Gengo().isExpress);
+       assert.isDefined(new Gengo().isExpress);
      });
    });
    describe('plugins', function() {
      it('should load plugins', function() {
-       var gengo = Gengo.create({}, gengopack());
+       var gengo = new Gengo({}, gengopack());
        //parsers
        assert.isDefined(gengo.plugins.parsers);
        assert.isTrue(!_.isEmpty(gengo.plugins.parsers));
@@ -91,9 +87,9 @@
        }, gengo);
      });
    });
-   describe('settings', function() {
+   describe('options', function() {
      describe('plain object', function() {
-       var options = Gengo.create({
+       var options = new Gengo({
          hello: 'world'
        }).options;
        assert.isDefined(options);
@@ -102,8 +98,8 @@
      });
      describe('json', function() {
        it('should read', function() {
-         var options = Gengo.create(path.normalize(
-           process.cwd() + '/tests/fixtures/settings/settings.json')).options;
+         var options = new Gengo(path.normalize(
+           process.cwd() + '/tests/fixtures/options/options.json')).options;
          assert.isDefined(options);
          assert.isObject(options);
          assert.isTrue(_.has(options, 'hello'));
@@ -111,8 +107,8 @@
      });
      describe('yaml', function() {
        it('should read', function() {
-         var options = Gengo.create(path.normalize(
-           process.cwd() + '/tests/fixtures/settings/settings.yml')).options;
+         var options = new Gengo(path.normalize(
+           process.cwd() + '/tests/fixtures/options/options.yml')).options;
          assert.isDefined(options);
          assert.isObject(options);
          assert.isTrue(_.has(options, 'hello'));

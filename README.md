@@ -191,7 +191,7 @@ export default () => {
 // seem to be constant
  var pkg = require('./package');
   return {
-    main: () => {
+    main: function (){
       // Access options
       this.header = new MyClass(this._header.options);
     },

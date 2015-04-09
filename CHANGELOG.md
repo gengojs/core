@@ -28,3 +28,9 @@
 
 * Bug fixes for inidivdual plugins not able to be loaded
 * Updated readme
+
+**0.0.1-beta.6**
+
+* Options have been reapplied by type after the plugin
+sets its options. Therefore, a plugin may call another's options by
+`this.options.[type]`

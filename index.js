@@ -76,6 +76,7 @@ var Gengo = (function () {
       };
       _debugify2['default']('core-' + type, 'name:', name, 'version:', version);
       plugin.bind(_this)();
+      _import2['default'].assign(_this.options[type], _this['_' + type].options);
     }, this);
   }
 
@@ -108,6 +109,7 @@ var Gengo = (function () {
         _debugify2['default']('core-' + type, 'name:', name, 'version:', version);
         _debugify2['default']('core-' + type, 'input', _this2['_' + type].input);
         plugin.bind(_this2)();
+        _import2['default'].assign(_this2.options[type], _this2['_' + type].options);
       }, this);
       return this.result;
     }
@@ -161,6 +163,7 @@ var Gengo = (function () {
         };
         _debugify2['default']('core-' + type, 'name:', name, 'version:', version);
         plugin.bind(_this4)(req, res);
+        _import2['default'].assign(_this4.options[type], _this4['_' + type].options);
       }, this);
       // Routers
       this.plugins.routers.forEach(function (plugin) {
@@ -175,6 +178,7 @@ var Gengo = (function () {
         };
         _debugify2['default']('core-' + type, 'name:', name, 'version:', version);
         plugin.bind(_this4)(req, res);
+        _import2['default'].assign(_this4.options[type], _this4['_' + type].options);
       }, this);
       // Localize(s)
       this.plugins.localizes.forEach(function (plugin) {
@@ -189,9 +193,9 @@ var Gengo = (function () {
         };
         _debugify2['default']('core-' + type, 'name:', name, 'version:', version);
         plugin.bind(_this4)();
+        _import2['default'].assign(_this4.options[type], _this4['_' + type].options);
       }, this);
       /* Apply API */
-
       // Koa?
       if (this.isKoa(req) && !_import2['default'].isEmpty(req)) {
         this.server = 'koa';
@@ -213,7 +217,6 @@ var Gengo = (function () {
         // Apply to API to the view
         if (res && res.locals) this.assign(res.locals);
       }
-
       _debugify2['default']('core', 'server:', this.server);
       // Make sure next exists and call it.
       if (_import2['default'].isFunction(next)) next();
@@ -237,6 +240,7 @@ var Gengo = (function () {
         };
         _debugify2['default']('core-' + type, 'name:', name, 'version:', version);
         plugin.bind(_this5)();
+        _import2['default'].assign(_this5.options[type], _this5['_' + type].options);
       }, this);
       // Apply the API
       this.plugins.handlers.forEach(function (plugin) {
@@ -247,11 +251,11 @@ var Gengo = (function () {
 
         _this5['_' + type] = {
           'package': plugin['package'],
-          options: _this5.options[type] || {},
-          api: _this5._api.options || {}
+          options: _this5.options[type] || {}
         };
         _debugify2['default']('core-' + type, 'name:', name, 'version:', version);
         plugin.bind(_this5)(req, res);
+        _import2['default'].assign(_this5.options[type], _this5['_' + type].options);
       }, this);
     }
   }, {
@@ -277,7 +281,7 @@ var Gengo = (function () {
 })();
 
 exports['default'] = function (options, plugins) {
-  /*jshint strict:false*/
+  'use strict';
   return new Gengo(options, plugins);
 };
 

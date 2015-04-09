@@ -48,7 +48,7 @@ then the gengojs is where you would do that.
 ##Getting Started
 
 **How gengo works** is similar to how Hapi works in terms of creating plugins and how Grunt works
-in terms of options (but I hope you guys can improve option distribution to specific plugins).
+in terms of options.
 
 To create plugins, the one thing to keep in mind is core's `this` context. When a plugin is initialized,
 the core calls the plugin as it binds its context to that plugin. There are different ways to handle the
@@ -136,7 +136,9 @@ module.exports = function() {
   pkg.type = 'parser';
   return {
   	main:MyClass,
-  	package:pkg
+  	package:pkg,
+    // ! add defaults
+    defaults: require('./defaults.json')
   };
 };
 ```
@@ -164,7 +166,8 @@ module.exports = function() {
   pkg.type = 'header';
   return {
   	main:ship,
-  	package:pkg
+  	package:pkg,
+    defaults: require('./defaults.json')
   };
 };
 ```
@@ -199,7 +202,8 @@ export default () => {
       // Access options
       this.header = new MyClass(this._header.options);
     },
-    package:pkg
+    package:pkg,
+    defaults:require('./defaults.json')
   }
 }
 ```
@@ -249,19 +253,20 @@ The core doesn't have the best options system but the official way to access opt
 by the context as in the example:
 
 ```js
-// Accessing options in the ship 
-// (or some function bound to the context)
- function ship(){
- // _ + type of plugin
-  this._header.options
- }
+function ship(){
+  // To access the options,
+  // simply use: this.options[type]:
+  console.log(this.options.parser);
+}
 ```
+Make sure to provide the defaults when you create your plugins. The core will apply them to the options
+as soon as it loads it into the stack.
 
-A few plugins will have a combination of other plugin's options. For example, a header plugin will need to know about 
+~~A few plugins will have a combination of other plugin's options. For example, a header plugin will need to know about 
 the API used such as `__` and `__l` and both options will be combined. Note that there is nothing to be done on your end 
-and everything is taken care by the core.
+and everything is taken care by the core.~~
 
-It is also best to expose the new options by doing the following:
+~~It is also best to expose the new options by doing the following:~~
 
 ```js
 function ship(){
@@ -271,7 +276,8 @@ function ship(){
 
 ```
 
-It may seem redundant but it brings constistency to the lower level (the core) and across plugins.
+Because the core applies the options immediately when loading the plugin, you no longer need to
+do anything on your end. Again, make sure to provide the defaults when creating your plugins.
 
 ##Status
 

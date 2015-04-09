@@ -10,6 +10,10 @@ var _debug = require('debug');
 
 var _debug2 = _interopRequireWildcard(_debug);
 
+var _import = require('lodash');
+
+var _import2 = _interopRequireWildcard(_import);
+
 var debugify = {
   core: _debug2['default']('core'),
   'core-plugins': _debug2['default']('core-plugins'),
@@ -28,7 +32,26 @@ exports['default'] = function (type) {
   }
 
   /*jshint strict:false*/
-  debugify[type].apply(null, args);
+  debugify[type].apply(null, (function () {
+    var _args = [];
+    _import2['default'].forEach(args, function (item) {
+      if (_import2['default'].isPlainObject(item)) {
+        _import2['default'].forOwn(item, function (value, key) {
+          switch (key) {
+            case 'name':
+              _args.push(key + ':');
+              _args.push(value);
+              break;
+            case 'version':
+              _args.push(key + ':');
+              _args.push(value);
+              break;
+          }
+        });
+      } else _args = args;
+    });
+    return _args;
+  })());
 };
 
 module.exports = exports['default'];

@@ -46,7 +46,8 @@ var gengopack = {
     pkg.type = 'parser';
     return {
       main: fixture,
-      package: pkg
+      package: pkg,
+      defaults: {}
     };
   },
   router: function() {
@@ -56,7 +57,8 @@ var gengopack = {
     pkg.type = 'router';
     return {
       main: fixture1,
-      package: pkg
+      package: pkg,
+      defaults: {}
     };
   },
   backend: function() {
@@ -66,7 +68,8 @@ var gengopack = {
     pkg.type = 'backend';
     return {
       main: fixture2,
-      package: pkg
+      package: pkg,
+      defaults: {}
     };
   },
   api: function() {
@@ -76,7 +79,8 @@ var gengopack = {
     pkg.type = 'api';
     return {
       main: fixture3,
-      package: pkg
+      package: pkg,
+      defaults: {}
     };
   },
   header: function() {
@@ -86,7 +90,8 @@ var gengopack = {
     pkg.type = 'header';
     return {
       main: fixture4,
-      package: pkg
+      package: pkg,
+      defaults: {}
     };
   },
   localize: function() {
@@ -96,7 +101,8 @@ var gengopack = {
     pkg.type = 'localize';
     return {
       main: fixture5,
-      package: pkg
+      package: pkg,
+      defaults: {}
     };
   },
   handler: function() {
@@ -106,7 +112,8 @@ var gengopack = {
     pkg.type = 'handler';
     return {
       main: fixture6,
-      package: pkg
+      package: pkg,
+      defaults: {}
     };
   }
 };

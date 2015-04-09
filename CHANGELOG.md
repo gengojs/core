@@ -34,3 +34,10 @@
 * Options have been reapplied by type after the plugin
 sets its options. Therefore, a plugin may call another's options by
 `this.options.[type]`
+
+**0.0.1-beta.7**
+
+* Reduced the amount of lines of code in lib/core
+* Options are now easier to access as they also include defaults
+	* Note that this removes the changes of 0.0.1-beta-6.
+* Updated readme

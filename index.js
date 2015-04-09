@@ -46,18 +46,11 @@ var Gengo = (function () {
     //Current version
     this.version = _pkg2['default'].version;
     // Options
-    this.options = _import2['default'].assign(this.options = {}, _optify2['default'](options));
+    this.options = _optify2['default'](options).options;
     // Current server
     this.server = '';
     /* Plugins */
-    this.plugins = {
-      parsers: [],
-      routers: [],
-      backends: [],
-      apis: [],
-      headers: [],
-      localizes: [],
-      handlers: [] };
+    this.plugins = _plugify2['default']().initialize(this.plugins = {});
     // Initialize plugins
     this.use(plugins);
     // Debug core
@@ -65,18 +58,8 @@ var Gengo = (function () {
     _debugify2['default']('core-plugins', 'plugins:', this.plugins);
     // Call backend plugin
     this.plugins.backends.forEach(function (plugin) {
-      var _plugin$package = plugin['package'];
-      var name = _plugin$package.name;
-      var version = _plugin$package.version;
-      var type = _plugin$package.type;
-
-      _this['_' + type] = {
-        'package': plugin['package'],
-        options: _this.options[type] || {}
-      };
-      _debugify2['default']('core-' + type, 'name:', name, 'version:', version);
+      _debugify2['default']('core-' + plugin['package'].type, plugin['package']);
       plugin.bind(_this)();
-      _import2['default'].assign(_this.options[type], _this['_' + type].options);
     }, this);
   }
 
@@ -91,25 +74,15 @@ var Gengo = (function () {
       var args = arguments;
       // Parser
       this.plugins.parsers.forEach(function (plugin) {
-        var _plugin$package2 = plugin['package'];
-        var name = _plugin$package2.name;
-        var version = _plugin$package2.version;
-        var type = _plugin$package2.type;
-
-        _this2['_' + type] = {
-          'package': plugin['package'],
-          options: _this2.options[type] || {},
-          input: {
-            arguments: args,
-            length: args.length,
-            phrase: phrase,
-            other: _extractify2['default'](args, args.length)
-          }
+        var input = {
+          arguments: args,
+          length: args.length,
+          phrase: phrase,
+          other: _extractify2['default'](args, args.length)
         };
-        _debugify2['default']('core-' + type, 'name:', name, 'version:', version);
-        _debugify2['default']('core-' + type, 'input', _this2['_' + type].input);
-        plugin.bind(_this2)();
-        _import2['default'].assign(_this2.options[type], _this2['_' + type].options);
+        _debugify2['default']('core-' + plugin['package'].type, plugin['package']);
+        _debugify2['default']('core-' + plugin['package'].type, 'input', input);
+        plugin.bind(_this2)(input);
       }, this);
       return this.result;
     }
@@ -123,7 +96,7 @@ var Gengo = (function () {
       _debugify2['default']('core', 'fn:', 'use');
       // Add plugins to array when plugify
       // begins its callbacks
-      if (plugins) _plugify2['default'](plugins, function (main, pkg) {
+      if (plugins) _plugify2['default'](plugins, function (main, pkg, defaults) {
         var name = pkg.name;
         var type = pkg.type;
 
@@ -135,6 +108,8 @@ var Gengo = (function () {
         _this3.plugins[type][name]['package'] = pkg;
         // Insert plugins as callbacks
         _this3.plugins[type + 's'].push(main);
+        // Set the default options by merging with user's
+        _this3.options[type] = _optify2['default'](_this3.options[type] || {}).merge(defaults);
       }, this);
     }
   }, {
@@ -152,48 +127,18 @@ var Gengo = (function () {
       /*Set plugins */
       // Headers
       this.plugins.headers.forEach(function (plugin) {
-        var _plugin$package3 = plugin['package'];
-        var name = _plugin$package3.name;
-        var version = _plugin$package3.version;
-        var type = _plugin$package3.type;
-
-        _this4['_' + type] = {
-          'package': plugin['package'],
-          options: _this4.options[type] || {}
-        };
-        _debugify2['default']('core-' + type, 'name:', name, 'version:', version);
+        _debugify2['default']('core-' + plugin['package'].type, plugin['package']);
         plugin.bind(_this4)(req, res);
-        _import2['default'].assign(_this4.options[type], _this4['_' + type].options);
       }, this);
       // Routers
       this.plugins.routers.forEach(function (plugin) {
-        var _plugin$package4 = plugin['package'];
-        var name = _plugin$package4.name;
-        var version = _plugin$package4.version;
-        var type = _plugin$package4.type;
-
-        _this4['_' + type] = {
-          'package': plugin['package'],
-          options: _this4.options[type] || {}
-        };
-        _debugify2['default']('core-' + type, 'name:', name, 'version:', version);
+        _debugify2['default']('core-' + plugin['package'].type, plugin['package']);
         plugin.bind(_this4)(req, res);
-        _import2['default'].assign(_this4.options[type], _this4['_' + type].options);
       }, this);
       // Localize(s)
       this.plugins.localizes.forEach(function (plugin) {
-        var _plugin$package5 = plugin['package'];
-        var name = _plugin$package5.name;
-        var version = _plugin$package5.version;
-        var type = _plugin$package5.type;
-
-        _this4['_' + type] = {
-          'package': plugin['package'],
-          options: _this4.options[type] || {}
-        };
-        _debugify2['default']('core-' + type, 'name:', name, 'version:', version);
+        _debugify2['default']('core-' + plugin['package'].type, plugin['package']);
         plugin.bind(_this4)();
-        _import2['default'].assign(_this4.options[type], _this4['_' + type].options);
       }, this);
       /* Apply API */
       // Koa?
@@ -223,39 +168,21 @@ var Gengo = (function () {
     }
   }, {
     key: 'assign',
+
+    /* Applies the API to objects */
     value: function assign(req, res) {
       var _this5 = this;
 
       _debugify2['default']('core', 'fn:', 'assign');
       // Define the API
       this.plugins.apis.forEach(function (plugin) {
-        var _plugin$package6 = plugin['package'];
-        var name = _plugin$package6.name;
-        var version = _plugin$package6.version;
-        var type = _plugin$package6.type;
-
-        _this5['_' + type] = {
-          'package': plugin['package'],
-          options: _this5.options[type] || {}
-        };
-        _debugify2['default']('core-' + type, 'name:', name, 'version:', version);
+        _debugify2['default']('core-' + plugin['package'].type, plugin['package']);
         plugin.bind(_this5)();
-        _import2['default'].assign(_this5.options[type], _this5['_' + type].options);
       }, this);
       // Apply the API
       this.plugins.handlers.forEach(function (plugin) {
-        var _plugin$package7 = plugin['package'];
-        var name = _plugin$package7.name;
-        var version = _plugin$package7.version;
-        var type = _plugin$package7.type;
-
-        _this5['_' + type] = {
-          'package': plugin['package'],
-          options: _this5.options[type] || {}
-        };
-        _debugify2['default']('core-' + type, 'name:', name, 'version:', version);
+        _debugify2['default']('core-' + plugin['package'].type, plugin['package']);
         plugin.bind(_this5)(req, res);
-        _import2['default'].assign(_this5.options[type], _this5['_' + type].options);
       }, this);
     }
   }, {

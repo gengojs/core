@@ -41,3 +41,7 @@ sets its options. Therefore, a plugin may call another's options by
 * Options are now easier to access as they also include defaults
 	* Note that this removes the changes of 0.0.1-beta-6.
 * Updated readme
+
+**0.0.1-beta.8**
+
+* Bug fix where parser wasn't getting any arguments

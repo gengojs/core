@@ -70,8 +70,11 @@ var Gengo = (function () {
     value: function parse(phrase) {
       var _this2 = this;
 
+      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+
       _debugify2['default']('core', 'fn:', 'parse');
-      var args = arguments;
       // Parser
       this.plugins.parsers.forEach(function (plugin) {
         var input = {

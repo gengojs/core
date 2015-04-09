@@ -33,13 +33,8 @@ var _Hoek2 = _interopRequireWildcard(_Hoek);
 /*
     Definition: Options must be either a string or a plain object.
 
-    1. Options must be defined similar to how grunt defines their options:
-       {
-        //plugin name must be exact to the package name
-          superPluginName:{
-              //...
-          }
-       }
+    1. Options must be specified by type such as 'parser', 'api', etc.
+       
 
     Side note: Every plugin created must offer default options and must 
     be responsible with letting the developers know about the options

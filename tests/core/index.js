@@ -19,9 +19,9 @@
        assert.isFunction(new Gengo().parse);
        assert.isDefined(new Gengo().parse);
      });
-     it('should export ship', function() {
-       assert.isFunction(new Gengo().ship);
-       assert.isDefined(new Gengo().ship);
+     it('should export assign', function() {
+       assert.isFunction(new Gengo().assign);
+       assert.isDefined(new Gengo().assign);
      });
      it('should export use', function() {
        assert.isFunction(new Gengo().use);
@@ -95,6 +95,15 @@
        assert.isDefined(options);
        assert.isObject(options);
        assert.isTrue(_.has(options, 'hello'));
+     });
+     describe('js', function() {
+       it('should read', function() {
+         var options = new Gengo(path.normalize(
+           process.cwd() + '/tests/fixtures/options/options.js')).options;
+         assert.isDefined(options);
+         assert.isObject(options);
+         assert.isTrue(_.has(options, 'hello'));
+       });
      });
      describe('json', function() {
        it('should read', function() {

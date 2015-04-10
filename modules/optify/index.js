@@ -51,15 +51,15 @@ var Optify = (function () {
       // Normalize the string and if it ends in yml replace it
       options = _path2['default'].normalize(options.replace('yml', 'yaml'));
       // Load the json file
-      if (/.json/.test(options)) {
+      if (/\.json/.test(options) || /\.js/.test(options)) {
         settings = require(options);
         this.options = settings;
-      } else if (/.yaml/.test(options)) {
+      } else if (/\.yaml/.test(options)) {
         // Load yaml
         settings = _yaml2['default'].safeLoad(_fs2['default'].readFileSync(options, 'utf8'));
         this.options = settings;
       } else {
-        _Hoek2['default'].assert(false, 'Woops! The configuration file must be either JSON or YAML.');
+        _Hoek2['default'].assert(false, 'Woops! The configuration file must be either JS, JSON or YAML.');
         this.options = {};
       }
     } else this.options = settings || {};

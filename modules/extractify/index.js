@@ -22,14 +22,14 @@ var Extract = (function () {
         args = [],
         value;
     // If the arguments is greater than 2 (because of offset)
-    if (length > 2) {
+    if (length > 1) {
       // Just append them to the array
       array.forEach(function (item) {
         return args.push(item);
       });
     }
     // If they are exactly 2 argument
-    else if (length === 2) {
+    else if (length === 1) {
       // Get the first value
       value = array[0];
       // Set arguments [...]

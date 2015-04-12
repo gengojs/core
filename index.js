@@ -94,33 +94,16 @@ var Gengo = (function () {
 
     /* Sets the plugins */
     value: function use(plugins) {
-      var _this3 = this;
-
       _debugify2['default']('core', 'fn:', 'use');
-      // Add plugins to array when plugify
-      // begins its callbacks
-      if (plugins) _plugify2['default'](plugins, function (main, pkg, defaults) {
-        var name = pkg.name;
-        var type = pkg.type;
-
-        // Initialize an object
-        _this3.plugins[type] = {};
-        // Set the plugin fn
-        _this3.plugins[type][name] = main;
-        // Set the package
-        _this3.plugins[type][name]['package'] = pkg;
-        // Insert plugins as callbacks
-        _this3.plugins[type + 's'].push(main);
-        // Set the default options by merging with user's
-        _this3.options[type] = _optify2['default'](_this3.options[type] || {}).merge(defaults);
-      }, this);
+      // Add plugins to array
+      _plugify2['default'](plugins, this);
     }
   }, {
     key: 'ship',
 
     /* Middleware for Node frameworks*/
     value: function ship() {
-      var _this4 = this;
+      var _this3 = this;
 
       _debugify2['default']('core', 'fn:', 'ship');
       // Get the request, response
@@ -131,17 +114,17 @@ var Gengo = (function () {
       // Headers
       this.plugins.headers.forEach(function (plugin) {
         _debugify2['default']('core-' + plugin['package'].type, plugin['package']);
-        plugin.bind(_this4)(req, res);
+        plugin.bind(_this3)(req, res);
       }, this);
       // Routers
       this.plugins.routers.forEach(function (plugin) {
         _debugify2['default']('core-' + plugin['package'].type, plugin['package']);
-        plugin.bind(_this4)(req, res);
+        plugin.bind(_this3)(req, res);
       }, this);
       // Localize(s)
       this.plugins.localizes.forEach(function (plugin) {
         _debugify2['default']('core-' + plugin['package'].type, plugin['package']);
-        plugin.bind(_this4)();
+        plugin.bind(_this3)();
       }, this);
       /* Apply API */
       // Koa?
@@ -174,18 +157,18 @@ var Gengo = (function () {
 
     /* Applies the API to objects */
     value: function assign(req, res) {
-      var _this5 = this;
+      var _this4 = this;
 
       _debugify2['default']('core', 'fn:', 'assign');
       // Define the API
       this.plugins.apis.forEach(function (plugin) {
         _debugify2['default']('core-' + plugin['package'].type, plugin['package']);
-        plugin.bind(_this5)();
+        plugin.bind(_this4)();
       }, this);
       // Apply the API
       this.plugins.handlers.forEach(function (plugin) {
         _debugify2['default']('core-' + plugin['package'].type, plugin['package']);
-        plugin.bind(_this5)(req, res);
+        plugin.bind(_this4)(req, res);
       }, this);
     }
   }, {

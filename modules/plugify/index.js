@@ -18,7 +18,11 @@ var _Hoek = require('hoek');
 
 var _Hoek2 = _interopRequireWildcard(_Hoek);
 
-var defaults = {
+var _optify = require('../optify');
+
+var _optify2 = _interopRequireWildcard(_optify);
+
+var _plugins = {
   parsers: require('gengojs-default-parser'),
   routers: require('gengojs-default-router'),
   backends: require('gengojs-default-memory'),
@@ -28,10 +32,18 @@ var defaults = {
   handlers: require('gengojs-default-handler')
 };
 
-var Plugify = (function () {
-  function Plugify(plugins, callback, _this) {
-    var _this2 = this;
+function assert(plugin) {
+  'use strict';
+  _Hoek2['default'].assert(_import2['default'].has(plugin, 'main'), 'Woops! Did you forget the main function?');
+  _Hoek2['default'].assert(_import2['default'].has(plugin, 'package'), 'Woops! Did you forget the package?');
+  _Hoek2['default'].assert(_import2['default'].has(plugin['package'], 'type'), 'Woops! Did you forget the "type" of plugin?');
+  _Hoek2['default'].assert(_import2['default'].has(plugin['package'], 'name'), 'Woops! Did you forget the "name" of plugin?');
+  _Hoek2['default'].assert(!_import2['default'].has(plugin['package'], 'defaults'), 'Woops! Did you forget to add "defaults"?');
+  _Hoek2['default'].assert(_import2['default'].has(plugin, 'defaults'), 'Woops! Did you forget to add the "defaults"?');
+}
 
+var Plugify = (function () {
+  function Plugify(plugins, _this) {
     _classCallCheck(this, Plugify);
 
     /*jshint strict:false*/
@@ -71,6 +83,30 @@ var Plugify = (function () {
         //...
     };
     */
+    if (_this)
+      // Add the defaults first
+      _import2['default'].forOwn(_this.plugins, function (plugins, key) {
+        var plugin = _plugins[key]();
+        var main = plugin.main;
+        var defaults = plugin.defaults;
+        var _plugin$package = plugin['package'];
+        var name = _plugin$package.name;
+        var type = _plugin$package.type;
+
+        // Assert
+        assert(plugin);
+        // Initialize an object
+        this.plugins[type] = {};
+        // Set the plugin fn
+        this.plugins[type][name] = main;
+        // Set the package
+        this.plugins[type][name]['package'] = plugin['package'];
+        // Insert plugins as callbacks
+        this.plugins[type + 's'].push(main);
+        // Set the default options by merging with user's
+        this.options[type] = _optify2['default'](this.options[type] || {}).merge(defaults);
+      }, _this);
+
     if (plugins) {
       var registrations = [];
       // The plugin will return a {}.
@@ -92,17 +128,39 @@ var Plugify = (function () {
         _Hoek2['default'].assert(_import2['default'].isPlainObject(plugins()), 'Woops! Did the ship forget to return a plain object?');
         registrations.push(plugins());
       }
-      // Restrict the plugins to one plugin per type
-      // and add defaults if none exist
 
-      // callback!
-      registrations.forEach(function (plugin) {
-        _this2.assert(plugin);
-        console.log(_this.plugins);
-        if (_this.plugins[plugin['package'].type + 's'].length === 0) callback.bind(_this)(plugin.main, plugin['package'], plugin.defaults);else if (_this.plugins[plugin['package'].type + 's'].length > 1) _this.plugins[plugin['package'].type].pop();
-      }, this);
-      // Set defaults
-      this.defaults(_this, callback);
+      // Register and then restrict the
+      // plugins to one plugin per type
+      // and add defaults if none exist
+      _import2['default'].forEach(registrations, function (plugin) {
+        // Assert
+        assert(plugin);
+        if (this.plugins[plugin['package'].type + 's'].length === 1) {
+          this.plugins[plugin['package'].type + 's'].pop();
+          var main = plugin.main;
+          var defaults = plugin.defaults;
+          var _plugin$package2 = plugin['package'];
+          var name = _plugin$package2.name;
+          var type = _plugin$package2.type;
+
+          // Initialize an object
+          this.plugins[type] = {};
+          // Set the plugin fn
+          this.plugins[type][name] = main;
+          // Set the package
+          this.plugins[type][name]['package'] = plugin['package'];
+          // Insert plugins as callbacks
+          this.plugins[type + 's'].push(main);
+          // Set the default options by merging with user's
+          this.options[type] = _optify2['default'](this.options[type] || {}).merge(defaults);
+        } else if (this.plugins[plugin['package'].type + 's'].length > 1) {
+          var length = this.plugins[plugin['package'].type + 's'].length - 1;
+          while (length !== 0) {
+            this.plugins[plugin['package'].type].pop();
+            length--;
+          }
+        }
+      }, _this);
     }
   }
 
@@ -120,37 +178,6 @@ var Plugify = (function () {
         localizes: [],
         handlers: []
       });
-    }
-  }, {
-    key: 'defaults',
-    value: (function (_defaults) {
-      function defaults(_x, _x2) {
-        return _defaults.apply(this, arguments);
-      }
-
-      defaults.toString = function () {
-        return _defaults.toString();
-      };
-
-      return defaults;
-    })(function (_this, callback) {
-      _import2['default'].forOwn(_this.plugins, function (plugins, key) {
-        if (_this.plugins[key].length === 0) {
-          var plugin = defaults[key];
-          this.assert(plugin);
-          callback.bind(_this)(plugin.main, plugin['package'], plugin.defaults);
-        }
-      });
-    })
-  }, {
-    key: 'assert',
-    value: function assert(plugin) {
-      _Hoek2['default'].assert(_import2['default'].has(plugin, 'main'), 'Woops! Did you forget the main function?');
-      _Hoek2['default'].assert(_import2['default'].has(plugin, 'package'), 'Woops! Did you forget the package?');
-      _Hoek2['default'].assert(_import2['default'].has(plugin['package'], 'type'), 'Woops! Did you forget the "type" of plugin?');
-      _Hoek2['default'].assert(_import2['default'].has(plugin['package'], 'name'), 'Woops! Did you forget the "name" of plugin?');
-      _Hoek2['default'].assert(!_import2['default'].has(plugin['package'], 'defaults'), 'Woops! Did you forget to add "defaults"?');
-      _Hoek2['default'].assert(_import2['default'].has(plugin, 'defaults'), 'Woops! Did you forget to add the "defaults"?');
     }
   }]);
 

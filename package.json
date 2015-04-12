@@ -1,10 +1,11 @@
 {
   "name": "gengojs-core",
-  "version": "0.0.1-beta.11",
+  "version": "0.0.1-beta.12",
   "description": "The core of gengo.js that manages i18n and l10n.",
   "main": "index.js",
   "scripts": {
-    "test": "grunt && mocha ./tests/core/"
+    "test": "grunt && mocha ./tests/core/",
+    "prepublish": "grunt && mocha ./tests/core/"
   },
   "repository": {
     "type": "git",
@@ -35,7 +36,7 @@
     "gengojs-default-header": "0.0.1-beta.3",
     "gengojs-default-localize": "0.0.1-beta.1",
     "gengojs-default-memory": "0.0.1-beta.6",
-    "gengojs-default-parser": "0.0.1-beta.2",
+    "gengojs-default-parser": "0.0.1-beta.4",
     "gengojs-default-router": "0.0.1-beta.4",
     "hoek": "^2.12.0",
     "js-yaml": "^3.2.7",
@@ -47,6 +48,6 @@
     "grunt-babel": "^5.0.0",
     "grunt-contrib-jshint": "^0.11.1",
     "load-grunt-tasks": "^3.1.0",
-    "mocha": "^2.2.1"
+    "mocha": "^2.2.4"
   }
 }

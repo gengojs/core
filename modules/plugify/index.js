@@ -18,8 +18,20 @@ var _Hoek = require('hoek');
 
 var _Hoek2 = _interopRequireWildcard(_Hoek);
 
+var defaults = {
+  parsers: require('gengojs-default-parser'),
+  routers: require('gengojs-default-router'),
+  backends: require('gengojs-default-memory'),
+  apis: require('gengojs-default-api'),
+  headers: require('gengojs-default-header'),
+  localizes: require('gengojs-default-localize'),
+  handlers: require('gengojs-default-handler')
+};
+
 var Plugify = (function () {
-  function Plugify(plugins, callback, context) {
+  function Plugify(plugins, callback, _this) {
+    var _this2 = this;
+
     _classCallCheck(this, Plugify);
 
     /*jshint strict:false*/
@@ -80,22 +92,24 @@ var Plugify = (function () {
         _Hoek2['default'].assert(_import2['default'].isPlainObject(plugins()), 'Woops! Did the ship forget to return a plain object?');
         registrations.push(plugins());
       }
+      // Restrict the plugins to one plugin per type
+      // and add defaults if none exist
+
       // callback!
       registrations.forEach(function (plugin) {
-        // Assert
-        _Hoek2['default'].assert(_import2['default'].has(plugin, 'main'), 'Woops! Did you forget the main function?');
-        _Hoek2['default'].assert(_import2['default'].has(plugin, 'package'), 'Woops! Did you forget the package?');
-        _Hoek2['default'].assert(_import2['default'].has(plugin['package'], 'type'), 'Woops! Did you forget the "type" of plugin?');
-        _Hoek2['default'].assert(_import2['default'].has(plugin['package'], 'name'), 'Woops! Did you forget the "name" of plugin?');
-        _Hoek2['default'].assert(!_import2['default'].has(plugin['package'], 'defaults'), 'Woops! Did you forget to add "defaults"?');
-        _Hoek2['default'].assert(_import2['default'].has(plugin, 'defaults'), 'Woops! Did you forget to add the "defaults"?');
-        callback.bind(context)(plugin.main, plugin['package'], plugin.defaults);
-      });
+        _this2.assert(plugin);
+        console.log(_this.plugins);
+        if (_this.plugins[plugin['package'].type + 's'].length === 0) callback.bind(_this)(plugin.main, plugin['package'], plugin.defaults);else if (_this.plugins[plugin['package'].type + 's'].length > 1) _this.plugins[plugin['package'].type].pop();
+      }, this);
+      // Set defaults
+      this.defaults(_this, callback);
     }
   }
 
   _createClass(Plugify, [{
     key: 'initialize',
+
+    // Initialize
     value: function initialize(plugins) {
       return _import2['default'].assign(plugins, {
         parsers: [],
@@ -106,6 +120,37 @@ var Plugify = (function () {
         localizes: [],
         handlers: []
       });
+    }
+  }, {
+    key: 'defaults',
+    value: (function (_defaults) {
+      function defaults(_x, _x2) {
+        return _defaults.apply(this, arguments);
+      }
+
+      defaults.toString = function () {
+        return _defaults.toString();
+      };
+
+      return defaults;
+    })(function (_this, callback) {
+      _import2['default'].forOwn(_this.plugins, function (plugins, key) {
+        if (_this.plugins[key].length === 0) {
+          var plugin = defaults[key];
+          this.assert(plugin);
+          callback.bind(_this)(plugin.main, plugin['package'], plugin.defaults);
+        }
+      });
+    })
+  }, {
+    key: 'assert',
+    value: function assert(plugin) {
+      _Hoek2['default'].assert(_import2['default'].has(plugin, 'main'), 'Woops! Did you forget the main function?');
+      _Hoek2['default'].assert(_import2['default'].has(plugin, 'package'), 'Woops! Did you forget the package?');
+      _Hoek2['default'].assert(_import2['default'].has(plugin['package'], 'type'), 'Woops! Did you forget the "type" of plugin?');
+      _Hoek2['default'].assert(_import2['default'].has(plugin['package'], 'name'), 'Woops! Did you forget the "name" of plugin?');
+      _Hoek2['default'].assert(!_import2['default'].has(plugin['package'], 'defaults'), 'Woops! Did you forget to add "defaults"?');
+      _Hoek2['default'].assert(_import2['default'].has(plugin, 'defaults'), 'Woops! Did you forget to add the "defaults"?');
     }
   }]);
 

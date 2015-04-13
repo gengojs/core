@@ -76,7 +76,7 @@ var Gengo = (function () {
         args[_key - 1] = arguments[_key];
       }
 
-      _debugify2['default']('core', 'fn:', 'parse');
+      _debugify2['default']('core', 'process:', 'parse');
       // Parser
       this.plugins.parsers.forEach(function (plugin) {
         var input = {
@@ -96,7 +96,7 @@ var Gengo = (function () {
 
     /* Sets the plugins */
     value: function use(plugins) {
-      _debugify2['default']('core', 'fn:', 'use');
+      _debugify2['default']('core', 'process:', 'use');
       // Add plugins to array
       _plugify2['default'](plugins, this);
     }
@@ -107,7 +107,7 @@ var Gengo = (function () {
     value: function ship() {
       var _this3 = this;
 
-      _debugify2['default']('core', 'fn:', 'ship');
+      _debugify2['default']('core', 'process:', 'ship');
       // Get the request, response
       var req = arguments[0],
           res = arguments[1] || null,
@@ -161,7 +161,7 @@ var Gengo = (function () {
     value: function assign(req, res) {
       var _this4 = this;
 
-      _debugify2['default']('core', 'fn:', 'assign');
+      _debugify2['default']('core', 'process:', 'assign');
       // Define the API
       this.plugins.apis.forEach(function (plugin) {
         _debugify2['default']('core-' + plugin['package'].type, plugin['package']);
@@ -172,6 +172,8 @@ var Gengo = (function () {
         _debugify2['default']('core-' + plugin['package'].type, plugin['package']);
         plugin.bind(_this4)(req, res);
       }, this);
+      // Return the interface
+      return this.handler.object;
     }
   }, {
     key: 'isKoa',

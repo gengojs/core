@@ -34,6 +34,8 @@ var _import = require('lodash');
 
 var _import2 = _interopRequireWildcard(_import);
 
+/* Class Gengo*/
+
 var Gengo = (function () {
   /* Gengo constructor */
 

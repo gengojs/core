@@ -5,6 +5,9 @@ var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? ob
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+/**
+ * This modules debugs the core
+ */
 
 var _debug = require('debug');
 
@@ -22,19 +25,31 @@ var debugify = {
   'core-backend': _debug2['default']('core-backend'),
   'core-header': _debug2['default']('core-header'),
   'core-api': _debug2['default']('core-api'),
-  'core-localize': _debug2['default']('core-localize'),
-  'core-handler': _debug2['default']('core-handler')
+  'core-localize': _debug2['default']('core-localize')
 };
 
 exports['default'] = function (type) {
+  'use strict';
+
   for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
     args[_key - 1] = arguments[_key];
   }
 
-  /*jshint strict:false*/
-  debugify[type].apply(null, (function () {
-    var _args = [];
+  var _args = [];
+  var _type = _import2['default'].isString(type) ? type : '';
+  // If type is a package
+  if (_import2['default'].isObject(type) && type['package']) {
+    // Set type
+    _type = type['package'].type;
+    // Push the package to args
+    _args.push(type['package']);
+  }
+  var log = debugify['core-' + _type] || debugify[_type];
+  log.apply(null, (function () {
+
     _import2['default'].forEach(args, function (item) {
+      // If args is a package
+      // then recreate the args
       if (_import2['default'].isPlainObject(item)) {
         _import2['default'].forOwn(item, function (value, key) {
           switch (key) {
@@ -46,9 +61,13 @@ exports['default'] = function (type) {
               _args.push(key + ':');
               _args.push(value);
               break;
+            case 'type':
+              _args.push(key + ':');
+              _args.push(value);
+              break;
           }
         });
-      } else _args = args;
+      } else _args = _import2['default'].merge(_args, args);
     });
     return _args;
   })());

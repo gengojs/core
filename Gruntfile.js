@@ -18,7 +18,10 @@ module.exports = function(grunt) {
           './modules/debugify/index.js': 'lib/modules/debugify/index.js',
           './modules/extractify/index.js': 'lib/modules/extractify/index.js',
           './modules/optify/index.js': 'lib/modules/optify/index.js',
-          './modules/plugify/index.js': 'lib/modules/plugify/index.js'
+          './modules/plugify/index.js': 'lib/modules/plugify/index.js',
+          './modules/inputify/index.js': 'lib/modules/inputify/index.js',
+          './modules/servify/index.js': 'lib/modules/servify/index.js',
+          './modules/bindify/index.js': 'lib/modules/bindify/index.js'
         }
       }
     }

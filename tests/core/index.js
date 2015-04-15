@@ -23,22 +23,6 @@
        assert.isFunction(new Gengo().assign);
        assert.isDefined(new Gengo().assign);
      });
-     it('should export use', function() {
-       assert.isFunction(new Gengo().use);
-       assert.isDefined(new Gengo().use);
-     });
-     it('should export isKoa', function() {
-       assert.isFunction(new Gengo().isKoa);
-       assert.isDefined(new Gengo().isKoa);
-     });
-     it('should export isHapi', function() {
-       assert.isFunction(new Gengo().isHapi);
-       assert.isDefined(new Gengo().isHapi);
-     });
-     it('should export isExpress', function() {
-       assert.isFunction(new Gengo().isExpress);
-       assert.isDefined(new Gengo().isExpress);
-     });
    });
    describe('plugins', function() {
      it('should load plugins', function() {
@@ -77,12 +61,6 @@
        assert.isDefined(gengo.plugins.localizes);
        assert.isTrue(!_.isEmpty(gengo.plugins.localizes));
        _.forEach(gengo.plugins.localizes, function(plugin) {
-         assert.isTrue(plugin.bind(this)());
-       }, gengo);
-       //handlers
-       assert.isDefined(gengo.plugins.handlers);
-       assert.isTrue(!_.isEmpty(gengo.plugins.handlers));
-       _.forEach(gengo.plugins.handlers, function(plugin) {
          assert.isTrue(plugin.bind(this)());
        }, gengo);
      });

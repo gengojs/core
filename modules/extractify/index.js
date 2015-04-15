@@ -9,6 +9,10 @@ var _createClass = (function () { function defineProperties(target, props) { for
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+/**
+ * This module Extracts the arguments and
+ * separates them into arrays and objects.
+ */
 
 var _import = require('lodash');
 

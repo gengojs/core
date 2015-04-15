@@ -30,11 +30,6 @@ function fixture5() {
   return _.isPlainObject(this.options);
 }
 
-function fixture6() {
-  /*jshint validthis:true, strict: false  */
-  return _.isPlainObject(this.options);
-}
-
 var gengopack = {
   //exports
   parser: function() {
@@ -101,17 +96,6 @@ var gengopack = {
     pkg.type = 'localize';
     return {
       main: fixture5,
-      package: pkg,
-      defaults: {}
-    };
-  },
-  handler: function() {
-    'use strict';
-    var pkg = {};
-    pkg.name = 'mocha-handler';
-    pkg.type = 'handler';
-    return {
-      main: fixture6,
       package: pkg,
       defaults: {}
     };

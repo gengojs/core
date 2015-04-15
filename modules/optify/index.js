@@ -9,6 +9,10 @@ var _createClass = (function () { function defineProperties(target, props) { for
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+/**
+ * This module reads or sets the
+ * initial options
+ */
 
 var _import = require('lodash');
 
@@ -50,7 +54,7 @@ var Optify = (function () {
     if (_import2['default'].isPlainObject(options) && !_import2['default'].isEmpty(options)) this.options = options;else if (_import2['default'].isString(options)) {
       // Normalize the string and if it ends in yml replace it
       options = _path2['default'].normalize(options.replace('yml', 'yaml'));
-      // Load the json file
+      // Load the json or javascript file
       if (/\.json/.test(options) || /\.js/.test(options)) {
         settings = require(options);
         this.options = settings;
@@ -59,7 +63,7 @@ var Optify = (function () {
         settings = _yaml2['default'].safeLoad(_fs2['default'].readFileSync(options, 'utf8'));
         this.options = settings;
       } else {
-        _Hoek2['default'].assert(false, 'Woops! The configuration file must be either JS, JSON or YAML.');
+        _Hoek2['default'].assert(false, 'Woops! Did you forgt to add the extension? \n' + 'The supported files are .json, .js, and .yaml.');
         this.options = {};
       }
     } else this.options = settings || {};

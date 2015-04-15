@@ -9,6 +9,9 @@ var _createClass = (function () { function defineProperties(target, props) { for
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+/**
+ * This module initializes the plugins.
+ */
 
 var _import = require('lodash');
 
@@ -43,10 +46,9 @@ function assert(plugin) {
 }
 
 var Plugify = (function () {
-  function Plugify(plugins, _this) {
+  function Plugify(plugins, options) {
     _classCallCheck(this, Plugify);
 
-    /*jshint strict:false*/
     /*
     Definition: 
     A plugin must be either a function, an array containing functions, 
@@ -83,29 +85,16 @@ var Plugify = (function () {
         //...
     };
     */
-    if (_this)
-      // Add the defaults first
-      _import2['default'].forOwn(_this.plugins, function (plugins, key) {
-        var plugin = _plugins[key]();
-        var main = plugin.main;
-        var defaults = plugin.defaults;
-        var _plugin$package = plugin['package'];
-        var name = _plugin$package.name;
-        var type = _plugin$package.type;
-
-        // Assert
-        assert(plugin);
-        // Initialize an object
-        this.plugins[type] = {};
-        // Set the plugin fn
-        this.plugins[type][name] = main;
-        // Set the package
-        this.plugins[type][name]['package'] = plugin['package'];
-        // Insert plugins as callbacks
-        this.plugins[type + 's'].push(main);
-        // Set the default options by merging with user's
-        this.options[type] = _optify2['default'](this.options[type] || {}).merge(defaults);
-      }, _this);
+    // Initialize
+    this.plugins = this.initialize();
+    // Add the defaults first
+    _import2['default'].forOwn(this.plugins, function (plugins, key) {
+      var plugin = _plugins[key]();
+      // Assert
+      assert(plugin);
+      // Set the plugin attributes
+      this.set(plugin, options);
+    }, this);
 
     if (plugins) {
       var registrations = [];
@@ -137,22 +126,8 @@ var Plugify = (function () {
         assert(plugin);
         if (this.plugins[plugin['package'].type + 's'].length === 1) {
           this.plugins[plugin['package'].type + 's'].pop();
-          var main = plugin.main;
-          var defaults = plugin.defaults;
-          var _plugin$package2 = plugin['package'];
-          var name = _plugin$package2.name;
-          var type = _plugin$package2.type;
-
-          // Initialize an object
-          this.plugins[type] = {};
-          // Set the plugin fn
-          this.plugins[type][name] = main;
-          // Set the package
-          this.plugins[type][name]['package'] = plugin['package'];
-          // Insert plugins as callbacks
-          this.plugins[type + 's'].push(main);
-          // Set the default options by merging with user's
-          this.options[type] = _optify2['default'](this.options[type] || {}).merge(defaults);
+          // Set the plugin attributes
+          this.set(plugin, options);
         } else if (this.plugins[plugin['package'].type + 's'].length > 1) {
           var length = this.plugins[plugin['package'].type + 's'].length - 1;
           while (length !== 0) {
@@ -160,16 +135,37 @@ var Plugify = (function () {
             length--;
           }
         }
-      }, _this);
+      }, this);
     }
+    return this.plugins;
   }
 
   _createClass(Plugify, [{
+    key: 'set',
+    value: function set(plugin, options) {
+      var main = plugin.main;
+      var defaults = plugin.defaults;
+      var _plugin$package = plugin['package'];
+      var name = _plugin$package.name;
+      var type = _plugin$package.type;
+
+      // Initialize an object
+      this.plugins[type] = {};
+      // Set the plugin fn
+      this.plugins[type][name] = main;
+      // Set the package
+      this.plugins[type][name]['package'] = plugin['package'];
+      // Insert plugins as callbacks
+      this.plugins[type + 's'].push(main);
+      // Set the default options by merging with user's
+      options[type] = _optify2['default'](options[type] || {}).merge(defaults);
+    }
+  }, {
     key: 'initialize',
 
     // Initialize
-    value: function initialize(plugins) {
-      return _import2['default'].assign(plugins, {
+    value: function initialize() {
+      return _import2['default'].assign({}, {
         parsers: [],
         routers: [],
         backends: [],

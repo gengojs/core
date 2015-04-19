@@ -25,14 +25,17 @@ var _optify = require('../optify');
 
 var _optify2 = _interopRequireWildcard(_optify);
 
+var _debugify = require('../debugify');
+
+var _debugify2 = _interopRequireWildcard(_debugify);
+
 var _plugins = {
-  parsers: require('gengojs-default-parser'),
-  routers: require('gengojs-default-router'),
-  backends: require('gengojs-default-memory'),
-  apis: require('gengojs-default-api'),
-  headers: require('gengojs-default-header'),
-  localizes: require('gengojs-default-localize'),
-  handlers: require('gengojs-default-handler')
+  parser: require('gengojs-default-parser'),
+  router: require('gengojs-default-router'),
+  backend: require('gengojs-default-memory'),
+  api: require('gengojs-default-api'),
+  header: require('gengojs-default-header'),
+  localize: require('gengojs-default-localize')
 };
 
 function assert(plugin) {
@@ -89,7 +92,7 @@ var Plugify = (function () {
     this.plugins = this.initialize();
     // Add the defaults first
     _import2['default'].forOwn(this.plugins, function (plugins, key) {
-      var plugin = _plugins[key]();
+      var plugin = _plugins[key.slice(0, -1)]();
       // Assert
       assert(plugin);
       // Set the plugin attributes
@@ -124,19 +127,21 @@ var Plugify = (function () {
       _import2['default'].forEach(registrations, function (plugin) {
         // Assert
         assert(plugin);
-        if (this.plugins[plugin['package'].type + 's'].length === 1) {
-          this.plugins[plugin['package'].type + 's'].pop();
+        var type = this.normalize(plugin['package'].type);
+        if (this.plugins[this.pluralize(type, 2)].length === 1) {
+          this.plugins[this.pluralize(type, 2)].pop();
           // Set the plugin attributes
           this.set(plugin, options);
-        } else if (this.plugins[plugin['package'].type + 's'].length > 1) {
-          var length = this.plugins[plugin['package'].type + 's'].length - 1;
+        } else if (this.plugins[this.pluralize(type, 2)].length > 1) {
+          var length = this.plugins[this.pluralize(type, 2)].length - 1;
           while (length !== 0) {
-            this.plugins[plugin['package'].type].pop();
+            this.plugins[type].pop();
             length--;
           }
         }
       }, this);
     }
+    _debugify2['default']('core-plugins', 'plugins:', this.plugins);
     return this.plugins;
   }
 
@@ -149,6 +154,7 @@ var Plugify = (function () {
       var name = _plugin$package.name;
       var type = _plugin$package.type;
 
+      type = this.normalize(type);
       // Initialize an object
       this.plugins[type] = {};
       // Set the plugin fn
@@ -156,9 +162,27 @@ var Plugify = (function () {
       // Set the package
       this.plugins[type][name]['package'] = plugin['package'];
       // Insert plugins as callbacks
-      this.plugins[type + 's'].push(main);
+      this.plugins[this.pluralize(type, 2)].push(main);
       // Set the default options by merging with user's
       options[type] = _optify2['default'](options[type] || {}).merge(defaults);
+    }
+  }, {
+    key: 'pluralize',
+
+    /* Pluralizes the string*/
+    value: function pluralize(str, count) {
+      if (count === 1 || _import2['default'].isUndefined(count)) {
+        return str;
+      } else {
+        return str + 's';
+      }
+    }
+  }, {
+    key: 'normalize',
+
+    /* Normalizes a string */
+    value: function normalize(str) {
+      return str.toLowerCase().replace('-', '');
     }
   }, {
     key: 'initialize',
@@ -171,8 +195,7 @@ var Plugify = (function () {
         backends: [],
         apis: [],
         headers: [],
-        localizes: [],
-        handlers: []
+        localizes: []
       });
     }
   }]);

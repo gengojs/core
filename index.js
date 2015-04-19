@@ -38,7 +38,7 @@ var _bindify = require('./modules/bindify');
 
 var _bindify2 = _interopRequireWildcard(_bindify);
 
-/* Class Gengo*/
+/* Class Gengo */
 
 var Gengo = (function () {
   /* Gengo constructor */
@@ -55,7 +55,6 @@ var Gengo = (function () {
     'options:', this.options = _optify2['default'](options).options);
     // Set Plugins
     this.plugins = _plugify2['default'](plugins, this.options);
-    _debugify2['default']('core-plugins', 'plugins:', this.plugins);
     // Backend
     this.plugins.backends.forEach(function (plugin) {
       return _bindify2['default'](plugin, _this)();
@@ -65,7 +64,7 @@ var Gengo = (function () {
   _createClass(Gengo, [{
     key: 'parse',
 
-    /* i18ns the input*/
+    /* i18ns the input */
     value: function parse(phrase) {
       var _this2 = this;
 

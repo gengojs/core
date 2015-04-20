@@ -24,12 +24,11 @@ var _debugify = require('../debugify');
 var _debugify2 = _interopRequireWildcard(_debugify);
 
 var Servify = (function () {
-  function Servify(assign, req, res, next) {
+  function Servify(_this) {
     _classCallCheck(this, Servify);
 
     this.server = '';
-    this.assign = assign;
-    this.apply(req, res, next);
+    this.context = _this;
   }
 
   _createClass(Servify, [{
@@ -37,26 +36,27 @@ var Servify = (function () {
 
     /*Applies the API to the objects */
     value: function apply(req, res, next) {
+      var _this = this.context;
       // Koa?
       if (this.isKoa(req) && !_import2['default'].isEmpty(req)) {
         this.server = 'koa';
         // Apply api to koa
-        this.assign(req.request, req.response);
-        if (req.req || req.res) this.assign(req.req, req.res);
-        if (req.state) this.assign(req.state);
+        _this.assign(req.request, req.response);
+        if (req.req || req.res) _this.assign(req.req, req.res);
+        if (req.state) _this.assign(req.state);
       }
       // Hapi?
       if (this.isHapi(req) && !_import2['default'].isEmpty(req)) {
         this.server = 'hapi';
-        if (req.response) if (req.response.variety === 'view') this.assign(req.response.source.context);
-        this.assign(req);
+        if (req.response) if (req.response.variety === 'view') _this.assign(req.response.source.context);
+        _this.assign(req);
       }
       // Express ?
       if (this.isExpress(req) && !_import2['default'].isEmpty(req)) {
         this.server = 'express';
-        this.assign(req, res);
+        _this.assign(req, res);
         // Apply to API to the view
-        if (res && res.locals) this.assign(res.locals);
+        if (res && res.locals) _this.assign(res.locals);
       }
       _debugify2['default']('core', 'server:', this.server);
       // Make sure next exists and call it.
@@ -85,9 +85,9 @@ var Servify = (function () {
   return Servify;
 })();
 
-exports['default'] = function (assign, req, res, next) {
+exports['default'] = function (_this) {
   'use strict';
-  return new Servify(assign, req, res, next);
+  return new Servify(_this);
 };
 
 module.exports = exports['default'];

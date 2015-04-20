@@ -100,7 +100,7 @@ var Gengo = (function () {
         return _bindify2['default'](plugin, _this3)(req, res);
       });
       /* Apply API to the objects/request/response*/
-      _servify2['default'](this.assign, req, res, next);
+      _servify2['default'](this, req, res, next).apply(req, res, next);
     }
   }, {
     key: 'assign',
@@ -115,7 +115,7 @@ var Gengo = (function () {
         return _bindify2['default'](plugin, _this4)(req, res);
       });
       // Return the interface
-      return this.api.api();
+      return this.api;
     }
   }]);
 

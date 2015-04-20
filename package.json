@@ -31,7 +31,7 @@
   "homepage": "https://github.com/iwatakeshi/gengojs-core",
   "dependencies": {
     "debug": "^2.1.3",
-    "gengojs-default-api": "0.0.1-beta.6",
+    "gengojs-default-api": "0.0.1-beta.7",
     "gengojs-default-header": "0.0.1-beta.4",
     "gengojs-default-localize": "0.0.1-beta.2",
     "gengojs-default-memory": "0.0.1-beta.8",

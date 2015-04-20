@@ -253,7 +253,7 @@ create issues at the core's [GitHub Issues](https://github.com/iwatakeshi/gengoj
 
 * Requirements
 	* Grunt
-	* [Airbnb Javascript Style](https://github.com/airbnb/javascript#testing)
+	* [Airbnb Javascript Style](https://github.com/airbnb/javascript)
 	* Mocha
 	* [semver versioning](http://semver.org/)
 	* Fork and Pull

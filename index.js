@@ -100,7 +100,7 @@ var Gengo = (function () {
         return _bindify2['default'](plugin, _this3)(req, res);
       });
       /* Apply API to the objects/request/response*/
-      _servify2['default'](this, req, res, next).apply(req, res, next);
+      _servify2['default'](this).apply(req, res, next);
     }
   }, {
     key: 'assign',
@@ -110,7 +110,7 @@ var Gengo = (function () {
       var _this4 = this;
 
       _debugify2['default']('core', 'process:', 'assign');
-      // API
+      // APIs
       this.plugins.apis.forEach(function (plugin) {
         return _bindify2['default'](plugin, _this4)(req, res);
       });

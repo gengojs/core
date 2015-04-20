@@ -1,6 +1,6 @@
 {
   "name": "gengojs-core",
-  "version": "0.0.1-beta.22",
+  "version": "0.0.1-beta.23",
   "description": "The core of gengo.js that manages i18n and l10n.",
   "main": "index.js",
   "scripts": {
@@ -31,11 +31,11 @@
   "homepage": "https://github.com/iwatakeshi/gengojs-core",
   "dependencies": {
     "debug": "^2.1.3",
-    "gengojs-default-api": "0.0.1-beta.8",
+    "gengojs-default-api": "0.0.1-beta.9",
     "gengojs-default-header": "0.0.1-beta.4",
     "gengojs-default-localize": "0.0.1-beta.2",
     "gengojs-default-memory": "0.0.1-beta.8",
-    "gengojs-default-parser": "0.0.1-beta.6",
+    "gengojs-default-parser": "0.0.1-beta.7",
     "gengojs-default-router": "0.0.1-beta.7",
     "hoek": "^2.12.0",
     "js-yaml": "^3.2.7",

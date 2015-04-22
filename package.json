@@ -35,7 +35,7 @@
     "gengojs-default-header": "0.0.1-beta.5",
     "gengojs-default-localize": "0.0.1-beta.3",
     "gengojs-default-memory": "0.0.1-beta.9",
-    "gengojs-default-parser": "0.0.1-beta.9",
+    "gengojs-default-parser": "0.0.1-beta.10",
     "gengojs-default-router": "0.0.1-beta.8",
     "hoek": "^2.12.0",
     "js-yaml": "^3.2.7",

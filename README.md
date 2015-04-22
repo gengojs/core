@@ -245,7 +245,9 @@ as soon as it loads the plugin into the stack.
 
 ## Status
 
-Because of the beautiful discovery of ES6, I am rewriting the set of plugins that actually work from ES5 to ES6. So it may take up some time but I will say that an alpha of gengo.js (the core and the set of plugins) will be released sometime in late May or late July.
+The plugins are somewhat complete. I will be adding tests and making sure they are production ready.
+
+~~Because of the beautiful discovery of ES6, I am rewriting the set of plugins that actually work from ES5 to ES6. So it may take up some time but I will say that an alpha of gengo.js (the core and the set of plugins) will be released sometime in late May or late July.~~
 
 ## Contributing
 

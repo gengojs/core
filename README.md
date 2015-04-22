@@ -38,7 +38,7 @@ that are provided by the request and response..
 `__('Hello')`. In this step, the parser plugin must return the i18ned string.
 
 **So...** you may be wondering why is the core a separate module from the rest? The reason is
-because having the core on its own allows you developers to create awesome plugins. I personally
+because having the core on its own allows you, developers, to create awesome plugins. I personally
 feel as if i18n modules are a bit limited in what it can do and myself as well. 
 
 Anyways, one thing to note is that this module should not be used on its own. The actual i18n library is
@@ -69,13 +69,14 @@ the type of plugins that are available for you to create and their dependencies:
 	* `this.header.getLocale()` from Header class
 * ~~Handler (Applies the API to the objects)~~ (Deprecated: Handler is now part of API)
 * API (Applies the API (such as `__` and `__l`) to the objects)
-	* `this.header.detectLocale()` from Header class
+  * `this.backend.catalog()` from Backend class
+  * `this.header.detectLocale()` from Header class
   * `this.header.getLocale()` from Header class
   * `this.header.setLocale()` from Header class
   * `this.localize` from Localize class
 * Parser (i18ns the string)
-	* `this.header.getLocale()` from Header class
 	* `this.backend.find()` from Back-end class
+  * `this.header.getLocale()` from Header class
 	* `this.router.toArray()` from Router class
   * `this.router.toDot()` from Router class
   * `this.router.isEnabled()` from Router class
@@ -89,16 +90,16 @@ plugins. The following shows which API needs to attach to the context:
 
 * Back-ends
 	* `this.backend = [your back-end plugin instance]`
-		* Returns class class instance
+		* Returns class instance
 * Header
 	* `this.header = [...]`
-		* Returns class class instance
+		* Returns class instance
 * Router
 	* `this.router = [...]`
-		* Returns class class instance
+		* Returns class instance
 * Localize
 	* `this.localize = [...]`
-		* Returns class class instance
+		* Returns class instance
 * ~~Handler~~ (Deprecated: Handler is now part of API)
 * API
 	* `this.api = [...]`
@@ -288,10 +289,10 @@ Here are the available types:
 * core-localize
 
 
-##Build
+## Build
 
 Run `grunt` to build. This will translate the ES6 files to ES5 and will check for syntax issues.
 
-##Tests
+## Tests
 
 Run `npm test`.

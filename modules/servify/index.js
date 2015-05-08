@@ -1,27 +1,28 @@
 'use strict';
 
-var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
-var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
 /**
  * This module detects the server
  * and applies the API to the
  * request and response objects
  */
 
-var _import = require('lodash');
+var _lodash = require('lodash');
 
-var _import2 = _interopRequireWildcard(_import);
+var _lodash2 = _interopRequireDefault(_lodash);
 
 var _debugify = require('../debugify');
 
-var _debugify2 = _interopRequireWildcard(_debugify);
+var _debugify2 = _interopRequireDefault(_debugify);
 
 var Servify = (function () {
   function Servify(_this) {
@@ -38,7 +39,7 @@ var Servify = (function () {
     value: function apply(req, res, next) {
       var _this = this.context;
       // Koa?
-      if (this.isKoa(req) && !_import2['default'].isEmpty(req)) {
+      if (this.isKoa(req) && !_lodash2['default'].isEmpty(req)) {
         this.server = 'koa';
         // Apply api to koa
         _this.assign(req.request, req.response);
@@ -46,13 +47,13 @@ var Servify = (function () {
         if (req.state) _this.assign(req.state);
       }
       // Hapi?
-      if (this.isHapi(req) && !_import2['default'].isEmpty(req)) {
+      if (this.isHapi(req) && !_lodash2['default'].isEmpty(req)) {
         this.server = 'hapi';
         if (req.response) if (req.response.variety === 'view') _this.assign(req.response.source.context);
         _this.assign(req);
       }
       // Express ?
-      if (this.isExpress(req) && !_import2['default'].isEmpty(req)) {
+      if (this.isExpress(req) && !_lodash2['default'].isEmpty(req)) {
         this.server = 'express';
         _this.assign(req, res);
         // Apply to API to the view
@@ -60,7 +61,7 @@ var Servify = (function () {
       }
       _debugify2['default']('core', 'server:', this.server);
       // Make sure next exists and call it.
-      if (_import2['default'].isFunction(next)) next();
+      if (_lodash2['default'].isFunction(next)) next();
       return this;
     }
   }, {
@@ -68,17 +69,17 @@ var Servify = (function () {
 
     /* Framework detection */
     value: function isKoa(req) {
-      return req && !req.raw ? req.response && req.request : !_import2['default'].isEmpty(this.server) ? this.server === 'koa' : false;
+      return req && !req.raw ? req.response && req.request : !_lodash2['default'].isEmpty(this.server) ? this.server === 'koa' : false;
     }
   }, {
     key: 'isHapi',
     value: function isHapi(req) {
-      return req ? req.raw : !_import2['default'].isEmpty(this.server) ? this.server === 'hapi' : false;
+      return req ? req.raw : !_lodash2['default'].isEmpty(this.server) ? this.server === 'hapi' : false;
     }
   }, {
     key: 'isExpress',
     value: function isExpress(req) {
-      return req && !req.raw ? req && !req.raw && !req.response : !_import2['default'].isEmpty(this.server) ? this.server === 'express' : false;
+      return req && !req.raw ? req && !req.raw && !req.response : !_lodash2['default'].isEmpty(this.server) ? this.server === 'express' : false;
     }
   }]);
 

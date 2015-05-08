@@ -1,143 +1,110 @@
 'use strict';
 
-var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
-var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
 /**
  * This module initializes the plugins.
  */
 
-var _import = require('lodash');
+var _lodash = require('lodash');
 
-var _import2 = _interopRequireWildcard(_import);
+var _lodash2 = _interopRequireDefault(_lodash);
 
-var _Hoek = require('hoek');
+var _hoek = require('hoek');
 
-var _Hoek2 = _interopRequireWildcard(_Hoek);
+var _hoek2 = _interopRequireDefault(_hoek);
 
 var _optify = require('../optify');
 
-var _optify2 = _interopRequireWildcard(_optify);
+var _optify2 = _interopRequireDefault(_optify);
 
 var _debugify = require('../debugify');
 
-var _debugify2 = _interopRequireWildcard(_debugify);
-
-var _plugins = {
-  parser: require('gengojs-default-parser'),
-  router: require('gengojs-default-router'),
-  backend: require('gengojs-default-memory'),
-  api: require('gengojs-default-api'),
-  header: require('gengojs-default-header'),
-  localize: require('gengojs-default-localize')
-};
+var _debugify2 = _interopRequireDefault(_debugify);
 
 function assert(plugin) {
   'use strict';
-  _Hoek2['default'].assert(_import2['default'].has(plugin, 'main'), 'Woops! Did you forget the main function?');
-  _Hoek2['default'].assert(_import2['default'].has(plugin, 'package'), 'Woops! Did you forget the package?');
-  _Hoek2['default'].assert(_import2['default'].has(plugin['package'], 'type'), 'Woops! Did you forget the "type" of plugin?');
-  _Hoek2['default'].assert(_import2['default'].has(plugin['package'], 'name'), 'Woops! Did you forget the "name" of plugin?');
-  _Hoek2['default'].assert(!_import2['default'].has(plugin['package'], 'defaults'), 'Woops! Did you forget to add "defaults"?');
-  _Hoek2['default'].assert(_import2['default'].has(plugin, 'defaults'), 'Woops! Did you forget to add the "defaults"?');
+  _hoek2['default'].assert(_lodash2['default'].has(plugin, 'main'), 'Woops! Did you forget the main function?');
+  _hoek2['default'].assert(_lodash2['default'].has(plugin, 'package'), 'Woops! Did you forget the package?');
+  _hoek2['default'].assert(_lodash2['default'].has(plugin['package'], 'type'), 'Woops! Did you forget the "type" of plugin?');
+  _hoek2['default'].assert(_lodash2['default'].has(plugin['package'], 'name'), 'Woops! Did you forget the "name" of plugin?');
+  _hoek2['default'].assert(!_lodash2['default'].has(plugin['package'], 'defaults'), 'Woops! Did you forget to add "defaults"?');
+  _hoek2['default'].assert(_lodash2['default'].has(plugin, 'defaults'), 'Woops! Did you forget to add the "defaults"?');
 }
 
 var Plugify = (function () {
-  function Plugify(plugins, options) {
+  function Plugify(plugins, options, defaults) {
     _classCallCheck(this, Plugify);
 
-    /*
-    Definition: 
-    A plugin must be either a function, an array containing functions, 
-    or an plain object with a set of functions.
-    
-    1. A plugin must return a plain object 
-    with the main (export) function and its package.
-    
-    2. A package must contain the name and type of plugin.
-      3. A package must provide defaults for its options
-      // the export function
-    function ship(){
-      var pkg = require('./package.json');
-      //used for options
-      pkg.type = 'parser';
-      return {
-         main:myfunction,
-         package:pkg,
-         defaults:require('defaults.json')
-      };
-    }
-    
-    3. A plain object exporting multiple 
-    plugins is called a 'pack' or 'gengo pack'.
-    
-    //export object
-    var gengopack = {
-        handler: ship1,
-        // ! You should not reference ship2 as ship1
-        // ...in short, been there done that! (failed)
-        // ...in long, for some reason the package (no matter how different)
-        // it will return the package of the last ship
-        parser: ship2
-        //...
-    };
-    */
-    // Initialize
+    // Initialize the plugin stack
     this.plugins = this.initialize();
-    // Add the defaults first
-    _import2['default'].forOwn(this.plugins, function (plugins, key) {
-      var plugin = _plugins[key.slice(0, -1)]();
-      // Assert
-      assert(plugin);
-      // Set the plugin attributes
-      this.set(plugin, options);
-    }, this);
+    // Check if default plugins were provided
+    if (defaults) {
+      // Add the defaults first
+      _lodash2['default'].forOwn(this.plugins, function (plugins, key) {
+        var plugin = defaults[key.slice(0, -1)]();
+        // Assert
+        assert(plugin);
+        // Set the plugin attributes
+        this.set(plugin, options);
+      }, this);
+    }
 
     if (plugins) {
       var registrations = [];
       // The plugin will return a {}.
-      if (_import2['default'].isPlainObject(plugins)) {
+      if (_lodash2['default'].isPlainObject(plugins)) {
         // This may be the only ship
-        if (_import2['default'].has(plugins, 'main')) {
+        if (_lodash2['default'].has(plugins, 'main')) {
           registrations.push(plugins);
         } else
           // This may have multiple ships
-          _import2['default'].forOwn(plugins, function (ship) {
+          _lodash2['default'].forOwn(plugins, function (ship) {
             // Assert that ship is a function
-            _Hoek2['default'].assert(_import2['default'].isFunction(ship), 'Uh oh! The ship must be a function!');
-            _Hoek2['default'].assert(_import2['default'].isPlainObject(ship()), 'Woops! Did the ship forget to return a plain object?');
+            _hoek2['default'].assert(_lodash2['default'].isFunction(ship), 'Uh oh! The ship must be a function!');
+            _hoek2['default'].assert(_lodash2['default'].isPlainObject(ship()), 'Woops! Did the ship forget to return a plain object?');
             registrations.push(ship());
           });
       }
-      if (_import2['default'].isArray(plugins)) registrations = plugins;
-      if (_import2['default'].isFunction(plugins)) {
-        _Hoek2['default'].assert(_import2['default'].isPlainObject(plugins()), 'Woops! Did the ship forget to return a plain object?');
+      if (_lodash2['default'].isArray(plugins)) registrations = plugins;
+      if (_lodash2['default'].isFunction(plugins)) {
+        _hoek2['default'].assert(_lodash2['default'].isPlainObject(plugins()), 'Woops! Did the ship forget to return a plain object?');
         registrations.push(plugins());
       }
-
       // Register and then restrict the
       // plugins to one plugin per type
       // and add defaults if none exist
-      _import2['default'].forEach(registrations, function (plugin) {
+      _lodash2['default'].forEach(registrations, function (plugin) {
         // Assert
         assert(plugin);
         var type = this.normalize(plugin['package'].type);
+        // If the default plugin already exists
+        // then remove the default and replace it with
+        // the user defined plugin
         if (this.plugins[this.pluralize(type, 2)].length === 1) {
-          this.plugins[this.pluralize(type, 2)].pop();
+          if (!_lodash2['default'].isUndefined(defaults)) this.plugins[this.pluralize(type, 2)].pop();
           // Set the plugin attributes
           this.set(plugin, options);
+          // If there are multiple plugins of the same type
+          // restrict it to one plugin
         } else if (this.plugins[this.pluralize(type, 2)].length > 1) {
           var length = this.plugins[this.pluralize(type, 2)].length - 1;
           while (length !== 0) {
-            this.plugins[type].pop();
+            if (!_lodash2['default'].isUndefined(defaults)) this.plugins[type].pop();
             length--;
           }
+          // Since no there are no default plugins,
+          // just add the plugin to the stack
+        } else {
+          this.set(plugin, options);
         }
       }, this);
     }
@@ -171,11 +138,7 @@ var Plugify = (function () {
 
     /* Pluralizes the string*/
     value: function pluralize(str, count) {
-      if (count === 1 || _import2['default'].isUndefined(count)) {
-        return str;
-      } else {
-        return str + 's';
-      }
+      if (count === 1 || _lodash2['default'].isUndefined(count)) return str;else return str + 's';
     }
   }, {
     key: 'normalize',
@@ -189,7 +152,7 @@ var Plugify = (function () {
 
     // Initialize
     value: function initialize() {
-      return _import2['default'].assign({}, {
+      return _lodash2['default'].assign({}, {
         parsers: [],
         routers: [],
         backends: [],

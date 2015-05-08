@@ -1,21 +1,22 @@
 'use strict';
 
-var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
 /**
  * This modules debugs the core
  */
 
 var _debug = require('debug');
 
-var _debug2 = _interopRequireWildcard(_debug);
+var _debug2 = _interopRequireDefault(_debug);
 
-var _import = require('lodash');
+var _lodash = require('lodash');
 
-var _import2 = _interopRequireWildcard(_import);
+var _lodash2 = _interopRequireDefault(_lodash);
 
 var debugify = {
   core: _debug2['default']('core'),
@@ -36,9 +37,9 @@ exports['default'] = function (type) {
   }
 
   var _args = [];
-  var _type = _import2['default'].isString(type) ? type : '';
+  var _type = _lodash2['default'].isString(type) ? type : '';
   // If type is a package
-  if (_import2['default'].isObject(type) && type['package']) {
+  if (_lodash2['default'].isObject(type) && type['package']) {
     // Set type
     _type = type['package'].type;
     // Push the package to args
@@ -46,12 +47,12 @@ exports['default'] = function (type) {
   }
   var log = debugify['core-' + _type] || debugify[_type];
   log.apply(null, (function () {
-
-    _import2['default'].forEach(args, function (item) {
+    // Iterate through the arguments
+    _lodash2['default'].forEach(args, function (item) {
       // If args is a package
       // then recreate the args
-      if (_import2['default'].isPlainObject(item)) {
-        _import2['default'].forOwn(item, function (value, key) {
+      if (_lodash2['default'].isPlainObject(item)) {
+        _lodash2['default'].forOwn(item, function (value, key) {
           switch (key) {
             case 'name':
               _args.push(key + ':');
@@ -67,7 +68,7 @@ exports['default'] = function (type) {
               break;
           }
         });
-      } else _args = _import2['default'].merge(_args, args);
+      } else _args = _lodash2['default'].merge(_args, args);
     });
     return _args;
   })());

@@ -1,6 +1,6 @@
  /*global describe, it */
  var assert = require('chai').assert;
- var Gengo = require('../../');
+ var core = require('../../');
  var gengopack = require('../fixtures/plugins/');
  var _ = require('lodash');
  var path = require('path');
@@ -8,25 +8,25 @@
    'use strict';
    describe('module', function() {
      it('should export the module', function() {
-       assert.isFunction(Gengo);
-       assert.isDefined(Gengo);
+       assert.isFunction(core);
+       assert.isDefined(core);
      });
      it('should export ship', function() {
-       assert.isFunction(new Gengo().ship);
-       assert.isDefined(new Gengo().ship);
+       assert.isFunction(core().ship);
+       assert.isDefined(core().ship);
      });
      it('should export parse', function() {
-       assert.isFunction(new Gengo().parse);
-       assert.isDefined(new Gengo().parse);
+       assert.isFunction(core().parse);
+       assert.isDefined(core().parse);
      });
      it('should export assign', function() {
-       assert.isFunction(new Gengo().assign);
-       assert.isDefined(new Gengo().assign);
+       assert.isFunction(core().assign);
+       assert.isDefined(core().assign);
      });
    });
    describe('plugins', function() {
      it('should load plugins', function() {
-       var gengo = new Gengo({}, gengopack());
+       var gengo = core({}, gengopack());
        //parsers
        assert.isDefined(gengo.plugins.parsers);
        assert.isTrue(!_.isEmpty(gengo.plugins.parsers));
@@ -67,7 +67,7 @@
    });
    describe('options', function() {
      describe('plain object', function() {
-       var options = new Gengo({
+       var options = core({
          hello: 'world'
        }).options;
        assert.isDefined(options);
@@ -76,7 +76,7 @@
      });
      describe('js', function() {
        it('should read', function() {
-         var options = new Gengo(path.normalize(
+         var options = core(path.normalize(
            process.cwd() + '/tests/fixtures/options/options.js')).options;
          assert.isDefined(options);
          assert.isObject(options);
@@ -85,7 +85,7 @@
      });
      describe('json', function() {
        it('should read', function() {
-         var options = new Gengo(path.normalize(
+         var options = core(path.normalize(
            process.cwd() + '/tests/fixtures/options/options.json')).options;
          assert.isDefined(options);
          assert.isObject(options);
@@ -94,7 +94,7 @@
      });
      describe('yaml', function() {
        it('should read', function() {
-         var options = new Gengo(path.normalize(
+         var options = core(path.normalize(
            process.cwd() + '/tests/fixtures/options/options.yml')).options;
          assert.isDefined(options);
          assert.isObject(options);

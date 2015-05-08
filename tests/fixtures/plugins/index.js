@@ -36,7 +36,6 @@ var gengopack = {
     'use strict';
     var pkg = {};
     pkg.name = 'mocha-parser';
-    pkg.nickname = 'uberParser';
     // ! add type
     pkg.type = 'parser';
     return {

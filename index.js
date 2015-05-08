@@ -1,63 +1,63 @@
 'use strict';
 
-var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
-var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _pkg = require('./package');
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _pkg2 = _interopRequireWildcard(_pkg);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _inputify = require('./modules/inputify');
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var _inputify2 = _interopRequireWildcard(_inputify);
+var _package = require('./package');
 
-var _plugify = require('./modules/plugify/');
+var _package2 = _interopRequireDefault(_package);
 
-var _plugify2 = _interopRequireWildcard(_plugify);
+var _modulesInputify = require('./modules/inputify');
 
-var _optify = require('./modules/optify');
+var _modulesInputify2 = _interopRequireDefault(_modulesInputify);
 
-var _optify2 = _interopRequireWildcard(_optify);
+var _modulesPlugify = require('./modules/plugify/');
 
-var _debugify = require('./modules/debugify');
+var _modulesPlugify2 = _interopRequireDefault(_modulesPlugify);
 
-var _debugify2 = _interopRequireWildcard(_debugify);
+var _modulesOptify = require('./modules/optify');
 
-var _servify = require('./modules/servify');
+var _modulesOptify2 = _interopRequireDefault(_modulesOptify);
 
-var _servify2 = _interopRequireWildcard(_servify);
+var _modulesDebugify = require('./modules/debugify');
 
-var _bindify = require('./modules/bindify');
+var _modulesDebugify2 = _interopRequireDefault(_modulesDebugify);
 
-var _bindify2 = _interopRequireWildcard(_bindify);
+var _modulesServify = require('./modules/servify');
+
+var _modulesServify2 = _interopRequireDefault(_modulesServify);
+
+var _modulesBindify = require('./modules/bindify');
+
+var _modulesBindify2 = _interopRequireDefault(_modulesBindify);
 
 /* Class Gengo */
 
 var Gengo = (function () {
   /* Gengo constructor */
 
-  function Gengo(options, plugins) {
+  function Gengo(options, plugins, defaults) {
     var _this = this;
 
     _classCallCheck(this, Gengo);
 
-    _debugify2['default']('core',
+    _modulesDebugify2['default']('core',
     // Current version
-    'version:', this.version = _pkg2['default'].version,
+    'version:', this.version = _package2['default'].version,
     // Options
-    'options:', this.options = _optify2['default'](options).options);
+    'options:', this.options = _modulesOptify2['default'](options).options);
     // Set Plugins
-    this.plugins = _plugify2['default'](plugins, this.options);
+    this.plugins = _modulesPlugify2['default'](plugins, this.options, defaults);
     // Backend
     this.plugins.backends.forEach(function (plugin) {
-      return _bindify2['default'](plugin, _this)();
+      return _modulesBindify2['default'](plugin, _this)();
     });
   }
 
@@ -72,10 +72,10 @@ var Gengo = (function () {
         args[_key - 1] = arguments[_key];
       }
 
-      _debugify2['default']('core', 'process:', 'parse');
+      _modulesDebugify2['default']('core', 'process:', 'parse');
       // Parser
       this.plugins.parsers.forEach(function (plugin) {
-        return _bindify2['default'](plugin, _this2)(_inputify2['default'](phrase, args));
+        return _modulesBindify2['default'](plugin, _this2)(_modulesInputify2['default'](phrase, args));
       });
       return this.result;
     }
@@ -86,21 +86,21 @@ var Gengo = (function () {
     value: function ship(req, res, next) {
       var _this3 = this;
 
-      _debugify2['default']('core', 'process:', 'ship');
+      _modulesDebugify2['default']('core', 'process:', 'ship');
       // Headers
       this.plugins.headers.forEach(function (plugin) {
-        return _bindify2['default'](plugin, _this3)(req, res);
+        return _modulesBindify2['default'](plugin, _this3)(req, res);
       });
       // Routers
       this.plugins.routers.forEach(function (plugin) {
-        return _bindify2['default'](plugin, _this3)(req, res);
+        return _modulesBindify2['default'](plugin, _this3)(req, res);
       });
       // Localize(s)
       this.plugins.localizes.forEach(function (plugin) {
-        return _bindify2['default'](plugin, _this3)(req, res);
+        return _modulesBindify2['default'](plugin, _this3)(req, res);
       });
       /* Apply API to the objects/request/response*/
-      _servify2['default'](this).apply(req, res, next);
+      _modulesServify2['default'](this).apply(req, res, next);
     }
   }, {
     key: 'assign',
@@ -109,10 +109,10 @@ var Gengo = (function () {
     value: function assign(req, res) {
       var _this4 = this;
 
-      _debugify2['default']('core', 'process:', 'assign');
+      _modulesDebugify2['default']('core', 'process:', 'assign');
       // APIs
       this.plugins.apis.forEach(function (plugin) {
-        return _bindify2['default'](plugin, _this4)(req, res);
+        return _modulesBindify2['default'](plugin, _this4)(req, res);
       });
       // Return the interface
       return this.api;
@@ -122,9 +122,9 @@ var Gengo = (function () {
   return Gengo;
 })();
 
-exports['default'] = function (options, plugins) {
+exports['default'] = function (options, plugins, defaults) {
   'use strict';
-  return new Gengo(options, plugins);
+  return new Gengo(options, plugins, defaults);
 };
 
 module.exports = exports['default'];

@@ -1,7 +1,7 @@
 # gengojs-core
 
 [![Build Status](https://travis-ci.org/iwatakeshi/gengojs-core.svg?branch=master)](https://travis-ci.org/iwatakeshi/gengojs-core)
-[![Dependency Status](https://david-dm.org/iwatakeshi/gengojs-core.png)](https://github.com/iwatakeshi/gengojs-core/blob/master/package.json) [![License Status](http://img.shields.io/npm/l/gengojs-core.svg)](https://github.com/iwatakeshi/gengojs-core/blob/master/LICENSE) [![Downloads](http://img.shields.io/npm/dm/gengojs-core.svg)](https://nodei.co/npm/gengojs-core/) 
+[![Dependency Status](https://david-dm.org/iwatakeshi/gengojs-core.png)](https://github.com/iwatakeshi/gengojs-core/blob/master/package.json) [![License Status](http://img.shields.io/npm/l/gengojs-core.svg)](https://github.com/iwatakeshi/gengojs-core/blob/master/LICENSE) [![Downloads](http://img.shields.io/npm/dm/gengojs-core.svg)](https://nodei.co/npm/gengojs-core/)
 [![Version](http://img.shields.io/npm/v/gengojs-core.svg)](https://nodei.co/npm/gengojs-core/)
 
 [![NPM](https://nodei.co/npm/gengojs-core.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/gengojs-core/)
@@ -11,10 +11,10 @@ The core of gengo.js that manages i18n and l10n.
 
 ## Introduction
 
-**gengojs-core** is the actual core of the upcoming [gengo.js](https://github.com/iwatakeshi/gengojs). It serves to be
-a server agnostic middle-ware supporting the popular servers such as Express, 
+**gengojs-core** is the actual core of [gengo.js](https://github.com/iwatakeshi/gengojs). It serves to be
+a server agnostic middle-ware supporting the popular servers such as Express,
 Koa, Hapi, and even more with ease. It is also modular-tastic, and easy
-to debug.
+to debug with less than 60 lines of code (minus the modules).
 
 To get started, there are three things to know about how the core works:
 
@@ -28,23 +28,23 @@ because of the possible use of asynchronous programming needs. Note that if you 
 create a plugin for the back-end, you will need to load every locale into memory so that
 the parser can readily use the data.
 
-**Ship** is a function that applies the API to requests and also to the view. 
-It begins by getting the locale from the client, letting the router know about 
-the current path, applying the locale to the localization plugin, and finally 
+**Ship** is a function that applies the API to requests and also to the view.
+It begins by getting the locale from the client, letting the router know about
+the current path, applying the locale to the localization plugin, and finally
 assigning the API such as `__` or `__l` (can be changed) to the objects
 that are provided by the request and response..
 
-**Parse** is the final step in the core. It is called only when the API are called such as
-`__('Hello')`. In this step, the parser plugin must return the i18ned string.
+**Parse** is the final step in the core. It is called only when the API such as
+`__('Hello')` are used. In this step, the parser plugin must return the i18ned string.
 
 **So...** you may be wondering why is the core a separate module from the rest? The reason is
 because having the core on its own allows you, developers, to create awesome plugins. I personally
-feel as if i18n modules are a bit limited in what it can do and myself as well. 
+feel as if i18n modules are a bit limited in what it can do and myself as well.
 
 Anyways, one thing to note is that this module should not be used on its own. The actual i18n library is
 [gengo.js](https://github.com/iwatakeshi/gengojs). If you want to extend the core to support
 server x, then here is where you want to do that but if you want to create the wrapper for server x,
-then gengo.js is where you would do that.
+then [gengo.js](https://github.com/iwatakeshi/gengojs) is where you would do that.
 
 ## Getting Started
 
@@ -54,7 +54,7 @@ in terms of options.
 To create plugins, the one thing to keep in mind is core's `this` context. When a plugin is initialized,
 the core calls the plugin as it binds its context to that plugin (see **Creating Plugins**). Another thing to keep in mind is *dependencies*. Dependencies are really
 internal API. For example, the parser plugin needs to know about the data. Therefore it is dependent on the
-back-end and is expecting the back-end to supply an internal API to retrieve the locale/data. The following shows
+back-end plugin and is expecting the back-end to supply an internal API to retrieve the locale/data. The following shows
 the type of plugins that are available for you to create and their dependencies:
 
 #### Type of Plugins and its Dependencies
@@ -62,12 +62,11 @@ the type of plugins that are available for you to create and their dependencies:
 * Back-end (Storage)
 	* None
 * Header (Header parsing)
-	* None 
+	* None
 * Router (Path or Sub-domain parsing for data transitions in views)
 	* None
 * Localize (Localization)
 	* `this.header.getLocale()` from Header class
-* ~~Handler (Applies the API to the objects)~~ (Deprecated: Handler is now part of API)
 * API (Applies the API (such as `__` and `__l`) to the objects)
   * `this.backend.catalog()` from Backend class
   * `this.header.detectLocale()` from Header class
@@ -81,7 +80,7 @@ the type of plugins that are available for you to create and their dependencies:
   * `this.router.toDot()` from Router class
   * `this.router.isEnabled()` from Router class
 
-If you noticed, you can pretty much change anything you like. It's designed that way so that if there was something I implemented that you didn't like, you can just create your own plugin for that part or contribute to the default plugins and PR it. 
+If you noticed, you can pretty much change anything you like. It's designed that way so that if there was something I implemented that you didn't like, you can just create your own plugin for that part or contribute to the default plugins and PR it.
 
 Now to make the internal API work, you would need to expose the internal API at the end of your
 plugins. The following shows which API needs to attach to the context:
@@ -100,7 +99,6 @@ plugins. The following shows which API needs to attach to the context:
 * Localize
 	* `this.localize = [...]`
 		* Returns class instance
-* ~~Handler~~ (Deprecated: Handler is now part of API)
 * API
 	* `this.api = [...]`
 		* Returns an class instance
@@ -117,6 +115,35 @@ For example plugins, see:
 
 To see how it works see **Creating Plugins**.
 
+## API
+
+### `Core(options, plugins, defaults)`
+
+The constructor for the core. Note that there is no need to use `new` since that is already done for you.
+
+* `options` - The options for each plugin type.
+	* Type: `String | Object`
+* `plugins` - The plugins to use.
+	* Type: `Object | Array | Function`
+* `defaults` - The default plugins
+	* Type: `Object`
+
+### `parse(phrase, ...args)`
+
+This function is to be used when the API, `__('...')` is called.
+
+* `phrase` - The phrase to parse.
+	* Type: Depends on the plugin
+* `args` - The arguments passed besides the `phrase`.
+
+### `ship(req, res, next)`
+
+This function accepts the request and response objects and a next function is applicable. It then applies the API to the objects.
+
+### `assign(req, res)`
+
+This is the main function that applies the API to the objects within the `ship` function. The arguments do not necessarily have to be a request or response object.
+
 ## Creating Plugins
 
 **Creating plugins** is quite similar, if not, the same as creating plugins for Hapi. As mentioned above,
@@ -126,7 +153,7 @@ the core is really all about context. The following shows you the recommended wa
 
 ```js
 function MyHeaderClass (options){
-   
+
    // Set
    this.getLocale = function(){
     // ...
@@ -169,7 +196,7 @@ export default () => {
 // seem to be constant
  var pkg = require('./package');
   return {
-  // Arrow functions do not work 
+  // Arrow functions do not work
   // because the context belongs
   // to something else so use traditional
   // functions
@@ -183,12 +210,12 @@ export default () => {
   };
 };
 ```
-**Notes**: 
+**Notes**:
 
 * You may have noticed that defaults are provided in the example. Defaults are required (See **Options**). If you
 do not have any defaults, then you can just pass `{}`, and the core will not complain.
 
-* Keep in mind that you are limited to one plugin per type. This was done to prevent problems that may arise 
+* Keep in mind that you are limited to one plugin per type. This was done to prevent problems that may arise
 when dealing with the core's context.
 
 ## Exporting Multiple Plugins
@@ -227,9 +254,36 @@ export default () => {
 }
 ```
 
+## Testing your plugins
+
+To test your plugins, simply install the core and also the default plugins needed for your plugin. The simplest way to download all the default plugins is by installing `gengojs-default-pack` which
+contains all the default plugins. Since the pack is an object, you
+can simply use it like so:
+
+```js
+var pack = require('gengojs-default-pack');
+
+// Use only what you need
+var header = pack.header;
+var backend = pack.backend;
+// or you can just replace the plugin:
+pack.backend = myBackendPlugin;
+
+// Then use the core for tests
+
+var core = require('gengojs-core');
+
+var gengo = core({}, pack);
+
+// Test for your plugins existence:
+
+if(!_.isUndefined(gengo.plugins.backends[0]))
+// ...
+```
+
 ## Options
 
-The core doesn't have the best options system but the official way to access options per plugin is 
+The core doesn't have the best option system but the official way to access options per plugin is
 by the context as in the example:
 
 ```js
@@ -239,20 +293,19 @@ function ship(){
   console.log(this.options.parser);
 }
 ```
-In general, you can access any other plugin's options through the same syntax as in the example, but 
+In general, you can access any other plugin's options through the same syntax as in the example, but
 make sure to provide the defaults when you create your plugins. The core will apply them to the options
 as soon as it loads the plugin into the stack.
 
 ## Status
 
-The plugins are somewhat complete. I will be adding tests and making sure they are production ready.
-
-~~Because of the beautiful discovery of ES6, I am rewriting the set of plugins that actually work from ES5 to ES6. So it may take up some time but I will say that an alpha of gengo.js (the core and the set of plugins) will be released sometime in late May or late July.~~
+As of 5/8/15, all plugins have been completed and are readily available to be installed individually or by a pack.
 
 ## Contributing
 
 Feel free to contribute. To contribute, see the requirements. If you have any suggestions,
-create issues at the core's [GitHub Issues](https://github.com/iwatakeshi/gengojs-core)
+create issues at the core's [GitHub Issues](https://github.com/iwatakeshi/gengojs-core). Also,
+all ES6 modules are located under `lib/`.
 
 * Requirements
 	* Grunt

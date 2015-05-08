@@ -1,10 +1,11 @@
 'use strict';
 
-var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
 /**
  * This module extracts the phrase and arguments
  * and uses the extractify module (See extractify).
@@ -12,11 +13,11 @@ Object.defineProperty(exports, '__esModule', {
 
 var _extractify = require('../extractify');
 
-var _extractify2 = _interopRequireWildcard(_extractify);
+var _extractify2 = _interopRequireDefault(_extractify);
 
 var _debugify = require('../debugify');
 
-var _debugify2 = _interopRequireWildcard(_debugify);
+var _debugify2 = _interopRequireDefault(_debugify);
 
 exports['default'] = function (phrase, args) {
   'use strict';

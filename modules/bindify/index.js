@@ -1,17 +1,18 @@
 'use strict';
 
-var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
 /**
- * This modules bind a function to the context.
+ * This modules binds a function to the context.
  */
 
 var _debugify = require('../debugify');
 
-var _debugify2 = _interopRequireWildcard(_debugify);
+var _debugify2 = _interopRequireDefault(_debugify);
 
 exports['default'] = function (fn, _this) {
   'use strict';

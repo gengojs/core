@@ -1,3 +1,7 @@
+/**
+ * This modules debugs the core
+ */
+
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -5,10 +9,6 @@ Object.defineProperty(exports, '__esModule', {
 });
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-/**
- * This modules debugs the core
- */
 
 var _debug = require('debug');
 
@@ -19,14 +19,14 @@ var _lodash = require('lodash');
 var _lodash2 = _interopRequireDefault(_lodash);
 
 var debugify = {
-  core: _debug2['default']('core'),
-  'core-plugins': _debug2['default']('core-plugins'),
-  'core-parser': _debug2['default']('core-parser'),
-  'core-router': _debug2['default']('core-router'),
-  'core-backend': _debug2['default']('core-backend'),
-  'core-header': _debug2['default']('core-header'),
-  'core-api': _debug2['default']('core-api'),
-  'core-localize': _debug2['default']('core-localize')
+  core: (0, _debug2['default'])('core'),
+  'core-plugins': (0, _debug2['default'])('core-plugins'),
+  'core-parser': (0, _debug2['default'])('core-parser'),
+  'core-router': (0, _debug2['default'])('core-router'),
+  'core-backend': (0, _debug2['default'])('core-backend'),
+  'core-header': (0, _debug2['default'])('core-header'),
+  'core-api': (0, _debug2['default'])('core-api'),
+  'core-localize': (0, _debug2['default'])('core-localize')
 };
 
 exports['default'] = function (type) {

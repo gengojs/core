@@ -1,3 +1,7 @@
+/**
+ * This module Extracts the arguments and
+ * separates them into arrays and objects.
+ */
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -9,11 +13,6 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-/**
- * This module Extracts the arguments and
- * separates them into arrays and objects.
- */
 
 var _lodash = require('lodash');
 

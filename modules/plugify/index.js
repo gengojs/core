@@ -1,3 +1,6 @@
+/**
+ * This module initializes the plugins.
+ */
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -9,10 +12,6 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-/**
- * This module initializes the plugins.
- */
 
 var _lodash = require('lodash');
 
@@ -108,7 +107,7 @@ var Plugify = (function () {
         }
       }, this);
     }
-    _debugify2['default']('core-plugins', 'plugins:', this.plugins);
+    (0, _debugify2['default'])('core-plugins', 'plugins:', this.plugins);
     return this.plugins;
   }
 
@@ -131,7 +130,7 @@ var Plugify = (function () {
       // Insert plugins as callbacks
       this.plugins[this.pluralize(type, 2)].push(main);
       // Set the default options by merging with user's
-      options[type] = _optify2['default'](options[type] || {}).merge(defaults);
+      options[type] = (0, _optify2['default'])(options[type] || {}).merge(defaults);
     }
   }, {
     key: 'pluralize',

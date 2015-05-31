@@ -48,16 +48,16 @@ var Gengo = (function () {
 
     _classCallCheck(this, Gengo);
 
-    _modulesDebugify2['default']('core',
+    (0, _modulesDebugify2['default'])('core',
     // Current version
     'version:', this.version = _package2['default'].version,
     // Options
-    'options:', this.options = _modulesOptify2['default'](options).options);
+    'options:', this.options = (0, _modulesOptify2['default'])(options).options);
     // Set Plugins
-    this.plugins = _modulesPlugify2['default'](plugins, this.options, defaults);
+    this.plugins = (0, _modulesPlugify2['default'])(plugins, this.options, defaults);
     // Backend
     this.plugins.backends.forEach(function (plugin) {
-      return _modulesBindify2['default'](plugin, _this)();
+      return (0, _modulesBindify2['default'])(plugin, _this)();
     });
   }
 
@@ -72,10 +72,10 @@ var Gengo = (function () {
         args[_key - 1] = arguments[_key];
       }
 
-      _modulesDebugify2['default']('core', 'process:', 'parse');
+      (0, _modulesDebugify2['default'])('core', 'process:', 'parse');
       // Parser
       this.plugins.parsers.forEach(function (plugin) {
-        return _modulesBindify2['default'](plugin, _this2)(_modulesInputify2['default'](phrase, args));
+        return (0, _modulesBindify2['default'])(plugin, _this2)((0, _modulesInputify2['default'])(phrase, args));
       });
       return this.result;
     }
@@ -86,21 +86,21 @@ var Gengo = (function () {
     value: function ship(req, res, next) {
       var _this3 = this;
 
-      _modulesDebugify2['default']('core', 'process:', 'ship');
+      (0, _modulesDebugify2['default'])('core', 'process:', 'ship');
       // Headers
       this.plugins.headers.forEach(function (plugin) {
-        return _modulesBindify2['default'](plugin, _this3)(req, res);
+        return (0, _modulesBindify2['default'])(plugin, _this3)(req, res);
       });
       // Routers
       this.plugins.routers.forEach(function (plugin) {
-        return _modulesBindify2['default'](plugin, _this3)(req, res);
+        return (0, _modulesBindify2['default'])(plugin, _this3)(req, res);
       });
       // Localize(s)
       this.plugins.localizes.forEach(function (plugin) {
-        return _modulesBindify2['default'](plugin, _this3)(req, res);
+        return (0, _modulesBindify2['default'])(plugin, _this3)(req, res);
       });
       /* Apply API to the objects/request/response*/
-      _modulesServify2['default'](this).apply(req, res, next);
+      (0, _modulesServify2['default'])(this).apply(req, res, next);
     }
   }, {
     key: 'assign',
@@ -109,10 +109,10 @@ var Gengo = (function () {
     value: function assign(req, res) {
       var _this4 = this;
 
-      _modulesDebugify2['default']('core', 'process:', 'assign');
+      (0, _modulesDebugify2['default'])('core', 'process:', 'assign');
       // APIs
       this.plugins.apis.forEach(function (plugin) {
-        return _modulesBindify2['default'](plugin, _this4)(req, res);
+        return (0, _modulesBindify2['default'])(plugin, _this4)(req, res);
       });
       // Return the interface
       return this.api;

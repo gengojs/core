@@ -1,3 +1,8 @@
+/**
+ * This module detects the server
+ * and applies the API to the
+ * request and response objects
+ */
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -9,12 +14,6 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-/**
- * This module detects the server
- * and applies the API to the
- * request and response objects
- */
 
 var _lodash = require('lodash');
 
@@ -35,13 +34,14 @@ var Servify = (function () {
   _createClass(Servify, [{
     key: 'apply',
 
-    /*Applies the API to the objects */
+    /* Applies the API to the objects */
     value: function apply(req, res, next) {
       var _this = this.context;
       // Koa?
       if (this.isKoa(req) && !_lodash2['default'].isEmpty(req)) {
         this.server = 'koa';
         // Apply api to koa
+        _this.assign(req);
         _this.assign(req.request, req.response);
         if (req.req || req.res) _this.assign(req.req, req.res);
         if (req.state) _this.assign(req.state);
@@ -59,7 +59,7 @@ var Servify = (function () {
         // Apply to API to the view
         if (res && res.locals) _this.assign(res.locals);
       }
-      _debugify2['default']('core', 'server:', this.server);
+      (0, _debugify2['default'])('core', 'server:', this.server);
       // Make sure next exists and call it.
       if (_lodash2['default'].isFunction(next)) next();
       return this;

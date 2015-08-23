@@ -31,10 +31,10 @@ var Servify = (function () {
     this.context = _this;
   }
 
+  /* Applies the API to the objects */
+
   _createClass(Servify, [{
     key: 'apply',
-
-    /* Applies the API to the objects */
     value: function apply(req, res, next) {
       var _this = this.context;
       // Koa?
@@ -64,10 +64,10 @@ var Servify = (function () {
       if (_lodash2['default'].isFunction(next)) next();
       return this;
     }
-  }, {
-    key: 'isKoa',
 
     /* Framework detection */
+  }, {
+    key: 'isKoa',
     value: function isKoa(req) {
       return req && !req.raw ? req.response && req.request : !_lodash2['default'].isEmpty(this.server) ? this.server === 'koa' : false;
     }

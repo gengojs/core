@@ -95,16 +95,16 @@ var Plugify = (function () {
           // If there are multiple plugins of the same type
           // restrict it to one plugin
         } else if (this.plugins[this.pluralize(type, 2)].length > 1) {
-          var length = this.plugins[this.pluralize(type, 2)].length - 1;
-          while (length !== 0) {
-            if (!_lodash2['default'].isUndefined(defaults)) this.plugins[type].pop();
-            length--;
-          }
-          // Since no there are no default plugins,
-          // just add the plugin to the stack
-        } else {
-          this.set(plugin, options);
-        }
+            var length = this.plugins[this.pluralize(type, 2)].length - 1;
+            while (length !== 0) {
+              if (!_lodash2['default'].isUndefined(defaults)) this.plugins[type].pop();
+              length--;
+            }
+            // Since no there are no default plugins,
+            // just add the plugin to the stack
+          } else {
+              this.set(plugin, options);
+            }
       }, this);
     }
     (0, _debugify2['default'])('core-plugins', 'plugins:', this.plugins);
@@ -132,24 +132,24 @@ var Plugify = (function () {
       // Set the default options by merging with user's
       options[type] = (0, _optify2['default'])(options[type] || {}).merge(defaults);
     }
-  }, {
-    key: 'pluralize',
 
     /* Pluralizes the string*/
+  }, {
+    key: 'pluralize',
     value: function pluralize(str, count) {
       if (count === 1 || _lodash2['default'].isUndefined(count)) return str;else return str + 's';
     }
-  }, {
-    key: 'normalize',
 
     /* Normalizes a string */
+  }, {
+    key: 'normalize',
     value: function normalize(str) {
       return str.toLowerCase().replace('-', '');
     }
-  }, {
-    key: 'initialize',
 
     // Initialize
+  }, {
+    key: 'initialize',
     value: function initialize() {
       return _lodash2['default'].assign({}, {
         parsers: [],

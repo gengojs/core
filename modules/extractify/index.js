@@ -34,13 +34,13 @@ var Extract = (function () {
     }
     // If they are exactly 2 argument
     else if (length === 1) {
-      // Get the first value
-      value = array[0];
-      // Set arguments [...]
-      if (_lodash2['default'].isArray(value)) args = value;else if (_lodash2['default'].isPlainObject(value)) args = [];else args.push(value);
-      // Set values {...}
-      values = _lodash2['default'].isPlainObject(value) ? value : {};
-    }
+        // Get the first value
+        value = array[0];
+        // Set arguments [...]
+        if (_lodash2['default'].isArray(value)) args = value;else if (_lodash2['default'].isPlainObject(value)) args = [];else args.push(value);
+        // Set values {...}
+        values = _lodash2['default'].isPlainObject(value) ? value : {};
+      }
 
     this.values = values;
     this.args = args;

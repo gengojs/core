@@ -61,10 +61,10 @@ var Gengo = (function () {
     });
   }
 
+  /* i18ns the input */
+
   _createClass(Gengo, [{
     key: 'parse',
-
-    /* i18ns the input */
     value: function parse(phrase) {
       var _this2 = this;
 
@@ -79,10 +79,10 @@ var Gengo = (function () {
       });
       return this.result;
     }
-  }, {
-    key: 'ship',
 
     /* Middleware for Node frameworks*/
+  }, {
+    key: 'ship',
     value: function ship(req, res, next) {
       var _this3 = this;
 
@@ -102,10 +102,10 @@ var Gengo = (function () {
       /* Apply API to the objects/request/response*/
       (0, _modulesServify2['default'])(this).apply(req, res, next);
     }
-  }, {
-    key: 'assign',
 
     /* Apply the API to objects */
+  }, {
+    key: 'assign',
     value: function assign(req, res) {
       var _this4 = this;
 

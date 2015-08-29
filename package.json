@@ -4,8 +4,7 @@
   "description": "The core of gengo.js that manages i18n and l10n.",
   "main": "core/index.js",
   "scripts": {
-    "test": "gulp test",
-    "prepublish": "grunt && mocha ./tests/core/"
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",

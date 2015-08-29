@@ -9,6 +9,14 @@
 
 The core of gengo.js that manages i18n and l10n.
 
+## Status
+
+As of 8/29/15, I've decided to go through the core and the plugins and refine them so that it will
+be easier to create the docs and hopefully easier to understand how to create plugins.
+
+Some from the docs below may still work as far as exporting plugins but the idea of internal API
+still needs some refinement.
+
 ## Introduction
 
 **gengojs-core** is the actual core of [gengo.js](https://github.com/iwatakeshi/gengojs). It serves to be
@@ -297,10 +305,6 @@ In general, you can access any other plugin's options through the same syntax as
 make sure to provide the defaults when you create your plugins. The core will apply them to the options
 as soon as it loads the plugin into the stack.
 
-## Status
-
-As of 5/8/15, all plugins have been completed and are readily available to be installed individually or by a pack.
-
 ## Contributing
 
 Feel free to contribute. To contribute, see the requirements. If you have any suggestions,
@@ -308,46 +312,46 @@ create issues at the core's [GitHub Issues](https://github.com/iwatakeshi/gengoj
 all ES6 modules are located under `lib/`.
 
 * Requirements
-	* Grunt
+	* Gulp
 	* [Airbnb Javascript Style](https://github.com/airbnb/javascript)
-	* Mocha
 	* [semver versioning](http://semver.org/)
 	* Fork and Pull
 	* Your skills
 
 ## Debug
 
-The core uses [debug](https://github.com/visionmedia/debug) to output debugging statements. To debug,
-simply set the type of debug in the shell:
+The core uses [gengojs-debug](https://github.com/iwatakeshi/gengojs-debug), 
+an extension of [debug](https://github.com/visionmedia/debug), to output debugging statements. 
+To debug, simply set the type of debug in the shell:
 
 Unix:
 
 ```bash
-$ DEBUG=core
+$ DEBUG=gengo.core:*
 ```
 
 Windows
 
 ```bash
-$ SET DEBUG=core
+$ SET DEBUG=gengo.core:*
 ```
 
-Here are the available types:
+The levels used in the core are:
 
-* core
-* core-plugins
-* core-parser
-* core-router
-* core-backend
-* core-header
-* core-api
-* core-localize
+* debug
+* error
+* info
 
+## Develop
 
-## Build
+```bash
+# Build modules with gulp for development
+gulp
+```
 
-Run `grunt` to build. This will translate the ES6 files to ES5 and will check for syntax issues.
+## Test
 
-## Tests
-
-Run `npm test`.
+```bash
+# Build modules with gulp for production
+gulp test
+```

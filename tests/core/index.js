@@ -1,6 +1,6 @@
  /*global describe, it */
  var assert = require('chai').assert;
- var core = require('../../');
+ var core = require('../../core');
  var gengopack = require('../fixtures/plugins/');
  var _ = require('lodash');
  var path = require('path');
@@ -27,40 +27,40 @@
    describe('plugins', function() {
      it('should load plugins', function() {
        var gengo = core({}, gengopack());
-       //parsers
-       assert.isDefined(gengo.plugins.parsers);
-       assert.isTrue(!_.isEmpty(gengo.plugins.parsers));
-       _.forEach(gengo.plugins.parsers, function(plugin) {
+       //parser
+       assert.isDefined(gengo.plugins.parser);
+       assert.isTrue(!_.isEmpty(gengo.plugins.parser));
+       _.forEach(gengo.plugins.parser, function(plugin) {
          assert.isTrue(plugin.bind(this)());
        }, gengo);
-       //headers
-       assert.isDefined(gengo.plugins.headers);
-       assert.isTrue(!_.isEmpty(gengo.plugins.headers));
-       _.forEach(gengo.plugins.headers, function(plugin) {
+       //header
+       assert.isDefined(gengo.plugins.header);
+       assert.isTrue(!_.isEmpty(gengo.plugins.header));
+       _.forEach(gengo.plugins.header, function(plugin) {
          assert.isTrue(plugin.bind(this)());
        }, gengo);
-       //routers
-       assert.isDefined(gengo.plugins.routers);
-       assert.isTrue(!_.isEmpty(gengo.plugins.routers));
-       _.forEach(gengo.plugins.routers, function(plugin) {
+       //router
+       assert.isDefined(gengo.plugins.router);
+       assert.isTrue(!_.isEmpty(gengo.plugins.router));
+       _.forEach(gengo.plugins.router, function(plugin) {
          assert.isTrue(plugin.bind(this)());
        }, gengo);
-       //backends
-       assert.isDefined(gengo.plugins.backends);
-       assert.isTrue(!_.isEmpty(gengo.plugins.backends));
-       _.forEach(gengo.plugins.backends, function(plugin) {
+       //backend
+       assert.isDefined(gengo.plugins.backend);
+       assert.isTrue(!_.isEmpty(gengo.plugins.backend));
+       _.forEach(gengo.plugins.backend, function(plugin) {
          assert.isTrue(plugin.bind(this)());
        }, gengo);
-       //apis
-       assert.isDefined(gengo.plugins.apis);
-       assert.isTrue(!_.isEmpty(gengo.plugins.apis));
-       _.forEach(gengo.plugins.headers, function(plugin) {
+       //api
+       assert.isDefined(gengo.plugins.api);
+       assert.isTrue(!_.isEmpty(gengo.plugins.api));
+       _.forEach(gengo.plugins.header, function(plugin) {
          assert.isTrue(plugin.bind(this)());
        }, gengo);
-       //localizes
-       assert.isDefined(gengo.plugins.localizes);
-       assert.isTrue(!_.isEmpty(gengo.plugins.localizes));
-       _.forEach(gengo.plugins.localizes, function(plugin) {
+       //localize
+       assert.isDefined(gengo.plugins.localize);
+       assert.isTrue(!_.isEmpty(gengo.plugins.localize));
+       _.forEach(gengo.plugins.localize, function(plugin) {
          assert.isTrue(plugin.bind(this)());
        }, gengo);
      });

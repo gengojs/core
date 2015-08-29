@@ -1,8 +1,8 @@
 {
   "name": "gengojs-core",
-  "version": "0.0.3",
+  "version": "0.1.3",
   "description": "The core of gengo.js that manages i18n and l10n.",
-  "main": "index.js",
+  "main": "core/index.js",
   "scripts": {
     "test": "grunt && mocha ./tests/core/",
     "prepublish": "grunt && mocha ./tests/core/"
@@ -30,16 +30,19 @@
   },
   "homepage": "https://github.com/iwatakeshi/gengojs-core",
   "dependencies": {
-    "debug": "^2.2.0",
-    "hoek": "^2.12.0",
+    "gengojs-core-modules": "^1.0.1",
+    "gengojs-debug": "^1.1.1",
     "js-yaml": "^3.2.7",
-    "lodash": "^3.7.0"
+    "lodash": "^3.10.1"
   },
   "devDependencies": {
     "chai": "^3.2.0",
-    "grunt": "^0.4.5",
-    "grunt-babel": "^5.0.0",
-    "grunt-contrib-jshint": "^0.11.2",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
+    "gulp-jshint": "^1.11.2",
+    "gulp-mocha": "^2.1.3",
+    "gulp-sourcemaps": "^1.5.2",
+    "jshint-stylish": "^2.0.1",
     "load-grunt-tasks": "^3.1.0",
     "mocha": "^2.2.4"
   }

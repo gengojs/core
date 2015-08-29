@@ -11,8 +11,6 @@
 
 The core of gengo.js that manages i18n and l10n.
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/iwatakeshi/gengojs-core?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-
 ## Status
 
 As of 8/29/15, I've decided to go through the core and the plugins and refine them so that it will

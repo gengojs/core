@@ -29,40 +29,28 @@
        var gengo = core({}, gengopack());
        //parser
        assert.isDefined(gengo.plugins.parser);
-       assert.isTrue(!_.isEmpty(gengo.plugins.parser));
-       _.forEach(gengo.plugins.parser, function(plugin) {
-         assert.isTrue(plugin.bind(this)());
-       }, gengo);
+       assert.isFunction(gengo.plugins.parser);
+       assert.isTrue(gengo.plugins.parser.apply(gengo));
        //header
        assert.isDefined(gengo.plugins.header);
-       assert.isTrue(!_.isEmpty(gengo.plugins.header));
-       _.forEach(gengo.plugins.header, function(plugin) {
-         assert.isTrue(plugin.bind(this)());
-       }, gengo);
+       assert.isFunction(gengo.plugins.header);
+       assert.isTrue(gengo.plugins.header.apply(gengo));
        //router
        assert.isDefined(gengo.plugins.router);
-       assert.isTrue(!_.isEmpty(gengo.plugins.router));
-       _.forEach(gengo.plugins.router, function(plugin) {
-         assert.isTrue(plugin.bind(this)());
-       }, gengo);
+       assert.isFunction(gengo.plugins.router);
+       assert.isTrue(gengo.plugins.router.apply(gengo));
        //backend
        assert.isDefined(gengo.plugins.backend);
-       assert.isTrue(!_.isEmpty(gengo.plugins.backend));
-       _.forEach(gengo.plugins.backend, function(plugin) {
-         assert.isTrue(plugin.bind(this)());
-       }, gengo);
+       assert.isFunction(gengo.plugins.backend);
+       assert.isTrue(gengo.plugins.backend.apply(gengo));
        //api
        assert.isDefined(gengo.plugins.api);
-       assert.isTrue(!_.isEmpty(gengo.plugins.api));
-       _.forEach(gengo.plugins.header, function(plugin) {
-         assert.isTrue(plugin.bind(this)());
-       }, gengo);
+       assert.isFunction(gengo.plugins.api);
+       assert.isTrue(gengo.plugins.api.apply(gengo));
        //localize
        assert.isDefined(gengo.plugins.localize);
-       assert.isTrue(!_.isEmpty(gengo.plugins.localize));
-       _.forEach(gengo.plugins.localize, function(plugin) {
-         assert.isTrue(plugin.bind(this)());
-       }, gengo);
+       assert.isFunction(gengo.plugins.localize);
+       assert.isTrue(gengo.plugins.localize.apply(gengo));
      });
    });
    describe('options', function() {

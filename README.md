@@ -6,9 +6,6 @@
 [![Dependency Status](https://david-dm.org/iwatakeshi/gengojs-core.png)](https://github.com/iwatakeshi/gengojs-core/blob/master/package.json) [![License Status](http://img.shields.io/npm/l/gengojs-core.svg)](https://github.com/iwatakeshi/gengojs-core/blob/master/LICENSE) [![Downloads](http://img.shields.io/npm/dm/gengojs-core.svg)](https://nodei.co/npm/gengojs-core/)
 [![Version](http://img.shields.io/npm/v/gengojs-core.svg)](https://nodei.co/npm/gengojs-core/)
 
-[![NPM](https://nodei.co/npm/gengojs-core.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/gengojs-core/)
-
-
 The core of gengo.js that manages i18n and l10n.
 
 ## Status

@@ -30,8 +30,6 @@ var Gengo = (function () {
   /* Gengo constructor */
 
   function Gengo(options, plugins, defaults) {
-    var _this = this;
-
     _classCallCheck(this, Gengo);
 
     (0, _gengojsDebug2['default'])('core', 'debug', 'class: ' + Gengo.name, 'process: constructor');
@@ -43,9 +41,7 @@ var Gengo = (function () {
     // Set Plugins
     this.plugins = (0, _gengojsCoreModules.plugify)(plugins, this.options, defaults);
     // Backend plugin
-    _lodash2['default'].forEach(this.plugins.backend, function (f) {
-      return f.apply(_this);
-    });
+    if (!_lodash2['default'].isEmpty(this.plugins.backend) && this.plugins.backend) this.plugins.backend.apply(this);
   }
 
   /* i18ns the input */
@@ -53,39 +49,27 @@ var Gengo = (function () {
   _createClass(Gengo, [{
     key: 'parse',
     value: function parse(phrase) {
-      var _this2 = this;
+      (0, _gengojsDebug2['default'])('core', 'debug', 'class: ' + Gengo.name, 'process: parse');
+      // Parser plugin
 
       for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         args[_key - 1] = arguments[_key];
       }
 
-      (0, _gengojsDebug2['default'])('core', 'debug', 'class: ' + Gengo.name, 'process: parse');
-      // Parser plugin
-      return _lodash2['default'].forEach(this.plugins.parser, function (f) {
-        return f.apply(_this2, [(0, _gengojsCoreModules.inputify)(phrase, args)]);
-      });
+      return this.plugins.parser.apply(this, [(0, _gengojsCoreModules.inputify)(phrase, args)]);
     }
 
     /* Middleware for Node frameworks */
   }, {
     key: 'ship',
     value: function ship(req, res, next) {
-      var _this3 = this,
-          _arguments = arguments;
-
       (0, _gengojsDebug2['default'])('core', 'debug', 'class: ' + Gengo.name, 'process: ship');
       // Header plugin
-      _lodash2['default'].forEach(this.plugins.header, function (f) {
-        return f.apply(_this3, _arguments);
-      });
+      this.plugins.header.apply(this, arguments);
       // Router plugin
-      _lodash2['default'].forEach(this.plugins.router, function (f) {
-        return f.apply(_this3, _arguments);
-      });
+      this.plugins.router.apply(this, arguments);
       // Localize plugin
-      _lodash2['default'].forEach(this.plugins.localize, function (f) {
-        return f.apply(_this3, _arguments);
-      });
+      this.plugins.localize.apply(this, arguments);
       /* Apply API to the objects/request/response */
       (0, _gengojsCoreModules.servify)(this).apply(req, res, next);
     }
@@ -94,14 +78,9 @@ var Gengo = (function () {
   }, {
     key: 'assign',
     value: function assign() {
-      var _this4 = this,
-          _arguments2 = arguments;
-
       (0, _gengojsDebug2['default'])('core', 'debug', 'class: ' + Gengo.name, 'process: assign');
       // API plugin
-      return _lodash2['default'].forEach(this.plugins.api, function (f) {
-        return f.apply(_this4, _arguments2);
-      });
+      return this.plugins.api.apply(this, arguments);
     }
   }]);
 

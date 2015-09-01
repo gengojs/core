@@ -1,6 +1,6 @@
 {
   "name": "gengojs-core",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "The core of gengo.js that manages i18n and l10n.",
   "main": "core/index.js",
   "scripts": {
@@ -38,6 +38,7 @@
     "chai": "^3.2.0",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.2.1",
+    "gulp-changelog": "^1.0.0",
     "gulp-jshint": "^1.11.2",
     "gulp-mocha": "^2.1.3",
     "gulp-sourcemaps": "^1.5.2",

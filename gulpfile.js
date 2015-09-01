@@ -2,7 +2,9 @@ var gulp = require("gulp");
 var sourcemaps = require("gulp-sourcemaps");
 var babel = require("gulp-babel");
 var mocha  = require('gulp-mocha');
-var jshint = require('gulp-jshint')
+var jshint = require('gulp-jshint');
+var changelog = require('gulp-changelog');
+
 gulp.task("lib:entry", function () {
   return gulp.src('./lib/**/**/*.js')
     .pipe(jshint())
@@ -25,6 +27,12 @@ gulp.task('test', ['lib:entry'], function() {
         .pipe(mocha());
 });
 
-gulp.task("default", ['lib:entry','watch']);
+gulp.task('changelog', function(cb){
+	changelog(require('./package.json')).then(function(stream){
+		stream.pipe(gulp.dest('./')).on('end', cb);
+	})
+});
 
-gulp.task('build', ['lib:entry', 'test']);
+gulp.task("default", ['lib:entry','changelog','watch',]);
+
+gulp.task('build', ['lib:entry','changelog','test']);

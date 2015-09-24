@@ -23,7 +23,7 @@ gulp.task('lib', function () {
 
 gulp.task('docs', function() {
   return gulp.src('./docs/**/*')
-    .pipe(pages({push:false}));
+    .pipe(pages());
 });
 
 gulp.task('watch', function () {

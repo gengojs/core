@@ -1,3 +1,11 @@
+0.3.1 / 2015-08-31
+==================
+
+  * Merge pull request [#11](https://github.com/iwatakeshi/gengojs-core/issues/11) from iwatakeshi/add-change-log
+    Update
+  * Update
+    Updated gulp to automate change logs.
+
 0.3.0 / 2015-08-31
 ==================
 
@@ -109,21 +117,3 @@
     Updated package.json
   * Update
     Bug fixes for API
-
-0.0.1-beta.19 / 2015-04-19
-==========================
-
-  * Update
-    Removed handler
-    Updated plugify
-    Updated readme
-    Updated package.json
-  * Cleaned comment
-  * Merge remote-tracking branch 'origin/master'
-    Conflicts:
-    lib/core/index.js
-  * Update
-    Added new modules
-    Reduced the code to ~60 lines from 140
-    Handlers are now API
-  * Update index.js

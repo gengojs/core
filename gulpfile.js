@@ -1,27 +1,35 @@
-var gulp = require("gulp");
-var sourcemaps = require("gulp-sourcemaps");
-var babel = require("gulp-babel");
-var mocha  = require('gulp-mocha');
-var jshint = require('gulp-jshint');
-var changelog = require('gulp-changelog');
+'use strict';
 
-gulp.task("lib:entry", function () {
+var gulp        = require('gulp'),
+    sourcemaps  = require('gulp-sourcemaps'),
+    babel       = require('gulp-babel'),
+    mocha       = require('gulp-mocha'),
+    jshint      = require('gulp-jshint'),
+    changelog   = require('gulp-changelog'),
+    pages       = require('gulp-gh-pages');
+
+gulp.task('docs', function() {
+  return gulp.src('./docs/**/*')
+    .pipe(pages());
+});
+
+gulp.task('lib', function () {
   return gulp.src('./lib/**/**/*.js')
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
     .pipe(jshint.reporter('fail'))
     .pipe(sourcemaps.init())
     .pipe(babel())
-    .pipe(sourcemaps.write("./source maps/"))
+    .pipe(sourcemaps.write('./source maps/'))
     .pipe(gulp.dest(function(file){
       return file.base.replace('lib/','');
      }));
 });
 
 gulp.task('watch', function () {
-    return gulp.watch('./lib/**/*.*', ['lib:entry']);
+    return gulp.watch('./lib/**/*.*', ['lib']);
 });
-gulp.task('test', ['lib:entry'], function() {
+gulp.task('test', ['lib'], function() {
   return gulp.src('./tests/**/**/*.js', {read: false})
         // gulp-mocha needs filepaths so you can't have any plugins before it
         .pipe(mocha());
@@ -30,9 +38,9 @@ gulp.task('test', ['lib:entry'], function() {
 gulp.task('changelog', function(cb){
 	changelog(require('./package.json')).then(function(stream){
 		stream.pipe(gulp.dest('./')).on('end', cb);
-	})
+	});
 });
 
-gulp.task("default", ['lib:entry','changelog','watch',]);
+gulp.task('default', ['lib','changelog','watch',]);
 
-gulp.task('build', ['lib:entry','changelog','test']);
+gulp.task('build', ['lib','changelog','test', 'docs']);

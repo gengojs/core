@@ -1,4 +1,4 @@
-# gengojs-core
+# gengo.js/core
 
 [![Join the chat at https://gitter.im/iwatakeshi/gengojs-core](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/iwatakeshi/gengojs-core?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -9,6 +9,17 @@
 The core of gengo.js that manages i18n and l10n.
 
 ## Status
+
+**09/23/15**: 
+
+Hey! First of all, apologies for any delays in gengo.js. I've been working on another project
+called [Mr Doc](https://www.github.com/mr-doc/mr-doc). It's a tool that generates beautiful docs and I've
+improved it because I really needed a better way to document my source. So I hope to go through
+everything as I document them well. Some changes did occur as I was working on Mr. Doc. I've decided to
+move all gengo.js related projects from my personal Github account to a dedicated [account](https://github.com/gengojs).
+There, you will find everthing you need to work on gengo and contribute. Finally, I did generate
+the docs for the core so see Documentation. Well, that's all for now! Happy coding!
+
 
 As of 8/29/15, I've decided to go through the core and the plugins and refine them so that it will
 be easier to create the docs and hopefully easier to understand how to create plugins.
@@ -21,7 +32,7 @@ still needs some refinement.
 **gengojs-core** is the actual core of [gengo.js](https://github.com/iwatakeshi/gengojs). It serves to be
 a server agnostic middle-ware supporting the popular servers such as Express,
 Koa, Hapi, and even more with ease. It is also modular-tastic, and easy
-to debug with less than 60 lines of code (minus the modules).
+to debug with less than 34 lines of code (minus the comments).
 
 To get started, there are three things to know about how the core works:
 
@@ -66,49 +77,11 @@ the type of plugins that are available for you to create and their dependencies:
 
 #### Type of Plugins and its Dependencies
 
-* Back-end (Storage)
-	* None
-* Header (Header parsing)
-	* None
-* Router (Path or Sub-domain parsing for data transitions in views)
-	* None
-* Localize (Localization)
-	* `this.header.getLocale()` from Header class
-* API (Applies the API (such as `__` and `__l`) to the objects)
-  * `this.backend.catalog()` from Backend class
-  * `this.header.detectLocale()` from Header class
-  * `this.header.getLocale()` from Header class
-  * `this.header.setLocale()` from Header class
-  * `this.localize` from Localize class
-* Parser (i18ns the string)
-	* `this.backend.find()` from Back-end class
-  * `this.header.getLocale()` from Header class
-	* `this.router.toArray()` from Router class
-  * `this.router.toDot()` from Router class
-  * `this.router.isEnabled()` from Router class
-
-If you noticed, you can pretty much change anything you like. It's designed that way so that if there was something I implemented that you didn't like, you can just create your own plugin for that part or contribute to the default plugins and PR it.
-
-Now to make the internal API work, you would need to expose the internal API at the end of your
-plugins. The following shows which API needs to attach to the context:
+TODO
 
 #### Internal API to Expose By Plugin
 
-* Back-ends
-	* `this.backend = [your back-end plugin instance]`
-		* Returns class instance
-* Header
-	* `this.header = [...]`
-		* Returns class instance
-* Router
-	* `this.router = [...]`
-		* Returns class instance
-* Localize
-	* `this.localize = [...]`
-		* Returns class instance
-* API
-	* `this.api = [...]`
-		* Returns an class instance
+TODO
 
 For example plugins, see:
 
@@ -122,34 +95,9 @@ For example plugins, see:
 
 To see how it works see **Creating Plugins**.
 
-## API
+## Documentation
 
-### `Core(options, plugins, defaults)`
-
-The constructor for the core. Note that there is no need to use `new` since that is already done for you.
-
-* `options` - The options for each plugin type.
-	* Type: `String | Object`
-* `plugins` - The plugins to use.
-	* Type: `Object | Array | Function`
-* `defaults` - The default plugins
-	* Type: `Object`
-
-### `parse(phrase, ...args)`
-
-This function is to be used when the API, `__('...')` is called.
-
-* `phrase` - The phrase to parse.
-	* Type: Depends on the plugin
-* `args` - The arguments passed besides the `phrase`.
-
-### `ship(req, res, next)`
-
-This function accepts the request and response objects and a next function is applicable. It then applies the API to the objects.
-
-### `assign(req, res)`
-
-This is the main function that applies the API to the objects within the `ship` function. The arguments do not necessarily have to be a request or response object.
+Visit [GitHub](https://gengojs.github.io/core/).
 
 ## Creating Plugins
 
@@ -302,7 +250,7 @@ function ship(){
 ```
 In general, you can access any other plugin's options through the same syntax as in the example, but
 make sure to provide the defaults when you create your plugins. The core will apply them to the options
-as soon as it loads the plugin into the stack.
+as soon as it loads the plugin.
 
 ## Contributing
 

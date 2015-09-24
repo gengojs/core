@@ -5,13 +5,7 @@ var gulp        = require('gulp'),
     babel       = require('gulp-babel'),
     mocha       = require('gulp-mocha'),
     jshint      = require('gulp-jshint'),
-    changelog   = require('gulp-changelog'),
-    pages       = require('gulp-gh-pages');
-
-gulp.task('docs', function() {
-  return gulp.src('./docs/**/*')
-    .pipe(pages());
-});
+    changelog   = require('gulp-changelog');
 
 gulp.task('lib', function () {
   return gulp.src('./lib/**/**/*.js')

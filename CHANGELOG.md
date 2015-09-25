@@ -1,3 +1,18 @@
+0.3.4 / 2015-09-25
+==================
+
+  * Release v0.3.4.
+  * Update
+    Updated gulp file.
+    Updated docs.
+  * Update
+    Updated package.
+    Updated docs.
+    Updated change log.
+  * Update
+  * Update
+    Updated change log.
+
 0.3.3 / 2015-09-25
 ==================
 
@@ -122,8 +137,3 @@
   * Update
     Fixed index.js
     Updated package.json
-
-0.0.1-beta.22 / 2015-04-19
-==========================
-
-  * Updated package.json

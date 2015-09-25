@@ -30,7 +30,9 @@ gulp.task('test', ['lib'], function() {
 });
 
 gulp.task('changelog', function(cb){
-	changelog(require('./package.json')).then(function(stream){
+	changelog(require('./package.json'),{
+    'number':30
+  }).then(function(stream){
 		stream.pipe(gulp.dest('./')).on('end', cb);
 	});
 });

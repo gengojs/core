@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/iwatakeshi/gengojs-core](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/iwatakeshi/gengojs-core?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Build Status](https://travis-ci.org/iwatakeshi/gengojs-core.svg?branch=master)](https://travis-ci.org/iwatakeshi/gengojs-core)
+[![Build Status](https://travis-ci.org/gengojs/core.svg?branch=master)](https://travis-ci.org/gengojs/core)
 [![Dependency Status](https://david-dm.org/gengojs/core.svg)](https://github.com/iwatakeshi/gengojs-core/blob/master/package.json) [![License Status](http://img.shields.io/npm/l/gengojs-core.svg)](https://github.com/iwatakeshi/gengojs-core/blob/master/LICENSE) [![Downloads](http://img.shields.io/npm/dm/gengojs-core.svg)](https://nodei.co/npm/gengojs-core/)
 [![Version](http://img.shields.io/npm/v/gengojs-core.svg)](https://nodei.co/npm/gengojs-core/)
 

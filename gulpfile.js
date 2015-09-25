@@ -89,7 +89,7 @@ gulp.task('doc', ['build'], shell.task([
         cmd = {
           source: ' -s lib/',
           output: ' -o docs/',
-          name:' -n "gengo.js/accept"',
+          name:' -n "gengo.js/core"',
           theme:' -t cayman'
         };
     return doc + cmd.source + cmd.output + cmd.name + cmd.theme;

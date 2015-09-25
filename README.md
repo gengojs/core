@@ -150,6 +150,8 @@ export default () => {
 // 'import' variables
 // seem to be constant
  var pkg = require('./package');
+ // ! add type
+  pkg.type = 'header';
   return {
   // Arrow functions do not work
   // because the context belongs
@@ -302,3 +304,7 @@ gulp
 # Build modules with gulp for production
 gulp test
 ```
+
+## Changelog
+
+See [changelog](https://github.com/gengojs/core/blob/master/CHANGELOG.md).

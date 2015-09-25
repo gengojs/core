@@ -1,7 +1,22 @@
+0.3.2 / 2015-09-24
+==================
+
+  * Update
+    Update
+  * Merge pull request [#12](https://github.com/gengojs/core/issues/12) from gengojs/0.3.2
+    Update
+  * Update
+  * Update
+    Removed gulp-gh-pages.
+  * Update
+    Updated readme.
+    Added comments.
+    Added docs.
+
 0.3.1 / 2015-08-31
 ==================
 
-  * Merge pull request [#11](https://github.com/iwatakeshi/gengojs-core/issues/11) from iwatakeshi/add-change-log
+  * Merge pull request [#11](https://github.com/gengojs/core/issues/11) from iwatakeshi/add-change-log
     Update
   * Update
     Updated gulp to automate change logs.
@@ -15,14 +30,14 @@
 0.2.0 / 2015-08-31
 ==================
 
-  * Merge pull request [#10](https://github.com/iwatakeshi/gengojs-core/issues/10) from iwatakeshi/0.2.0
+  * Merge pull request [#10](https://github.com/gengojs/core/issues/10) from iwatakeshi/0.2.0
     Update
   * Update
     Updated tests.
     Updated core to reflect change in gengojs-core-modules.
   * Update
     Update README.
-  * Merge pull request [#9](https://github.com/iwatakeshi/gengojs-core/issues/9) from gitter-badger/gitter-badge
+  * Merge pull request [#9](https://github.com/gengojs/core/issues/9) from gitter-badger/gitter-badge
     Add a Gitter chat badge to README.md
 
 0.1.3 / 2015-08-29
@@ -171,7 +186,7 @@
   * Update
     Updated package.json
   * Update
-    Fix [#5](https://github.com/iwatakeshi/gengojs-core/issues/5)
+    Fix [#5](https://github.com/gengojs/core/issues/5)
     Reduced the core size to 140 lines!
   * Updated package.json
 
@@ -180,7 +195,7 @@
 
   * Removed logging
   * Update
-    Should fix [#5](https://github.com/iwatakeshi/gengojs-core/issues/5)
+    Should fix [#5](https://github.com/gengojs/core/issues/5)
     Removed changelog for now
 
 0.0.1-beta.10 / 2015-04-09
@@ -194,7 +209,7 @@
 0.0.1-beta.9 / 2015-04-09
 =========================
 
-  * Merge pull request [#3](https://github.com/iwatakeshi/gengojs-core/issues/3) from iwatakeshi/iwatakeshi-patch-1
+  * Merge pull request [#3](https://github.com/gengojs/core/issues/3) from iwatakeshi/iwatakeshi-patch-1
     Update package.json
   * Update index.js
     Fixed an issue where arguments were not being passed.
@@ -230,14 +245,3 @@
   * Update
     Bug fixes for inidivdual plugins not able to be loaded
     Updated readme
-
-0.0.1-beta.4 / 2015-04-08
-=========================
-
-  * Update
-    Update readme
-  * Update
-    Bug fixes for debugging
-    Removed source maps
-  * Updated changelog
-  * Removed uberproto from dependencies

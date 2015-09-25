@@ -1,3 +1,11 @@
+0.3.3 / 2015-09-25
+==================
+
+  * Update
+    Updated readme.
+    Updated package.
+  * Update
+
 0.3.2 / 2015-09-24
 ==================
 
@@ -238,10 +246,3 @@
     `this.options.[type]`
   * Update
     Update changelog
-
-0.0.1-beta.5 / 2015-04-08
-=========================
-
-  * Update
-    Bug fixes for inidivdual plugins not able to be loaded
-    Updated readme

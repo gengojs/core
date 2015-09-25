@@ -2,7 +2,7 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
-    <title>gengo.js/core</title>
+    <title>gengo.js/accept</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" type="text/css">
@@ -12,7 +12,7 @@
   </head>
   <body>
     <section class="page-header">
-      <h1 class="project-name">gengo.js/core</h1>
+      <h1 class="project-name">gengo.js/accept</h1>
       <h2 class="project-tagline">The core of gengo.js that manages i18n and l10n.</h2><a href="https://github.com/gengojs/core" target="_blank" class="btn">View on GitHub</a><a href="https://npmjs.com/package/gengojs-core" target="_blank" class="btn">View on npm</a>
     </section>
     <section data-spy="scroll" data-target=".scrollspy" class="main-content">
@@ -79,19 +79,19 @@
             </tbody>
           </table>
           <div class="description"></div>
-          <pre><code class="language-javascript">constructor (options, plugins, defaults) {
-  debug('core', 'debug', `class: ${Gengo.name}`, `process: constructor`);
-  debug('core', 'info',
-    // Current version
-    `version: ${(this.version = pkg.version)}`,
-    // Options
-    `options: ${(this.options = optify(options))}`);
-  // Set Plugins
-  this.plugins = plugify(plugins, this.options, defaults);
-  // Backend plugin
-  if(!_.isEmpty(this.plugins.backend) &amp;&amp; this.plugins.backend)
-    this.plugins.backend.apply(this);
-}</code></pre>
+          <pre><code class="language-javascript">constructor(options, plugins, defaults) {
+    debug('core', 'debug', `class: ${Gengo.name}`, `process: constructor`);
+    debug('core', 'info',
+      // Current version
+      `version: ${(this.version = pkg.version)}`,
+      // Options
+      `options: ${(this.options = optify(options))}`);
+    // Set Plugins
+    this.plugins = plugify(plugins, this.options, defaults);
+    // Backend plugin
+    if (!_.isEmpty(this.plugins.backend) &amp;&amp; this.plugins.backend)
+      this.plugins.backend.apply(this);
+  }</code></pre>
           <section id="parse">
             <h1>parse</h1>
             <h5 class="subheader"></h5>
@@ -121,11 +121,11 @@
             </tbody>
           </table>
           <div class="description"><p>Parses and i18ns the phrase.</p></div>
-          <pre><code class="language-javascript">parse (phrase, ...args) {
-  debug('core', 'debug', `class: ${Gengo.name}`, `process: parse`);
-  // Parser plugin
-  return this.plugins.parser.apply(this, [inputify(phrase, args)]);
-}</code></pre>
+          <pre><code class="language-javascript">parse(phrase, ...args) {
+    debug('core', 'debug', `class: ${Gengo.name}`, `process: parse`);
+    // Parser plugin
+    return this.plugins.parser.apply(this, [inputify(phrase, args)]);
+  }</code></pre>
           <section id="ship">
             <h1>ship</h1>
             <h5 class="subheader"></h5>
@@ -160,17 +160,17 @@
             </tbody>
           </table>
           <div class="description"><p>The Middleware for Node frameworks</p></div>
-          <pre><code class="language-javascript">ship (req, res, next) {
-  debug('core', 'debug', `class: ${Gengo.name}`, `process: ship`);
-  // Header plugin
-  this.plugins.header.apply(this, arguments);
-  // Router plugin
-  this.plugins.router.apply(this, arguments);
-  // Localize plugin
-  this.plugins.localize.apply(this, arguments);
-  // Apply API to the objects/request/response
-  servify(this).apply(req, res, next);
-}</code></pre>
+          <pre><code class="language-javascript">ship(req, res, next) {
+    debug('core', 'debug', `class: ${Gengo.name}`, `process: ship`);
+    // Header plugin
+    this.plugins.header.apply(this, arguments);
+    // Router plugin
+    this.plugins.router.apply(this, arguments);
+    // Localize plugin
+    this.plugins.localize.apply(this, arguments);
+    // Apply API to the objects/request/response
+    servify(this).apply(req, res, next);
+  }</code></pre>
           <section id="assign">
             <h1>assign</h1>
             <h5 class="subheader"></h5>
@@ -200,7 +200,7 @@
             </tbody>
           </table>
           <div class="description"><p>Applies the API to req, res, and other objects.</p></div>
-          <pre><code class="language-javascript">assign () {
+          <pre><code class="language-javascript">assign() {
   debug('core', 'debug', `class: ${Gengo.name}`, `process: assign`);
   // API plugin
   return this.plugins.api.apply(this, arguments);

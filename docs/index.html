@@ -2,7 +2,7 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
-    <title>gengo.js/core</title>
+    <title>gengo.js/accept</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" type="text/css">
@@ -12,7 +12,7 @@
   </head>
   <body>
     <section class="page-header">
-      <h1 class="project-name">gengo.js/core</h1>
+      <h1 class="project-name">gengo.js/accept</h1>
       <h2 class="project-tagline">The core of gengo.js that manages i18n and l10n.</h2><a href="https://github.com/gengojs/core" target="_blank" class="btn">View on GitHub</a><a href="https://npmjs.com/package/gengojs-core" target="_blank" class="btn">View on npm</a>
     </section>
     <section data-spy="scroll" data-target=".scrollspy" class="main-content">
@@ -28,7 +28,7 @@
         <div class="col-md-9">
           <section id="Main" class="readme"><h1>gengo.js/core</h1>
 <p><a href="https://gitter.im/iwatakeshi/gengojs-core?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/iwatakeshi/gengojs-core"></a></p>
-<p><a href="https://travis-ci.org/iwatakeshi/gengojs-core"><img src="https://travis-ci.org/iwatakeshi/gengojs-core.svg?branch=master" alt="Build Status"></a>
+<p><a href="https://travis-ci.org/gengojs/core"><img src="https://travis-ci.org/gengojs/core.svg?branch=master" alt="Build Status"></a>
 <a href="https://github.com/iwatakeshi/gengojs-core/blob/master/package.json"><img src="https://david-dm.org/gengojs/core.svg" alt="Dependency Status"></a> <a href="https://github.com/iwatakeshi/gengojs-core/blob/master/LICENSE"><img src="http://img.shields.io/npm/l/gengojs-core.svg" alt="License Status"></a> <a href="https://nodei.co/npm/gengojs-core/"><img src="http://img.shields.io/npm/dm/gengojs-core.svg" alt="Downloads"></a>
 <a href="https://nodei.co/npm/gengojs-core/"><img src="http://img.shields.io/npm/v/gengojs-core.svg" alt="Version"></a></p>
 <p>The core of gengo.js that manages i18n and l10n.</p>
@@ -143,6 +143,8 @@ export default () =&gt; {
 // 'import' variables
 // seem to be constant
  var pkg = require('./package');
+ // ! add type
+  pkg.type = 'header';
   return {
   // Arrow functions do not work
   // because the context belongs
@@ -271,6 +273,8 @@ gulp
 <pre><code class="language-bash"># Build modules with gulp for production
 gulp test
 </code></pre>
+<h2>Changelog</h2>
+<p>See <a href="https://github.com/gengojs/core/blob/master/CHANGELOG.md">changelog</a>.</p>
 </section>
           <div class="footer site-footer">
             <div class="span site-footer-owner"><a href="https://github.com/iwatakeshi/doxx-theme-cayman">Cayman</a> is maintained by <a href="https://github.com/iwatakeshi">iwatakeshi</a>.</div>

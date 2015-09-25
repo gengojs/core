@@ -47,6 +47,7 @@
     "gulp-sourcemaps": "^1.5.2",
     "jshint-stylish": "^2.0.1",
     "mocha": "^2.2.4",
+    "mr-doc": "git+https://github.com/mr-doc/mr-doc.git",
     "mr-doc-theme-cayman": "git+https://github.com/mr-doc/mr-doc-theme-cayman.git",
     "rimraf": "^2.4.3"
   }

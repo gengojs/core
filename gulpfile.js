@@ -5,8 +5,7 @@ var gulp        = require('gulp'),
     babel       = require('gulp-babel'),
     mocha       = require('gulp-mocha'),
     jshint      = require('gulp-jshint'),
-    changelog   = require('gulp-changelog'),
-    pages       = require('gulp-gh-pages');
+    changelog   = require('gulp-changelog');
 
 gulp.task('lib', function () {
   return gulp.src('./lib/**/**/*.js')
@@ -19,11 +18,6 @@ gulp.task('lib', function () {
     .pipe(gulp.dest(function(file){
       return file.base.replace('lib/','');
      }));
-});
-
-gulp.task('docs', function() {
-  return gulp.src('./docs/**/*')
-    .pipe(pages());
 });
 
 gulp.task('watch', function () {
@@ -43,4 +37,4 @@ gulp.task('changelog', function(cb){
 
 gulp.task('default', ['lib','changelog','watch',]);
 
-gulp.task('build', ['lib','changelog','test', 'docs']);
+gulp.task('build', ['lib','changelog','test']);

@@ -40,7 +40,7 @@ improved it because I really needed a better way to document my source. So I hop
 everything as I document them well. Some changes did occur as I was working on Mr. Doc. I've decided to
 move all gengo.js related projects from my personal Github account to a dedicated <a href="https://github.com/gengojs">account</a>.
 There, you will find everthing you need to work on gengo and contribute. Finally, I did generate
-the docs for the core so see Documentation. Well, that's all for now! Happy coding!</p>
+the docs for the core so see <a href="https://gengojs.github.io/core/">Documentation</a>. Well, that's all for now! Happy coding!</p>
 <p>As of 8/29/15, I've decided to go through the core and the plugins and refine them so that it will
 be easier to create the docs and hopefully easier to understand how to create plugins.</p>
 <p>Some from the docs below may still work as far as exporting plugins but the idea of internal API
@@ -103,7 +103,7 @@ the type of plugins that are available for you to create and their dependencies:
 <p><strong>Creating plugins</strong> is quite similar, if not, the same as creating plugins for Hapi. As mentioned above,
 the core is really all about context. The following shows you the recommended way to create your plugins:</p>
 <h3>ES5</h3>
-<pre><code class="language-js">function MyHeaderClass (options){
+<pre><code class="language-javascript">function MyHeaderClass (options){
 
    // Set
    this.getLocale = function(){
@@ -128,7 +128,7 @@ module.exports = function() {
 };
 </code></pre>
 <h3>ES6</h3>
-<pre><code class="language-js">class MyHeaderClass {
+<pre><code class="language-javascript">class MyHeaderClass {
   constructor(options){
     // ...
   }
@@ -176,7 +176,7 @@ when dealing with the core's context.</p>
 <strong>YES!</strong>. I call these sets, <em>packs</em> or <em>gengo-pack</em>. To create a pack, simply export the individual
 <em>ships</em> like the following:</p>
 <h3>ES5</h3>
-<pre><code class="language-js">module.exports = function(){
+<pre><code class="language-javascript">module.exports = function(){
   return {
     parser: /*parser ship*/,
     router: /*router ship*/,
@@ -188,7 +188,7 @@ when dealing with the core's context.</p>
 };
 </code></pre>
 <h3>ES6</h3>
-<pre><code class="language-js">export default () =&gt; {
+<pre><code class="language-javascript">export default () =&gt; {
   return {
     parser: /*parser ship*/,
     router: /*router ship*/,
@@ -203,7 +203,7 @@ when dealing with the core's context.</p>
 <p>To test your plugins, simply install the core and also the default plugins needed for your plugin. The simplest way to download all the default plugins is by installing <code>gengojs-default-pack</code> which
 contains all the default plugins. Since the pack is an object, you
 can simply use it like so:</p>
-<pre><code class="language-js">var pack = require('gengojs-default-pack');
+<pre><code class="language-javascript">var pack = require('gengojs-default-pack');
 
 // Use only what you need
 var header = pack.header;
@@ -225,7 +225,7 @@ if(!_.isUndefined(gengo.plugins.backends[0]))
 <h2>Options</h2>
 <p>The core doesn't have the best option system but the official way to access options per plugin is
 by the context as in the example:</p>
-<pre><code class="language-js">function ship(){
+<pre><code class="language-javascript">function ship(){
   // To access the options,
   // simply use: this.options[type]:
   console.log(this.options.parser);

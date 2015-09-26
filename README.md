@@ -18,7 +18,7 @@ improved it because I really needed a better way to document my source. So I hop
 everything as I document them well. Some changes did occur as I was working on Mr. Doc. I've decided to
 move all gengo.js related projects from my personal Github account to a dedicated [account](https://github.com/gengojs).
 There, you will find everthing you need to work on gengo and contribute. Finally, I did generate
-the docs for the core so see Documentation. Well, that's all for now! Happy coding!
+the docs for the core so see [Documentation](https://gengojs.github.io/core/). Well, that's all for now! Happy coding!
 
 
 As of 8/29/15, I've decided to go through the core and the plugins and refine them so that it will
@@ -106,7 +106,7 @@ the core is really all about context. The following shows you the recommended wa
 
 ### ES5
 
-```js
+```javascript
 function MyHeaderClass (options){
 
    // Set
@@ -134,7 +134,7 @@ module.exports = function() {
 
 ### ES6
 
-```js
+```javascript
 class MyHeaderClass {
   constructor(options){
     // ...
@@ -183,7 +183,7 @@ Now you may be wondering, *Can I release a set of plugins?* The answer is
 
 ### ES5
 
-```js
+```javascript
 module.exports = function(){
   return {
     parser: /*parser ship*/,
@@ -198,7 +198,7 @@ module.exports = function(){
 
 ### ES6
 
-```js
+```javascript
 export default () => {
   return {
     parser: /*parser ship*/,
@@ -217,7 +217,7 @@ To test your plugins, simply install the core and also the default plugins neede
 contains all the default plugins. Since the pack is an object, you
 can simply use it like so:
 
-```js
+```javascript
 var pack = require('gengojs-default-pack');
 
 // Use only what you need
@@ -243,7 +243,7 @@ if(!_.isUndefined(gengo.plugins.backends[0]))
 The core doesn't have the best option system but the official way to access options per plugin is
 by the context as in the example:
 
-```js
+```javascript
 function ship(){
   // To access the options,
   // simply use: this.options[type]:

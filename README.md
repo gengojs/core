@@ -8,6 +8,11 @@
 
 The core of gengo.js that manages i18n and l10n.
 
+## Documentation
+
+Visit [GitHub](https://gengojs.github.io/core/).
+
+
 ## Status
 
 **09/24/15**: 
@@ -94,10 +99,6 @@ For example plugins, see:
 
 
 To see how it works see **Creating Plugins**.
-
-## Documentation
-
-Visit [GitHub](https://gengojs.github.io/core/).
 
 ## Creating Plugins
 

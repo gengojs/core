@@ -30,7 +30,7 @@
   "homepage": "https://github.com/gengojs/core",
   "dependencies": {
     "gengojs-core-modules": "^2.0.0",
-    "gengojs-debug": "^1.1.1",
+    "gengojs-debug": "^2.0.4",
     "js-yaml": "^3.2.7",
     "lodash": "^3.10.1"
   },

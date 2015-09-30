@@ -16,13 +16,11 @@ var _package2 = _interopRequireDefault(_package);
 
 var _gengojsCoreModules = require('gengojs-core-modules');
 
-var _gengojsDebug = require('gengojs-debug');
-
-var _gengojsDebug2 = _interopRequireDefault(_gengojsDebug);
-
 var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
+
+var log = require('gengojs-debug')('core');
 
 /**
  * The core of gengo.js
@@ -40,12 +38,11 @@ var Gengo = (function () {
   function Gengo(options, plugins, defaults) {
     _classCallCheck(this, Gengo);
 
-    (0, _gengojsDebug2['default'])('core', 'debug', 'class: ' + Gengo.name, 'process: constructor');
-    (0, _gengojsDebug2['default'])('core', 'info',
+    log.debug('class: ' + Gengo.name, 'process: constructor')
     // Current version
-    'version: ' + (this.version = _package2['default'].version),
+    .info('version:', this.version = _package2['default'].version)
     // Options
-    'options: ' + (this.options = (0, _gengojsCoreModules.optify)(options)));
+    .info('options: ', this.options = (0, _gengojsCoreModules.optify)(options));
     // Set Plugins
     this.plugins = (0, _gengojsCoreModules.plugify)(plugins, this.options, defaults);
     // Backend plugin
@@ -66,7 +63,7 @@ var Gengo = (function () {
   _createClass(Gengo, [{
     key: 'parse',
     value: function parse(phrase) {
-      (0, _gengojsDebug2['default'])('core', 'debug', 'class: ' + Gengo.name, 'process: parse');
+      log.debug('class: ' + Gengo.name, 'process: parse');
       // Parser plugin
 
       for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -85,7 +82,7 @@ var Gengo = (function () {
   }, {
     key: 'ship',
     value: function ship(req, res, next) {
-      (0, _gengojsDebug2['default'])('core', 'debug', 'class: ' + Gengo.name, 'process: ship');
+      log.debug('class: ' + Gengo.name, 'process: ship');
       // Header plugin
       this.plugins.header.apply(this, arguments);
       // Router plugin
@@ -104,7 +101,7 @@ var Gengo = (function () {
   }, {
     key: 'assign',
     value: function assign() {
-      (0, _gengojsDebug2['default'])('core', 'debug', 'class: ' + Gengo.name, 'process: assign');
+      log.debug('class: ' + Gengo.name, 'process: assign');
       // API plugin
       return this.plugins.api.apply(this, arguments);
     }

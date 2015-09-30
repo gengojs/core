@@ -80,12 +80,11 @@
           </table>
           <div class="description"></div>
           <pre><code class="language-javascript">constructor(options, plugins, defaults) {
-    debug('core', 'debug', `class: ${Gengo.name}`, `process: constructor`);
-    debug('core', 'info',
+    log.debug(`class: ${Gengo.name}`, `process: constructor`)
       // Current version
-      `version: ${(this.version = pkg.version)}`,
+      .info('version:', (this.version = pkg.version))
       // Options
-      `options: ${(this.options = optify(options))}`);
+      .info('options: ', this.options = optify(options));
     // Set Plugins
     this.plugins = plugify(plugins, this.options, defaults);
     // Backend plugin
@@ -122,7 +121,7 @@
           </table>
           <div class="description"><p>Parses and i18ns the phrase.</p></div>
           <pre><code class="language-javascript">parse(phrase, ...args) {
-    debug('core', 'debug', `class: ${Gengo.name}`, `process: parse`);
+    log.debug(`class: ${Gengo.name}`, `process: parse`);
     // Parser plugin
     return this.plugins.parser.apply(this, [inputify(phrase, args)]);
   }</code></pre>
@@ -161,7 +160,7 @@
           </table>
           <div class="description"><p>The Middleware for Node frameworks</p></div>
           <pre><code class="language-javascript">ship(req, res, next) {
-    debug('core', 'debug', `class: ${Gengo.name}`, `process: ship`);
+    log.debug(`class: ${Gengo.name}`, `process: ship`);
     // Header plugin
     this.plugins.header.apply(this, arguments);
     // Router plugin
@@ -201,7 +200,7 @@
           </table>
           <div class="description"><p>Applies the API to req, res, and other objects.</p></div>
           <pre><code class="language-javascript">assign() {
-  debug('core', 'debug', `class: ${Gengo.name}`, `process: assign`);
+  log.debug(`class: ${Gengo.name}`, `process: assign`);
   // API plugin
   return this.plugins.api.apply(this, arguments);
 }

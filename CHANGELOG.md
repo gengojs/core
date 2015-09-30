@@ -1,3 +1,37 @@
+0.3.8 / 2015-09-29
+==================
+
+  * Release v0.3.8.
+  * Update
+    Updated gengojs-debug.
+  * Update config.json
+
+0.3.7 / 2015-09-28
+==================
+
+  * Release v0.3.7.
+  * Update
+    Updated gulp file.
+    Updated package.
+
+0.3.6 / 2015-09-27
+==================
+
+  * Release v0.3.6.
+  * Update
+    Update docs.
+
+0.3.5 / 2015-09-25
+==================
+
+  * Release v0.3.5.
+  * Update
+    Updated readme.
+    Update gulp file.
+    Removed local docs.
+  * Update
+    Updated change log.
+
 0.3.4 / 2015-09-25
 ==================
 
@@ -108,32 +142,4 @@
 ==========================
 
   * Update
-    Updated package.json
-
-0.0.1-beta.26 / 2015-04-21
-==========================
-
-  * Update
-    Updated package.json
-    Udpated readme
-
-0.0.1-beta.25 / 2015-04-21
-==========================
-
-  * Update
-    Updated package.json
-    Updated readme
-
-0.0.1-beta.24 / 2015-04-20
-==========================
-
-  * Update
-    Updated readme
-    Updated package.json
-
-0.0.1-beta.23 / 2015-04-20
-==========================
-
-  * Update
-    Fixed index.js
     Updated package.json

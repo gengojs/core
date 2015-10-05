@@ -57,7 +57,7 @@ gulp.task('lib', ['beautify'], function () {
     .pipe(sourcemaps.init())
     .pipe(babel())
     .pipe(sourcemaps.write('./source maps/'))
-    .pipe(gulp.dest('./'));
+    .pipe(gulp.dest('src/'));
 });
 
 /* Watches for changes and applies the build task*/

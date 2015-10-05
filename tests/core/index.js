@@ -1,6 +1,6 @@
 /*global describe, it */
 var assert = require('chai').assert;
-var core = require('../../core');
+var core = require('../../src');
 var gengopack = require('../fixtures/plugins/');
 var _ = require('lodash');
 var path = require('path');

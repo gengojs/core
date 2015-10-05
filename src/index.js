@@ -116,4 +116,4 @@ exports['default'] = function (options, plugins, defaults) {
 };
 
 module.exports = exports['default'];
-//# sourceMappingURL=../source maps/core/index.js.map
+//# sourceMappingURL=source maps/index.js.map

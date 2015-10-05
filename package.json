@@ -2,7 +2,7 @@
   "name": "gengojs-core",
   "version": "0.3.10",
   "description": "The core of gengo.js that manages i18n and l10n.",
-  "main": "core/index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "gulp test"
   },

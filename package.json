@@ -29,9 +29,9 @@
   },
   "homepage": "https://github.com/gengojs/core",
   "dependencies": {
-    "gengojs-core-modules": "^2.0.0",
+    "gengojs-core-modules": "^2.0.2",
     "gengojs-debug": "^2.0.4",
-    "js-yaml": "^3.2.7",
+    "js-yaml": "^3.4.2",
     "lodash": "^3.10.1"
   },
   "devDependencies": {

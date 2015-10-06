@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/gengojs/core",
   "dependencies": {
-    "gengojs-core-modules": "^2.0.7",
+    "gengojs-core-modules": "^2.0.8",
     "gengojs-debug": "^2.0.4",
     "js-yaml": "^3.4.2",
     "lodash": "^3.10.1"

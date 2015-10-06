@@ -1,6 +1,6 @@
 {
   "name": "gengojs-core",
-  "version": "0.3.13",
+  "version": "0.3.14",
   "description": "The core of gengo.js that manages i18n and l10n.",
   "main": "src/index.js",
   "scripts": {

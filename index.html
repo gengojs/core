@@ -33,9 +33,17 @@
 <a href="https://nodei.co/npm/gengojs-core/"><img src="http://img.shields.io/npm/v/gengojs-core.svg" alt="Version"></a></p>
 <p>The core of gengo.js that manages i18n and l10n.</p>
 <h2>Documentation</h2>
-<p>Visit <a href="https://gengojs.github.io/core/">GitHub</a>.</p>
+<p>See <a href="https://gengojs.github.io/core/">documentation</a>.</p>
 <h2>Status</h2>
-<p><strong>09/24/15</strong>:</p>
+<p><strong>10/6/15</strong></p>
+<p>Greetings! As promised, I have added documentation to the core and to the plugins. It should be
+self explanatory but if there is something that needs clarification then feel free to create an issue
+about it.
+As far as gengo.js is concernced, expect <strong>1.0.0-alpha.2</strong> to be released within this week or next (hopefully soon).
+I'll also be creating an example app with Sails so that it will show how gengo.js works. I do plan to create a sails hook
+that will replace the default i18n of sails so be watching! <strong>;)</strong> In the mean time, please checkout the documentations
+of the plugins. Anyways, happy coding!</p>
+<p>09/24/15:</p>
 <p>Hey! First of all, apologies for any delays in gengo.js. I've been working on another project
 called <a href="https://www.github.com/mr-doc/mr-doc">Mr Doc</a>. It's a tool that generates beautiful docs and I've
 improved it because I really needed a better way to document my source. So I hope to go through
@@ -43,15 +51,15 @@ everything as I document them well. Some changes did occur as I was working on M
 move all gengo.js related projects from my personal Github account to a dedicated <a href="https://github.com/gengojs">account</a>.
 There, you will find everthing you need to work on gengo and contribute. Finally, I did generate
 the docs for the core so see <a href="https://gengojs.github.io/core/">Documentation</a>. Well, that's all for now! Happy coding!</p>
-<p>As of 8/29/15, I've decided to go through the core and the plugins and refine them so that it will
-be easier to create the docs and hopefully easier to understand how to create plugins.</p>
-<p>Some from the docs below may still work as far as exporting plugins but the idea of internal API
-still needs some refinement.</p>
+<p><s>As of 8/29/15, I've decided to go through the core and the plugins and refine them so that it will
+be easier to create the docs and hopefully easier to understand how to create plugins.</s></p>
+<p><s>Some from the docs below may still work as far as exporting plugins but the idea of internal API
+still needs some refinement.</s></p>
 <h2>Introduction</h2>
-<p><strong>gengojs-core</strong> is the actual core of <a href="https://github.com/iwatakeshi/gengojs">gengo.js</a>. It serves to be
+<p><strong>gengojs-core</strong> is the actual core of <a href="https://github.com/gengojs/gengojs">gengo.js</a>. It serves to be
 a server agnostic middle-ware supporting the popular servers such as Express,
 Koa, Hapi, and even more with ease. It is also modular-tastic, and easy
-to debug with less than 34 lines of code (minus the comments).</p>
+to debug with less than 40 lines of source code according to <a href="https://www.npmjs.com/package/sloc">sloc</a>.</p>
 <p>To get started, there are three things to know about how the core works:</p>
 <ul>
 <li>Initialize</li>
@@ -65,96 +73,80 @@ create a plugin for the back-end, you will need to load every locale into memory
 the parser can readily use the data.</p>
 <p><strong>Ship</strong> is a function that applies the API to requests and also to the view.
 It begins by getting the locale from the client, letting the router know about
-the current path, applying the locale to the localization plugin, and finally
+the current URL path, applying the locale to the localization plugin, and finally
 assigning the API such as <code>__</code> or <code>__l</code> (can be changed) to the objects
 that are provided by the request and response..</p>
 <p><strong>Parse</strong> is the final step in the core. It is called only when the API such as
 <code>__('Hello')</code> are used. In this step, the parser plugin must return the i18ned string.</p>
 <p><strong>So...</strong> you may be wondering why is the core a separate module from the rest? The reason is
 because having the core on its own allows you, developers, to create awesome plugins. I personally
-feel as if i18n modules are a bit limited in what it can do and myself as well.</p>
-<p>Anyways, one thing to note is that this module should not be used on its own. The actual i18n library is
-<a href="https://github.com/iwatakeshi/gengojs">gengo.js</a>. If you want to extend the core to support
+feel as if i18n modules are <strong>a bit limited</strong> in what it can do and myself as well.</p>
+<p>Anyways, one thing to note is that this module <em>should not be used on its own</em>. The actual i18n library is
+<a href="https://github.com/gengojs/gengojs">gengo.js</a>. If you want to extend the core to support
 server x, then here is where you want to do that but if you want to create the wrapper for server x,
-then <a href="https://github.com/iwatakeshi/gengojs">gengo.js</a> is where you would do that.</p>
+then <a href="https://github.com/gengojs/gengojs">gengo.js</a> is where you would do that.</p>
 <h2>Getting Started</h2>
 <p><strong>How gengo.js works</strong> is similar to how Hapi works in terms of creating plugins and how Grunt works
 in terms of options.</p>
 <p>To create plugins, the one thing to keep in mind is core's <code>this</code> context. When a plugin is initialized,
-the core calls the plugin as it binds its context to that plugin (see <strong>Creating Plugins</strong>). Another thing to keep in mind is <em>dependencies</em>. Dependencies are really
+the core calls the plugin as it binds its context to that plugin (see <strong>Creating Plugins</strong>). Another thing to keep in mind is <em>dependency</em>. Dependencies are really
 internal API. For example, the parser plugin needs to know about the data. Therefore it is dependent on the
-back-end plugin and is expecting the back-end to supply an internal API to retrieve the locale/data. The following shows
-the type of plugins that are available for you to create and their dependencies:</p>
-<h4>Type of Plugins and its Dependencies</h4>
-<p>TODO</p>
-<h4>Internal API to Expose By Plugin</h4>
-<p>TODO</p>
-<p>For example plugins, see:</p>
+back-end plugin and is expecting the back-end to supply an internal API to retrieve the locale/data. To see how dependencies work,
+checkout the default plugins. Each plugin show the dependencies and the exposed internal api and also have their own documentation.</p>
 <ul>
-<li><a href="https://github.com/iwatakeshi/gengojs-default-api">gengojs-default-api</a></li>
-<li><a href="https://github.com/iwatakeshi/gengojs-default-backend">gengojs-default-backend</a></li>
-<li><a href="https://github.com/iwatakeshi/gengojs-default-header">gengojs-default-header</a></li>
-<li><a href="https://github.com/iwatakeshi/gengojs-default-localize">gengojs-default-localize</a></li>
-<li><a href="https://github.com/iwatakeshi/gengojs-default-parser">gengojs-default-parser</a></li>
-<li><a href="https://github.com/iwatakeshi/gengojs-default-router">gengojs-default-router</a></li>
+<li><a href="https://github.com/gengojs/plugin-api">gengojs-default-api</a></li>
+<li><a href="https://github.com/gengojs/plugin-backend">gengojs-default-backend</a></li>
+<li><a href="https://github.com/gengojs/plugin-header">gengojs-default-header</a></li>
+<li><a href="https://github.com/gengojs/plugin-localize">gengojs-default-localize</a></li>
+<li><a href="https://github.com/gengojs/plugin-parser">gengojs-default-parser</a></li>
+<li><a href="https://github.com/gengojs/plugin-router">gengojs-default-router</a></li>
 </ul>
-<p>To see how it works see <strong>Creating Plugins</strong>.</p>
 <h2>Creating Plugins</h2>
 <p><strong>Creating plugins</strong> is quite similar, if not, the same as creating plugins for Hapi. As mentioned above,
 the core is really all about context. The following shows you the recommended way to create your plugins:</p>
+<p>For this example we will create a dummy header plugin:</p>
 <h3>ES5</h3>
 <pre><code class="language-javascript">function MyHeaderClass (options){
 
-   // Set
    this.getLocale = function(){
     // ...
    }
 }
-
-// Hapi-ish style plugin
-module.exports = function() {
-  var pkg = require('./package');
-  // ! add type
-  pkg.type = 'header';
-  return {
-    main: function ship(){
-      // Pass options and expose internal API
-      this.header = new MyHeaderClass(this.options.header);
-    },
-    package: pkg,
-    // Provide option defaults
-    defaults: require('./defaults.json')
-  };
-};
 </code></pre>
 <h3>ES6</h3>
 <pre><code class="language-javascript">class MyHeaderClass {
-  constructor(options){
+  constructor (options){
     // ...
   }
-  // Set
+  
   getLocale(){
     // ...
   }
 }
-
-export default () =&gt; {
-// Using require because
-// 'import' variables
-// seem to be constant
+</code></pre>
+<h2>Exporting Plugins</h2>
+<p>Now we will export our dummy header plugin. Our plugin must specify a type which we know it's a header but here are the available types:</p>
+<ul>
+<li>parser</li>
+<li>header</li>
+<li>api</li>
+<li>localize</li>
+<li>backend</li>
+<li>router</li>
+</ul>
+<p>In this example, I will use <a href="https://lodash.com/">Lodash</a> to merge the type of plugin
+with the package.</p>
+<p>Our plugin must also have defaults provided.</p>
+<pre><code class="language-javascript">module.exports = function ship() {
  var pkg = require('./package');
- // ! add type
-  pkg.type = 'header';
   return {
-  // Arrow functions do not work
-  // because the context belongs
-  // to something else so use traditional
-  // functions
     main: function ship(){
       // Pass options and expose internal API
       this.header = new MyHeaderClass(this.options.header);
     },
-    package: pkg,
+    package: _.merge({
+      type: 'header'
+    }, require('../package')),,
     // Provide option defaults
     defaults: require('./defaults.json')
   };
@@ -175,7 +167,6 @@ when dealing with the core's context.</p>
 <p>Now you may be wondering, <em>Can I release a set of plugins?</em> The answer is
 <strong>YES!</strong>. I call these sets, <em>packs</em> or <em>gengo-pack</em>. To create a pack, simply export the individual
 <em>ships</em> like the following:</p>
-<h3>ES5</h3>
 <pre><code class="language-javascript">module.exports = function(){
   return {
     parser: /*parser ship*/,
@@ -187,20 +178,8 @@ when dealing with the core's context.</p>
   }
 };
 </code></pre>
-<h3>ES6</h3>
-<pre><code class="language-javascript">export default () =&gt; {
-  return {
-    parser: /*parser ship*/,
-    router: /*router ship*/,
-    backend: /*backend ship*/,
-    api: /*api ship*/,
-    header: /*header ship*/,
-    localize: /*localize ship*/
-  }
-}
-</code></pre>
 <h2>Testing your plugins</h2>
-<p>To test your plugins, simply install the core and also the default plugins needed for your plugin. The simplest way to download all the default plugins is by installing <code>gengojs-default-pack</code> which
+<p>To test your plugins, simply install the core and also the default plugins needed for your plugin. The simplest way to require all the default plugins is by installing <code>gengojs-default-pack</code> which
 contains all the default plugins. Since the pack is an object, you
 can simply use it like so:</p>
 <pre><code class="language-javascript">var pack = require('gengojs-default-pack');
@@ -219,7 +198,7 @@ var gengo = core({}, pack);
 
 // Test for your plugins existence:
 
-if(!_.isUndefined(gengo.plugins.backends[0]))
+if(!_.isUndefined(gengo.plugins.backend))
 // ...
 </code></pre>
 <h2>Options</h2>
@@ -236,7 +215,7 @@ make sure to provide the defaults when you create your plugins. The core will ap
 as soon as it loads the plugin.</p>
 <h2>Contributing</h2>
 <p>Feel free to contribute. To contribute, see the requirements. If you have any suggestions,
-create issues at the core's <a href="https://github.com/iwatakeshi/gengojs-core">GitHub Issues</a>. Also,
+create issues at the core's <a href="https://github.com/gengojs/core">GitHub Issues</a>. Also,
 all ES6 modules are located under <code>lib/</code>.</p>
 <ul>
 <li>Requirements
@@ -250,7 +229,7 @@ all ES6 modules are located under <code>lib/</code>.</p>
 </li>
 </ul>
 <h2>Debug</h2>
-<p>The core uses <a href="https://github.com/iwatakeshi/gengojs-debug">gengojs-debug</a>,
+<p>The core uses <a href="https://github.com/gengojs/debug">gengojs-debug</a>,
 an extension of <a href="https://github.com/visionmedia/debug">debug</a>, to output debugging statements.
 To debug, simply set the type of debug in the shell:</p>
 <p>Unix:</p>

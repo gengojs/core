@@ -15,7 +15,14 @@ See [documentation](https://gengojs.github.io/core/).
 
 ## Status
 
-**10/6/15**
+**10/8/15**
+
+Another release!? Yup and it's going fast. **1.0.0-alpha.2** has already been released but expect more alphas to
+be released within this month. Also, I have released `sails-hook-gengojs` on npm which will allow you to use
+gengo.js in your Sails app as if it was built into Sails in the first place. In future releases expect gengo.js to move from
+alpha -> beta -> rc (release candidate). I will also be working on gengojs.com so expect that to happen soon as well! Well, happy coding!
+
+10/6/15
 
 Greetings! As promised, I have added documentation to the core and to the plugins. It should be
 self explanatory but if there is something that needs clarification then feel free to create an issue

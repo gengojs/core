@@ -116,5 +116,14 @@ describe('core', function () {
         assert.isTrue(_.has(options, 'hello'));
       });
     });
+    describe('toml', function () {
+      it('should read', function () {
+        var options = core(path.normalize(
+          process.cwd() + '/tests/fixtures/options/options.toml')).options;
+        assert.isDefined(options);
+        assert.isObject(options);
+        assert.isTrue(_.has(options, 'hello'));
+      });
+    });
   });
 });
